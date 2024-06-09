@@ -63,3 +63,10 @@ Item types and Attributes can be flagged as being 'system' managed.  System mana
     }
 }
 ```
+
+# Latest Schema Document
+
+The latest schema documents can be found here:
+
+* [Library Json Schema](https://schema.thingslibrary.io/latest/library.json)
+* [Thing Json Schema](https://schema.thingslibrary.io/latest/thing.json)
