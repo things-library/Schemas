@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://schema.thingslibrary.io/1.0.0/type.json",
+    "$comment": "Item types are used to explain all that is possible attribute and attachment wise with a thing.",
+    
+    "type": "object",
+    "properties": {
+        "key": {
+            "type": "string",
+            "title": "Key",
+            "minLength": 2,
+            "maxLength": 500,
+            "pattern": "^[a-z0-9\\-]*$"
+        },
+
+        "name": {
+            "type": "string",
+            "title": "Name",
+            "minLength": 2,
+            "maxLength": 50
+        },
+
+        "description": {
+            "type": "string",
+            "title": "Description"
+        },
+
+        "system": {
+            "type": "boolean",
+            "title": "System",
+            "description": "Indicates that this item type is managed by the system and can't be edited by a user",
+            "default": false
+        },
+
+        "locked": {
+            "type": "boolean",
+            "title": "Locked",
+            "description": "Prevent attachments from outside of the attachment listing",
+            "default": false
+        },
+
+        "attributes": {
+            "type": "array",
+            "title": "Attributes",
+            "items": {
+                "$ref": "https://thingslibrary.io/schemas/1.0.0/attribute.json"
+            }
+        },
+
+        "attachments": {
+            "type": "array",
+            "title": "Attachments",
+            "items": {
+                "$ref": "https://thingslibrary.io/schemas/1.0.0/type-attachment.json"
+            }
+        }
+    },
+    "required": [ "key", "name" ]
+}

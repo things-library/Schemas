@@ -1,0 +1,272 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://schema.thingslibrary.io/1.0.0/library.json",
+    "$comment": "Libraries hold thing types (items) and things that has a type.",
+    
+    "$defs": {
+        "item-type": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 2,
+                    "maxLength": 500,
+                    "pattern": "^[a-z0-9\\-]*$"
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 2,
+                    "maxLength": 50
+                },
+
+                "description": {
+                    "type": "string",
+                    "title": "Description"
+                },
+
+                "system": {
+                    "type": "boolean",
+                    "title": "System",
+                    "description": "Indicates that this item type is managed by the system and can't be edited by a user",
+                    "default": false
+                },
+
+                "locked": {
+                    "type": "boolean",
+                    "title": "Locked",
+                    "description": "Prevent attachments from outside of the attachment listing",
+                    "default": false
+                },
+
+                "attributes": {
+                    "type": "array",
+                    "title": "Attributes",
+                    "items": {
+                        "$ref": "#/$defs/attribute"
+                    }
+                },
+
+                "attachments": {
+                    "type": "array",
+                    "title": "Attachments",
+                    "items": {
+                        "$ref": "#/$defs/item-type-attachment"
+                    }
+                }
+            },
+            "required": ["key","name"]
+        },
+
+        "item-type-attachment": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "title": "Type Key",
+                    "minLength": 2,
+                    "maxLength": 50,
+                    "pattern": "^[a-z0-9\\-]*$"
+                },
+        
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 2,
+                    "maxLength": 50
+                },
+        
+                "description": {
+                    "type": "string",
+                    "title": "Description"
+                },
+                
+                "required": {
+                    "type": "boolean",
+                    "title": "Required",
+                    "description": "Is this item type required to be attached",
+                    "default": false
+                },
+        
+                "one-only": {
+                    "type": "boolean",
+                    "title": "Limit to One",
+                    "description": "Limit attachments to only one of this item type",
+                    "default": false
+                }
+            },
+            "required": ["type","name"]
+        },
+
+        "attribute": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 2,
+                    "maxLength": 200,
+                    "pattern": "^[a-z0-9\\-]*$"
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 2,
+                    "maxLength": 50
+                },
+
+                "type": {
+                    "type": "string",
+                    "title": "Data Type",
+                    "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
+                },
+
+                "units": {
+                    "type": "string",
+                    "title": "Unit Symbol",
+                    "maxLength": 20
+                },
+
+                "weight": {
+                    "type": "integer",
+                    "title": "Order (Weight)",
+                    "description": "Where in the list should this item show up priority wise.  Higher the number, higher on the list it will appear",
+                    "default": 0
+                },
+
+                "multi": {
+                    "type": "boolean",
+                    "title": "Allow Multiples",
+                    "description": "Allow multiple of this attribute attached to a Thing",
+                    "default": false
+                },
+
+                "required": {
+                    "type": "boolean",
+                    "title": "Required",
+                    "description": "Is this field required to be entered",
+                    "default": false
+                },
+
+                "locked": {
+                    "type": "boolean",
+                    "title": "Locked",
+                    "description": "Prevent new attribute values from being added",
+                    "default": false
+                },
+
+                "system": {
+                    "type": "boolean",
+                    "title": "System",
+                    "description": "Indicates that this attribute is managed by the system and can't be edited by a user",
+                    "default": false
+                },
+
+                "values": {
+                    "type": "object",
+                    "title": "Values",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": ["key","name","type"]            
+        },
+
+        "thing": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 2,
+                    "maxLength": 50,
+                    "pattern": "^[a-z0-9\\-]*$"
+                },
+
+                "date": {
+                    "type": "string",
+                    "title": "Date",
+                    "format": "date-time"        
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 2,
+                    "maxLength": 50
+                },
+
+                "type": {
+                    "type": "string",
+                    "title": "Type",
+                    "minLength": 2,
+                    "maxLength": 50,
+                    "pattern": "^[a-z0-9\\-]*$"
+                },
+                
+                "attributes": {
+                    "type": "array",
+                    "title": "Attributes",
+                    "items": {
+                        "$ref": "#/$defs/attribute"
+                    }
+                },
+
+                "attachments": {
+                    "type": "array",
+                    "title": "Attachments",
+                    "items": {
+                        "$ref": "#/$defs/thing"
+                    }
+                }
+            },
+            "required": ["key","name","type"]
+        }
+    },
+
+    "type": "object",
+    "properties": {
+        "key": {
+            "type": "string",
+            "title": "Key",
+            "minLength": 5,
+            "maxLength": 50,
+            "pattern": "^[a-z0-9\\-]*$"
+        },
+
+        "name": {
+            "type": "string",
+            "title": "Name",
+            "minLength": 5,
+            "maxLength": 50
+        },
+
+        "types": {
+            "type": "array",
+            "title": "Item Types",
+            "items": {
+                "$ref": "#/$defs/item-type"
+            }
+        },
+        
+        "things": {
+            "type": "array",
+            "title": "Things",
+            "items": {
+                "$ref": "#/$defs/thing"
+            }
+        },
+
+        "thing-count": {
+            "type": "integer",
+            "title": "Count (Things)",
+            "description": "Count of root things in the library",
+            "default": 0
+        }
+    },
+    "required": ["key","name"]
+}

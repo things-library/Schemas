@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://schema.thingslibrary.io/1.0.0/type-attachment.json",
+    "$comment": "Item type attachments that are typical for this item type.",
+    
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "title": "Type Key",
+            "minLength": 2,
+            "maxLength": 50,
+            "pattern": "^[a-z0-9\\-]*$"
+        },
+
+        "name": {
+            "type": "string",
+            "title": "Name",
+            "minLength": 2,
+            "maxLength": 50
+        },
+
+        "description": {
+            "type": "string",
+            "title": "Description"
+        },
+        
+        "required": {
+            "type": "boolean",
+            "title": "Required",
+            "description": "Is this item type required to be attached",
+            "default": false
+        },
+
+        "one-only": {
+            "type": "boolean",
+            "title": "Limit to One",
+            "description": "Limit attachments to only one of this item type",
+            "default": false
+        }
+    },
+    "required": [ "type", "name" ]
+}
