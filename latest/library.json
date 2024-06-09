@@ -12,7 +12,7 @@
                     "title": "Key",
                     "minLength": 2,
                     "maxLength": 500,
-                    "pattern": "^[a-z0-9\\-]*$"
+                    "pattern": "^[a-z0-9_]*$"
                 },
 
                 "name": {
@@ -68,7 +68,7 @@
                     "title": "Type Key",
                     "minLength": 2,
                     "maxLength": 50,
-                    "pattern": "^[a-z0-9\\-]*$"
+                    "pattern": "^[a-z0-9_]*$"
                 },
         
                 "name": {
@@ -108,7 +108,7 @@
                     "title": "Key",
                     "minLength": 2,
                     "maxLength": 200,
-                    "pattern": "^[a-z0-9\\-]*$"
+                    "pattern": "^[a-z0-9_]*$"
                 },
 
                 "name": {
@@ -184,7 +184,7 @@
                     "title": "Key",
                     "minLength": 2,
                     "maxLength": 50,
-                    "pattern": "^[a-z0-9\\-]*$"
+                    "pattern": "^[a-z0-9_]*$"
                 },
 
                 "date": {
@@ -205,7 +205,7 @@
                     "title": "Type",
                     "minLength": 2,
                     "maxLength": 50,
-                    "pattern": "^[a-z0-9\\-]*$"
+                    "pattern": "^[a-z0-9_]*$"
                 },
                 
                 "attributes": {
@@ -235,7 +235,7 @@
             "title": "Key",
             "minLength": 5,
             "maxLength": 50,
-            "pattern": "^[a-z0-9\\-]*$"
+            "pattern": "^[a-z0-9_]*$"
         },
 
         "name": {

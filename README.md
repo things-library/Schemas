@@ -35,7 +35,7 @@ Item types and Attributes can be flagged as being 'system' managed.  System mana
 * 'Things' have an 'item type' that explains how the thing is categorized (Example: car, furnace, electronics).
 * 'Item Types' have various attributes used to define the thing. (Example: air filter size, last filter change date, recommended tire pressure, purchase date)
 * Item type 'Attributes' have a data type. (Example: pick list, string, number, currency, date only, date and time, url)
-* Keys must consist of lowercase alphanumeric characters or underscores.
+* Keys must consist of lowercase alphanumeric characters or underscores which is known as snake case.
 * Keys are cannot be changed once created and must be unique to their container, for example a root 'thing' key must be unique to the library where an attached thing's key must be unique within the attachment things.
 
 
@@ -46,10 +46,10 @@ Item types and Attributes can be flagged as being 'system' managed.  System mana
     "name": "Example Movie (2024)",
     "type": "movie",
     "attributes": {
-        "release-date": "2024-02-21",
-        "release-year": "2024",
+        "release_date": "2024-02-21",
+        "release_year": "2024",
         "studio": "BigPac Entertainment",
-        "content-rating": "PG-13",
+        "content_rating": "PG-13",
         "duration": "01:53:29.4710000",
         "genre": [
           "Science Fiction",

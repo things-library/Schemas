@@ -10,7 +10,7 @@
             "title": "Type Key",
             "minLength": 2,
             "maxLength": 50,
-            "pattern": "^[a-z0-9\\-]*$"
+            "pattern": "^[a-z0-9_]*$"
         },
 
         "name": {
