@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://schema.thingslibrary.io/1.0.0/attribute.json",
+    "$id": "https://schema.thingslibrary.io/1.0/item-type-attribute.json",
     "$comment": "Attributes explain what sort of data we are explaining in the thing record.",
 
     "type": "object",
@@ -17,7 +17,7 @@
             "type": "string",
             "title": "Name",
             "minLength": 2,
-            "maxLength": 50
+            "maxLength": 200
         },
 
         "type": {

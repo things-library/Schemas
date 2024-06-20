@@ -1,15 +1,15 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://schema.thingslibrary.io/1.0.0/type.json",
+    "$id": "https://schema.thingslibrary.io/1.0/item-type.json",
     "$comment": "Item types are used to explain all that is possible attribute and attachment wise with a thing.",
-    
+
     "type": "object",
     "properties": {
         "key": {
             "type": "string",
             "title": "Key",
             "minLength": 2,
-            "maxLength": 500,
+            "maxLength": 200,
             "pattern": "^[a-z0-9_]*$"
         },
 
@@ -17,7 +17,7 @@
             "type": "string",
             "title": "Name",
             "minLength": 2,
-            "maxLength": 50
+            "maxLength": 200
         },
 
         "description": {
@@ -43,7 +43,7 @@
             "type": "array",
             "title": "Attributes",
             "items": {
-                "$ref": "https://thingslibrary.io/schemas/1.0.0/attribute.json"
+                "$ref": "#/$defs/attribute"
             }
         },
 
@@ -51,9 +51,18 @@
             "type": "array",
             "title": "Attachments",
             "items": {
-                "$ref": "https://thingslibrary.io/schemas/1.0.0/type-attachment.json"
+                "$ref": "#/$defs/item-type-attachment"
+            }
+        },
+
+        "metadata": {
+            "type": "object",
+            "title": "Metadata",
+            "additionalProperties": {
+                "type": "string"
             }
         }
     },
+    "additionalProperties": false,
     "required": [ "key", "name" ]
 }
