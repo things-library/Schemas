@@ -209,7 +209,7 @@
                     "title": "Key",
                     "minLength": 2,
                     "maxLength": 200,
-                    "pattern": "^[a-z0-9_]*$"
+                    "pattern": "^[a-z0-9_\\-]*$"
                 },
 
                 "date": {
@@ -271,7 +271,7 @@
             "title": "Key",
             "minLength": 5,
             "maxLength": 200,
-            "pattern": "^[a-z0-9_]*$"
+            "pattern": "^[a-z0-9_\\-]*$"
         },
 
         "name": {
