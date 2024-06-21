@@ -43,7 +43,7 @@
             "type": "array",
             "title": "Attributes",
             "items": {
-                "$ref": "#/$defs/attribute"
+                "$ref": "#/$defs/item-type-attribute"
             }
         },
 

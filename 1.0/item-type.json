@@ -3,6 +3,140 @@
     "$id": "https://schema.thingslibrary.io/1.0/item-type.json",
     "$comment": "Item types are used to explain all that is possible attribute and attachment wise with a thing.",
 
+    "$defs": {        
+        "item-type-attachment": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "title": "Type Key",
+                    "minLength": 2,
+                    "maxLength": 200,
+                    "pattern": "^[a-z0-9_]*$"
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 2,
+                    "maxLength": 200
+                },
+
+                "description": {
+                    "type": "string",
+                    "title": "Description"
+                },
+
+                "required": {
+                    "type": "boolean",
+                    "title": "Required",
+                    "description": "Is this item type required to be attached?",
+                    "default": false
+                },
+
+                "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "description": "Limit number of attachments of this type? (0 = not limited)",
+                    "default": 0
+                },
+
+                "metadata": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [ "type", "name" ]
+        },
+
+        "item-type-attribute": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 2,
+                    "maxLength": 200,
+                    "pattern": "^[a-z0-9_]*$"
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 2,
+                    "maxLength": 200
+                },
+
+                "type": {
+                    "type": "string",
+                    "title": "Data Type",
+                    "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
+                },
+
+                "units": {
+                    "type": "string",
+                    "title": "Unit Symbol",
+                    "maxLength": 20
+                },
+
+                "weight": {
+                    "type": "integer",
+                    "title": "Order (Weight)",
+                    "description": "Where in the list should this item show up priority wise.  Higher the number, higher on the list it will appear.",
+                    "default": 0
+                },
+
+                "multi": {
+                    "type": "boolean",
+                    "title": "Allow Multiples",
+                    "description": "Allow multiple of this attribute attached to a Thing",
+                    "default": false
+                },
+
+                "required": {
+                    "type": "boolean",
+                    "title": "Required",
+                    "description": "Is this field required to be entered",
+                    "default": false
+                },
+
+                "locked": {
+                    "type": "boolean",
+                    "title": "Locked",
+                    "description": "Prevent new attribute values from being added.",
+                    "default": false
+                },
+
+                "system": {
+                    "type": "boolean",
+                    "title": "System",
+                    "description": "Indicates that this attribute is managed by the system and can't be edited by a user.",
+                    "default": false
+                },
+
+                "values": {
+                    "type": "object",
+                    "title": "Values",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+
+                "metadata": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [ "key", "name", "type" ]
+        }       
+    },
+
     "type": "object",
     "properties": {
         "key": {
@@ -43,7 +177,7 @@
             "type": "array",
             "title": "Attributes",
             "items": {
-                "$ref": "#/$defs/attribute"
+                "$ref": "#/$defs/item-type-attribute"
             }
         },
 

@@ -23,7 +23,7 @@
         "type": {
             "type": "string",
             "title": "Data Type",
-            "enum": [ "boolean", "currency", "date", "date-time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal-range", "int-range" ]
+            "enum": [ "boolean", "currency", "currency_range", "date", "date_time", "decimal", "decimal_range", "duration", "email", "enum", "html", "int", "int_range", "password", "phone", "string", "text", "time", "url" ]
         },
 
         "units": {

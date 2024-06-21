@@ -37,6 +37,16 @@
             }
         },
         {
+            "key": "currency_range",
+            "name": "Currency (Range)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "number",
+                "input_type": "number",
+                "format": ""
+            }
+        },
+        {
             "key": "date",
             "name": "Date Only",
             "type": "attribute_data_type",
@@ -54,6 +64,26 @@
                 "type": "string",
                 "input_type": "datetime",
                 "format": "date-time"
+            }
+        },
+        {
+            "key": "decimal",
+            "name": "Number (Decimals)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "number",
+                "input_type": "number",
+                "format": ""
+            }
+        },
+        {
+            "key": "decimal_range",
+            "name": "Number Range (Decimals)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "number",
+                "input_type": "number",
+                "format": ""
             }
         },
         {
@@ -93,6 +123,26 @@
             "attributes": {
                 "type": "string",
                 "input_type": "text",
+                "format": ""
+            }
+        },
+        {
+            "key": "int",
+            "name": "Number (Whole)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "integer",
+                "input_type": "number",
+                "format": ""
+            }
+        },
+        {
+            "key": "int_range",
+            "name": "Number Range (Whole)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "integer",
+                "input_type": "number",
                 "format": ""
             }
         },
@@ -154,56 +204,6 @@
                 "type": "string",
                 "input_type": "url",
                 "format": "uri"
-            }
-        },
-        {
-            "key": "decimal",
-            "name": "Number (Decimals)",
-            "type": "attribute_data_type",
-            "attributes": {
-                "type": "number",
-                "input_type": "number",
-                "format": ""
-            }
-        },
-        {
-            "key": "int",
-            "name": "Number (Whole)",
-            "type": "attribute_data_type",
-            "attributes": {
-                "type": "integer",
-                "input_type": "number",
-                "format": ""
-            }
-        },
-        {
-            "key": "decimal_range",
-            "name": "Number Range (Decimals)",
-            "type": "attribute_data_type",
-            "attributes": {
-                "type": "number",
-                "input_type": "number",
-                "format": ""
-            }
-        },
-        {
-            "key": "int_range",
-            "name": "Number Range (Whole)",
-            "type": "attribute_data_type",
-            "attributes": {
-                "type": "integer",
-                "input_type": "number",
-                "format": ""
-            }
-        },
-        {
-            "key": "currency_range",
-            "name": "Currency (Range)",
-            "type": "attribute_data_type",
-            "attributes": {
-                "type": "number",
-                "input_type": "number",
-                "format": ""
             }
         }
     ]
