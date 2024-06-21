@@ -1,0 +1,210 @@
+{
+    "$schema": "https://schema.thingslibrary.io/library/1.0/attribute-data-type.json",
+
+    "name": "Attribute Data Types",
+
+    "types": [
+        {
+            "key": "attribute_data_type",
+            "name": "Attribute Data Type",
+            "attributes": [                
+                { "key": "type",       "name": "Data Type",  "type": "string" },
+                { "key": "input_type", "name": "Input Type", "type": "string" },
+                { "key": "format",     "name": "Data Type",  "type": "string" }
+            ]
+        }
+    ],
+
+    "items": [
+        {
+            "key": "boolean",
+            "name": "True / False",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "boolean",
+                "input_type": "checkbox",
+                "format": ""
+            }
+        },
+        {
+            "key": "currency",
+            "name": "Currency",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "text",
+                "format": ""
+            }
+        },
+        {
+            "key": "date",
+            "name": "Date Only",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "date",
+                "format": "date"
+            }
+        },
+        {
+            "key": "date_time",
+            "name": "Date + Time",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "datetime",
+                "format": "date-time"
+            }
+        },
+        {
+            "key": "duration",
+            "name": "Duration",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "text",
+                "format": ""
+            }
+        },
+        {
+            "key": "email",
+            "name": "Email",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "email",
+                "format": "email"
+            }
+        },
+        {
+            "key": "enum",
+            "name": "Pick List",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "text",
+                "format": ""
+            }
+        },
+        {
+            "key": "html",
+            "name": "HTML",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "text",
+                "format": ""
+            }
+        },
+        {
+            "key": "password",
+            "name": "Password",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "text",
+                "format": ""
+            }
+        },
+        {
+            "key": "phone",
+            "name": "Phone Number",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "tel",
+                "format": ""
+            }
+        },
+        {
+            "key": "string",
+            "name": "String",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "text",
+                "format": ""
+            }
+        },
+        {
+            "key": "text",
+            "name": "Text (MultiLine)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "textarea",
+                "format": "textarea"
+            }
+        },
+        {
+            "key": "time",
+            "name": "Time Only",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "time",
+                "format": "time"
+            }
+        },
+        {
+            "key": "url",
+            "name": "Url",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "string",
+                "input_type": "url",
+                "format": "uri"
+            }
+        },
+        {
+            "key": "decimal",
+            "name": "Number (Decimals)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "number",
+                "input_type": "number",
+                "format": ""
+            }
+        },
+        {
+            "key": "int",
+            "name": "Number (Whole)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "integer",
+                "input_type": "number",
+                "format": ""
+            }
+        },
+        {
+            "key": "decimal_range",
+            "name": "Number Range (Decimals)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "number",
+                "input_type": "number",
+                "format": ""
+            }
+        },
+        {
+            "key": "int_range",
+            "name": "Number Range (Whole)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "integer",
+                "input_type": "number",
+                "format": ""
+            }
+        },
+        {
+            "key": "currency_range",
+            "name": "Currency (Range)",
+            "type": "attribute_data_type",
+            "attributes": {
+                "type": "number",
+                "input_type": "number",
+                "format": ""
+            }
+        }
+    ]
+}

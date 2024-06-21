@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://schema.thingslibrary.io/1.0/library.json",
     "$comment": "Libraries hold item types and items that have a type.",
-    
+
     "$defs": {
         "item-type": {
             "type": "object",
