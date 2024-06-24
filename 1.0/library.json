@@ -261,49 +261,54 @@
                 }
             },
             "required": [ "key", "name", "type" ]
-        }
-    },
-
-    "type": "object",
-    "properties": {
-        "key": {
-            "type": "string",
-            "title": "Key",
-            "minLength": 5,
-            "maxLength": 200,
-            "pattern": "^[a-z0-9_\\-]*$"
         },
 
-        "name": {
-            "type": "string",
-            "title": "Name",
-            "minLength": 5,
-            "maxLength": 200
-        },
-
-        "types": {
-            "type": "array",
-            "title": "Item Types",
-            "items": {
-                "$ref": "#/$defs/item-type"
-            }
-        },
-
-        "items": {
-            "type": "array",
-            "title": "Things",
-            "items": {
-                "$ref": "#/$defs/item"
-            }
-        },
-
-        "metadata": {
+        "library": {
+            
             "type": "object",
-            "title": "Metadata",
-            "additionalProperties": {
-                "type": "string"
-            }
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 5,
+                    "maxLength": 200,
+                    "pattern": "^[a-z0-9_\\-]*$"
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 5,
+                    "maxLength": 200
+                },
+
+                "types": {
+                    "type": "array",
+                    "title": "Item Types",
+                    "items": {
+                        "$ref": "#/$defs/item-type"
+                    }
+                },
+
+                "items": {
+                    "type": "array",
+                    "title": "Things",
+                    "items": {
+                        "$ref": "#/$defs/item"
+                    }
+                },
+
+                "metadata": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [ "items" ]
         }
     },
-    "required": [ "key", "name" ]
+
+    "$ref": "#/$defs/library"
 }

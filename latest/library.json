@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://schema.thingslibrary.io/1.0/library.json",
     "$comment": "Libraries hold item types and items that have a type.",
-    
+
     "$defs": {
         "item-type": {
             "type": "object",
@@ -12,7 +12,7 @@
                     "title": "Key",
                     "minLength": 2,
                     "maxLength": 200,
-                    "pattern": "^[a-z0-9_\\-]*$"
+                    "pattern": "^[a-z0-9_]*$"
                 },
 
                 "name": {
@@ -125,7 +125,7 @@
                     "title": "Key",
                     "minLength": 2,
                     "maxLength": 200,
-                    "pattern": "^[a-z0-9_\\-]*$"
+                    "pattern": "^[a-z0-9_]*$"
                 },
 
                 "name": {
@@ -261,48 +261,54 @@
                 }
             },
             "required": [ "key", "name", "type" ]
+        },
+
+        "library": {
+            
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 5,
+                    "maxLength": 200,
+                    "pattern": "^[a-z0-9_\\-]*$"
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 5,
+                    "maxLength": 200
+                },
+
+                "types": {
+                    "type": "array",
+                    "title": "Item Types",
+                    "items": {
+                        "$ref": "#/$defs/item-type"
+                    }
+                },
+
+                "items": {
+                    "type": "array",
+                    "title": "Things",
+                    "items": {
+                        "$ref": "#/$defs/item"
+                    }
+                },
+
+                "metadata": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [ "items" ]
         }
     },
 
-    "type": "object",
-    "properties": {
-        "key": {
-            "type": "string",
-            "title": "Key",
-            "minLength": 5,
-            "maxLength": 200,
-            "pattern": "^[a-z0-9_\\-]*$"
-        },
-
-        "name": {
-            "type": "string",
-            "title": "Name",
-            "minLength": 5,
-            "maxLength": 200
-        },
-
-        "types": {
-            "type": "array",
-            "title": "Item Types",
-            "items": {
-                "$ref": "#/$defs/item-type"
-            }
-        },
-
-        "items": {
-            "type": "array",
-            "title": "Things",
-            "items": {
-                "$ref": "#/$defs/item"
-            }
-        },
-
-        "metadata": {
-            "type": "object",
-            "title": "Metadata",
-            "additionalProperties": {
-                "type": "string"
-            }
-        }
-    }    
+    "$ref": "#/$defs/library"
 }

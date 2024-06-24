@@ -3,60 +3,67 @@
     "$id": "https://schema.thingslibrary.io/1.0/item.json",
     "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.",
     
-    "type": "object",
-    "properties": {
-        "key": {
-            "type": "string",
-            "title": "Key",
-            "minLength": 2,
-            "maxLength": 50,
-            "pattern": "^[a-z0-9_\\-]*$"
-        },
-
-        "date": {
-            "type": "string",
-            "title": "Date",
-            "format": "date-time"
-        },
-
-        "name": {
-            "type": "string",
-            "title": "Name",
-            "minLength": 2,
-            "maxLength": 50
-        },
-
-        "type": {
-            "type": "string",
-            "title": "Type",
-            "minLength": 2,
-            "maxLength": 50,
-            "pattern": "^[a-z0-9_]*$"
-        },
-
-        "attributes": {
+    "$defs": {
+        "item": {
             "type": "object",
-            "title": "Attributes",
-            "additionalProperties": {
-                "type": "string"
-            }
-        },
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 2,
+                    "maxLength": 50,
+                    "pattern": "^[a-z0-9_\\-]*$"
+                },
 
-        "attachments": {
-            "type": "array",
-            "title": "Attachments",
-            "items": {
-                "$ref": "#"
-            }
-        },
+                "date": {
+                    "type": "string",
+                    "title": "Date",
+                    "format": "date-time"
+                },
 
-        "metadata": {
-            "type": "object",
-            "title": "Metadata",
-            "additionalProperties": {
-                "type": "string"
-            }
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 2,
+                    "maxLength": 50
+                },
+
+                "type": {
+                    "type": "string",
+                    "title": "Type",
+                    "minLength": 2,
+                    "maxLength": 50,
+                    "pattern": "^[a-z0-9_]*$"
+                },
+
+                "attributes": {
+                    "type": "object",
+                    "title": "Attributes",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+
+                "attachments": {
+                    "type": "array",
+                    "title": "Attachments",
+                    "items": {
+                        "$ref": "#/$defs/item"
+                        "$ref": "#/$defs/item"
+                    }
+                },
+
+                "metadata": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [ "name", "type" ]
         }
     },
-    "required": [ "name", "type" ]
+
+    "$ref": "#/$defs/item"
 }

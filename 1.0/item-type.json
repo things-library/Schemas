@@ -1,9 +1,9 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://schema.thingslibrary.io/1.0/item-type.json",
-    "$comment": "Item types are used to explain all that is possible attribute and attachment wise with a thing.",
-
-    "$defs": {        
+    
+    "$defs": {
+        
         "item-type-attachment": {
             "type": "object",
             "properties": {
@@ -134,69 +134,75 @@
                 }
             },
             "required": [ "key", "name", "type" ]
-        }       
-    },
-
-    "type": "object",
-    "properties": {
-        "key": {
-            "type": "string",
-            "title": "Key",
-            "minLength": 2,
-            "maxLength": 200,
-            "pattern": "^[a-z0-9_]*$"
         },
 
-        "name": {
-            "type": "string",
-            "title": "Name",
-            "minLength": 2,
-            "maxLength": 200
-        },
-
-        "description": {
-            "type": "string",
-            "title": "Description"
-        },
-
-        "system": {
-            "type": "boolean",
-            "title": "System",
-            "description": "Indicates that this item type is managed by the system and can't be edited by a user",
-            "default": false
-        },
-
-        "locked": {
-            "type": "boolean",
-            "title": "Locked",
-            "description": "Prevent attachments from outside of the attachment listing",
-            "default": false
-        },
-
-        "attributes": {
-            "type": "array",
-            "title": "Attributes",
-            "items": {
-                "$ref": "#/$defs/item-type-attribute"
-            }
-        },
-
-        "attachments": {
-            "type": "array",
-            "title": "Attachments",
-            "items": {
-                "$ref": "#/$defs/item-type-attachment"
-            }
-        },
-
-        "metadata": {
+        "item-type": {
             "type": "object",
-            "title": "Metadata",
-            "additionalProperties": {
-                "type": "string"
-            }
-        }
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 2,
+                    "maxLength": 200,
+                    "pattern": "^[a-z0-9_]*$"
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 2,
+                    "maxLength": 200
+                },
+
+                "description": {
+                    "type": "string",
+                    "title": "Description"
+                },
+
+                "system": {
+                    "type": "boolean",
+                    "title": "System",
+                    "description": "Indicates that this item type is managed by the system and can't be edited by a user",
+                    "default": false
+                },
+
+                "locked": {
+                    "type": "boolean",
+                    "title": "Locked",
+                    "description": "Prevent attachments from outside of the attachment listing",
+                    "default": false
+                },
+
+                "attributes": {
+                    "type": "array",
+                    "title": "Attributes",
+                    "items": {
+                        "$ref": "#/$defs/item-type-attribute"
+                    }
+                },
+
+                "attachments": {
+                    "type": "array",
+                    "title": "Attachments",
+                    "items": {
+                        "$ref": "#/$defs/item-type-attachment"
+                    }
+                },
+
+                "metadata": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false,
+
+            "required": [ "key", "name" ]
+         }
     },
-    "additionalProperties": false,
-    "required": [ "key", "name" ]
+    
+    "$ref": "#/$defs/item-type"
 }
+
