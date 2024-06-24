@@ -1,0 +1,11 @@
+{
+    "$schema": "https://schema.thingslibrary.io/1.0/item.json",
+
+    "name": "TEST 2024",
+    "type": "vehicle",
+
+    "attributes": {
+        "Brand": "Test Brand",
+        "Color": [ "Black", "Red", "Blue" ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+	"key": "test_basic",
+	"name": "Basic Valid Test",
+	
+	"types": [
+		{
+			"key": "test_type",
+			"name": "Test Type",
+			"attributes": [
+				{ "key": "location", "name": "Location", "type": "enum", "values": { 
+					  "location_a":"Location A", 
+					  "location_b": "Location B"
+				}},
+				{ "key": "last_name", "name":  "Last Name", "type":  "string" }
+			]
+		}
+	],
+
+	"items": [
+		{ 
+			"key": "test_thing",
+			"name": "Test Thing",
+			"type": "test_type",
+			"attributes": {
+				"location":  "basement",
+				"last_name": "Last Name"
+			}
+		}
+
+	]
+}

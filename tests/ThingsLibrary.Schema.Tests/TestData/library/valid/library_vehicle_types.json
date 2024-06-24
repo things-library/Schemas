@@ -1,0 +1,150 @@
+{	
+	"key": "test_types",
+	"name": "Test Types",
+	
+	"types": [
+		{
+			"key": "vehicle",
+			"name": "Vehicle",
+			"attributes": [
+				{ "key": "location", "name": "Location", "type": "enum", "values": { 
+					  "kitchen":"Kitchen", 
+					  "basement": "Basement"
+				}},
+				{ "key": "make", "name": "Make", "type": "enum" },
+				{ "key": "model", "name": "Model", "type": "string" },
+				{ "key": "model_year", "name": "Model Year", "type": "string" },
+				{ "key": "color", "name": "Color", "type": "string" },
+				
+				{ "key": "vin", "name": "VIN", "type": "string" },
+				{ "key": "cylinders", "name": "Cylinders", "type": "int" },
+						
+				{ "key": "last_oil_replaced_date", "name": "Last Oil Replaced (Date)", "type": "date" },
+				{ "key": "last_oil_replaced_odometer", "name": "Last Oil Replaced (Miles)", "type": "int" },
+				{ "key": "last_air_filter_replaced_date", "name": "Last Air Filter Replaced (Date)", "type": "date" },
+				{ "key": "last_air_filter_replaced_odometer", "name": "Last Air Filter Replaced (Miles)", "type": "int" },
+
+				{ "key": "insurance_company", "name": "Insurance Company", "type": "string" },
+				{ "key": "insurance_policy", "name": "Insurance Policy", "type": "string" },
+				{ "key": "insurance_expires", "name": "Insurance Expires", "type": "date" }				
+			],
+			"attachments": [
+				{ "type": "vehicle_purchase", "name": "Purchase", "description": "", "only_one": true },
+				{ "type": "vehicle_maintenance", "name": "Maintenance", "description": "", "only_one": false },
+				{ "type": "vehicle_maintenance_tires", "name": "Maintenance", "description": "", "only_one": false },				
+				{ "type": "vehicle_driver", "name": "Primary Driver", "description": "", "only_one": true },
+				{ "type": "vehicle_driver", "name": "Secondary Driver", "description": "", "only_one": true }
+			]
+		},
+		{
+			"key": "vehicle_purchase",
+			"name": "Purchase",
+			"attributes": [
+				{ "key": "purchase_date", "name": "Purchase Date", "type": "date" },				
+				{ "key": "vendor_sales_person", "name": "Vendor Sales Person", "type": "string" },
+				{ "key": "vendor", "name": "Vendor", "type": "string" }, 
+
+				{ "key": "total_cost", "name": "Total Cost", "type": "currency"}
+			]
+		},
+		{
+			"key": "vehicle_maintenance",
+			"name": "Vehicle Maintenance",
+			"attributes": [
+				{ "key": "location", "name": "Location", "type": "enum", "values": { 
+					  "kitchen": "Kitchen", 
+					  "basement":"Basement"
+				}},
+				{ "key": "brand", "name": "Brand", "type": "enum" },
+				{ "key": "model", "name": "Model", "type": "string" },
+				{ "key": "serial_number", "name": "Serial Number", "type": "string" },
+				{ "key": "description", "name": "Description", "type": "text" }				
+			]			
+		},
+		{
+			"key": "vehicle_driver",
+			"name":  "Driver",
+			"attributes": [
+				{ "key": "first_name", 	  "name": "First Name", "type": "string" },
+				{ "key": "last_name", 	  "name": "Last Name", "type": "string" },				
+				{ "key": "phone_number",  "name": "Phone Number", "type": "phone" },
+				{ "key": "email_address", "name": "Email Address", "type": "email" }				
+			]		
+		},
+		{
+			"key": "vehicle_battery_replaced",
+			"name": "Battery Replaced",
+			"attributes": [
+				{ "key": "brand", "name": "Brand" },
+				{ "key": "model", "name": "Model" },
+				{ "key": "model_number", "name": "Model Number" },
+				{ "key": "serial_number", "name": "Serial Number" },
+				{ "key": "bci_group_number", "name": "Group Number" },
+				{ "key": "cold_crank_amps", "name": "Cold Crank Amps" },
+				{ "key": "post_location", "name": "Post Location", "values": {
+					  "top": "Top",
+					  "side": "Side"
+				}},
+				{ "key": "weight", "name": "Weight" },				
+				{ "key": "vendor", "name": "Vendor" },
+				{ "key": "total_cost", "name": "Total Cost" }
+			]
+		},
+		{
+			"key": "vehicle_maintenance_tires",
+			"name": "Tires Replaced",
+			"attributes": [
+				{ "key": "brand", "name": "Brand" },
+				{ "key": "model", "name": "Model" },
+				{ "key": "model_number", "name": "Model Number" },
+				{ "key": "odometer", "name": "Odometer" },
+				{ "key": "wheel_torque", "name": "Wheel Torque" },
+				{ "key": "air_pressure_front", "name": "Air Pressure Front" },
+				{ "key": "air_pressure_rear", "name": "Air Pressure Rear" },
+				{ "key": "warranty", "name": "Warranty" },
+				{ "key": "warranty_end_odometer", "name": "Warranty End Odometer" },
+				
+				{ "key": "vendor", "name": "Vendor" },
+				{ "key": "installer", "name": "Installer" },
+				{ "key": "per_tire_cost", "name": "Per Tire Cost" },
+				{ "key": "total_cost", "name": "Total Cost" }
+			]
+		},
+		{
+			"key": "vehicle_damage_report",
+			"name": "Damage Report",	
+			"attributes": [
+				{ "key": "incident_date", "name": "Incident Date", "type": "date_time" }, 
+				{ "key": "report_date", "name": "Report Date", "type": "date_time" }, 
+				
+				{ "key": "odometer", "name": "Odometer", "type": "int" }, 
+				{ "key": "injury_occured", "name": "Injury Occured", "type": "boolean" }, 
+				{ "key": "injuries", "name": "Injuries", "type": "text" }, 
+				{ "key": "map_location", "name": "Map Location", "type": "string" }, 
+				
+				{ "key": "description", "name": "Description", "type": "text" }, 
+				{ "key": "vehicle_damage", "name": "Vehicle Damage", "type": "text" }, 
+				{ "key": "non_vehicle_damage", "name": "Non-Vehicle Damage", "type": "text" }, 
+				{ "key": "witnesses", "name": "Witnesses", "type": "text" }, 
+				{ "key": "weather_conditions", "name": "Weather Conditions", "type": "string" },
+				
+				{ "key": "approx_repair_cost", "name": "Estimated Repair Cost", "type": "currency" }, 
+				{ "key": "total_cost", "name": "Total Cost", "type": "currency" } 
+			],
+			"attachments": [
+				{
+					"key": "vehicle_driver_details",
+					"name": "Driver Details",
+					"type": "vehicle_driver",
+					"required": true,
+					"one_only": true					
+				},
+				{
+					"key": "vehicle_driver_details",
+					"name": "Other Driver Details",
+					"type": "vehicle_driver"					
+				}
+			]
+		}
+	]	
+}

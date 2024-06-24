@@ -40,7 +40,13 @@
                     "type": "object",
                     "title": "Attributes",
                     "additionalProperties": {
-                        "type": "string"
+                        "anyOf": [
+                            { "type": "string" },
+                            {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
+                        ]
                     }
                 },
 
@@ -48,8 +54,7 @@
                     "type": "array",
                     "title": "Attachments",
                     "items": {
-                        "$ref": "#/$defs/item"
-                        "$ref": "#/$defs/item"
+                        "$ref": "#/$defs/item"                        
                     }
                 },
 

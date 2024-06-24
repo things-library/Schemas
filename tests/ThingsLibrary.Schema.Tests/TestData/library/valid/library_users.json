@@ -1,0 +1,64 @@
+{	
+	"key": "system_users",
+	"name": "System Users",
+	
+	"types": [		
+		{ 
+			"key": "person",            			
+            "name": "Person",
+            "attributes": [
+				{ "key": "given_name", "name": "First Name", "type": "string", "weight": 9 }, 
+				{ "key": "family_name", "name": "Last Name", "type": "string", "weight": 8 }, 
+				{ "key": "email", "name": "Email Address", "type": "email", "required": true, "weight": 7 }, 
+				{ "key": "phone", "name": "Phone Number", "type": "phone", "weight": 6 }, 
+				{ "key": "birth_date", "name": "Birth Date", "type": "date", "weight": 5 }
+            ]
+		}
+	],
+
+	"items": [
+		{ 
+			"key": "sgamgee_shire_com",				
+			"name": "sgamgee@shire.com",
+			"type": "person",
+			"attributes": {
+				"given_name": "Sam",
+				"family_name": "Gamgee",
+				"email": "sgamgee@shire.com",
+				"phone": "515-555-5827"
+			}			
+		},
+		{ 
+			"key": "ohunter_shire_org",				
+			"name": "ohunter@shire.org",
+			"type": "person",
+			"attributes": {
+				"given_name": "Orc",
+				"family_name": "Hunter",
+				"email": "ohunter@shire.org",
+				"phone": "515-555-2712"
+			}
+		}, 
+		{
+			"key": "fbaggins_shire_org",					
+			"name": "fbaggins@shire.org",
+			"type": "person",
+			"attributes": {
+				"given_name": "Frodo",
+				"family_name": "Baggins",
+				"email": "fbaggins@shire.org",
+				"phone": "515-555-0721"
+			}
+		},
+		{ 
+			"key": "ggray_shire_org",				
+			"name": "ggray@shire.org",
+			"type": "person",
+			"attributes": {
+				"given_name": "Gandalf",
+				"family_name": "Gray",
+				"email": "ggray@shire.org"
+			}
+		}
+	]
+}

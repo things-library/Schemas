@@ -1,4 +1,4 @@
-{
+ {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://schema.thingslibrary.io/1.0/library.json",
     "$comment": "Libraries hold item types and items that have a type.",
@@ -201,7 +201,7 @@
             "required": [ "key", "name", "type" ]
         },
 
-        "item": {
+        "library-item": {
             "type": "object",
             "properties": {
                 "key": {
@@ -238,7 +238,13 @@
                     "title": "Attributes",
                     "patternProperties": {
                         "^[a-z0-9_]+$": {
-                            "type": "string"
+                            "anyOf": [
+                                { "type": "string" },
+                                {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                }
+                            ]
                         }
                     },
                     "additionalProperties": false
@@ -248,7 +254,7 @@
                     "type": "array",
                     "title": "Attachments",
                     "items": {
-                        "$ref": "#/$defs/item"
+                        "$ref": "#/$defs/library-item"
                     }
                 },
 
@@ -264,7 +270,7 @@
         },
 
         "library": {
-            
+
             "type": "object",
             "properties": {
                 "key": {
@@ -292,9 +298,9 @@
 
                 "items": {
                     "type": "array",
-                    "title": "Things",
+                    "title": "Items",
                     "items": {
-                        "$ref": "#/$defs/item"
+                        "$ref": "#/$defs/library-item"
                     }
                 },
 
@@ -306,7 +312,7 @@
                     }
                 }
             },
-            "required": [ "items" ]
+            "required": [ "types", "items" ]
         }
     },
 
