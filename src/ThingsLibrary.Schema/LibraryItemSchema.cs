@@ -4,15 +4,15 @@
     /// Iten
     /// </summary>
     [DebuggerDisplay("{Name} (Key: {Key}, Type: {Type})")]
-    public class ItemSchema : Base.SchemaBase
+    public class LibraryItemSchema : Base.SchemaBase
     {        
         /// <summary>
         /// Resource Key
         /// </summary>  
         [JsonPropertyName("key")]
-        [Display(Name = "Key"), StringLength(50, MinimumLength = 2)]
+        [Display(Name = "Key"), StringLength(50, MinimumLength = 2), Required]
         [RegularExpression(Base.SchemaBase.RootKeyPattern, ErrorMessage = Base.SchemaBase.RootKeyPatternDescription)]
-        public string? Key { get; set; }
+        public string Key { get; set; } = string.Empty;
 
         /// <summary>
         /// Name
@@ -46,15 +46,15 @@
         /// <summary>
         /// Attachments
         /// </summary>
-        [ValidateObject<ItemSchema>]
+        [ValidateObject<LibraryItemSchema>]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public List<ItemSchema> Attachments { get; set; } = new();
+        public List<LibraryItemSchema> Attachments { get; set; } = new();
 
         
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemSchema()
+        public LibraryItemSchema()
         {
             //nothing
         }

@@ -11,7 +11,7 @@
         /// </summary>  
         [JsonPropertyName("key")]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 2), Required]
-        [RegularExpression("^[a-z0-9_]*$", ErrorMessage = "Invalid Characters.  Please only use lowercase letters, numeric, and underscores.")]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>

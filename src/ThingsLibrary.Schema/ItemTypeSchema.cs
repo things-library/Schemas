@@ -8,11 +8,10 @@
     {        
         /// <summary>
         /// Library Unique Key
-        /// </summary>
-        /// <remarks>(Pattern: {library_key}/{item_type_key}</remarks>
+        /// </summary>        
         [JsonPropertyName("key")]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 2), Required]
-        [RegularExpression("^[a-z0-9_]*$", ErrorMessage = "Invalid Characters.  Please only use lowercase letters, numeric, and underscores.")]
+        [RegularExpression(Base.SchemaBase.RootKeyPattern, ErrorMessage = Base.SchemaBase.RootKeyPatternDescription)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
@@ -70,9 +69,11 @@
         /// Constructor
         /// </summary>
         /// <param name="key">Key</param>
-        public ItemTypeSchema(string key)
+        /// <param name="name">Name</param>
+        public ItemTypeSchema(string key, string name)
         {
-            Key = key;
+            this.Key = key;
+            this.Name = name;
         }
     }
 }

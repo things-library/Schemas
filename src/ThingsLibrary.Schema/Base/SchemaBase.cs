@@ -74,30 +74,5 @@ namespace ThingsLibrary.Schema.Base
         /// </summary>
         [JsonPropertyName("metadata"), JsonIgnoreEmptyCollection]
         public Dictionary<string, string> Metadata { get; set; } = new();
-
-
-        ///// <summary>
-        ///// Get Schema Version
-        ///// </summary>
-        ///// <param name="schemaUrl"></param>
-        ///// <returns></returns>
-        //public static Version GetVersion(JsonDocument json)
-        //{
-        //    Version? version = null;
-
-        //    Log.Warning("Falling back to $schema for version number.");
-        //    var schemaUrl = json.GetProperty<Uri>("$schema");
-        //    if (schemaUrl != null)
-        //    {
-
-        //        var segments = schemaUrl.AbsolutePath.Split('/');
-        //        if (segments.Length >= 2)
-        //        {
-        //            Version.TryParse(segments[segments.Length - 2], out version);
-        //        }
-        //    }
-
-        //    return version ?? new Version(0, 0, 0);
-        //}
     }
 }
