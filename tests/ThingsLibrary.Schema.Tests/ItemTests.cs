@@ -1,8 +1,3 @@
-using System.Text.Json;
-using Json.Schema;
-
-using ThingsLibrary.Schema.Base;
-
 namespace ThingsLibrary.Schema.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
@@ -39,14 +34,23 @@ namespace ThingsLibrary.Schema.Tests
 
 
         [TestMethod]
+        [DataRow("valid/attribute_value.json", true)]
+        [DataRow("valid/attribute_values.json", true)]
         [DataRow("valid/children.json", true)]
         [DataRow("valid/minimal.json", true)]
+        [DataRow("valid/name_max.json", true)]
+        [DataRow("valid/name_min.json", true)]
         [DataRow("valid/simple.json", true)]
-        [DataRow("bad/attribute_value.json", false)]
+        [DataRow("valid/type_max.json", true)]
+        [DataRow("valid/type_min.json", true)]
+        [DataRow("bad/attribute_value_1.json", false)]
+        [DataRow("bad/attribute_value_2.json", false)]
         [DataRow("bad/missing_name.json", false)]
         [DataRow("bad/missing_type.json", false)]
-        [DataRow("bad/name.json", false)]
-        [DataRow("bad/type.json", false)]
+        [DataRow("bad/name_max.json", false)]
+        [DataRow("bad/name_min.json", false)]
+        [DataRow("bad/type_max.json", false)]
+        [DataRow("bad/type_min.json", false)]
         public void Validate(string fileName, bool isValid)
         {
             var schema = Base.TestBase.EvaluationOptions.SchemaRegistry.Get(ItemSchemaUrl) as JsonSchema;
@@ -59,37 +63,44 @@ namespace ThingsLibrary.Schema.Tests
             var doc = JsonDocument.Parse(json);
 
             var results = schema.Evaluate(doc, Base.TestBase.EvaluationOptions);
-            Assert.AreEqual(isValid, results.IsValid);
+            if (Debugger.IsAttached && isValid && !results.IsValid) { this.DebugLogResults(results, fileName); }
 
-            var item = doc.Deserialize<ItemSchema>(SchemaBase.JsonSerializerOptions);
-            Assert.IsNotNull(item);
+            Assert.AreEqual(isValid, results.IsValid);
         }
 
-        //[TestMethod]
-        //[DataRow("valid/children.json", true)]
-        //[DataRow("valid/minimal.json", true)]
-        //[DataRow("valid/simple.json", true)]
-        //[DataRow("bad/attribute_value.json", false)]
-        //[DataRow("bad/missing_name.json", false)]
-        //[DataRow("bad/missing_type.json", false)]
-        //[DataRow("bad/name.json", false)]
-        //[DataRow("bad/type.json", false)]
-        //public void ValidateObjects(string fileName, bool isValid)
-        //{
-        //    var schema = Base.TestBase.EvaluationOptions.SchemaRegistry.Get(ItemSchemaUrl) as JsonSchema;
-        //    Assert.IsNotNull(schema);
+        [TestMethod]
+        [DataRow("valid/children.json", true)]
+        [DataRow("valid/minimal.json", true)]
+        [DataRow("valid/name_max.json", true)]
+        [DataRow("valid/name_min.json", true)]
+        [DataRow("valid/simple.json", true)]
+        [DataRow("valid/type_max.json", true)]
+        [DataRow("valid/type_min.json", true)]
+        [DataRow("bad/missing_name.json", false)]
+        [DataRow("bad/missing_type.json", false)]
+        [DataRow("bad/type_max.json", false)]
+        [DataRow("bad/type_min.json", false)]
+        public void ValidateObjects(string fileName, bool isValid)
+        {
+            var filePath = $"TestData/items/{fileName}";
+            Assert.IsTrue(File.Exists(filePath));
 
-        //    var filePath = $"TestData/items/{fileName}";
-        //    Assert.IsTrue(File.Exists(filePath));
+            var json = File.ReadAllText(filePath);
+            var doc = JsonDocument.Parse(json);
 
-        //    var json = File.ReadAllText(filePath);
-        //    var doc = JsonDocument.Parse(json);
+            var item = doc.Deserialize<ItemBasicSchema>(SchemaBase.JsonSerializerOptions);
+            Assert.IsNotNull(item);
 
-        //    var results = schema.Evaluate(doc, Base.TestBase.EvaluationOptions);
-        //    Assert.AreEqual(isValid, results.IsValid);
-
-        //    var item = doc.Deserialize<ItemSchema>(SchemaBase.JsonSerializerOptions);
-        //    Assert.IsNotNull(item);
-        //}
+            var validationErrors = item.Validate();
+            if (isValid)
+            {
+                // if we expect valid then there would be not validation errors
+                Assert.IsFalse(validationErrors.Any());
+            }
+            else
+            {
+                Assert.IsTrue(validationErrors.Any());
+            }
+        }
     }
 }

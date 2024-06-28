@@ -1,0 +1,83 @@
+{
+	"key": "test_library",
+	"name": "Test Library",
+
+	"types": {
+		"node": {
+			"name": "Test Node"
+		}
+	},
+
+	"items": {
+		"root": {
+			"name": "Root",
+			"type": "node",
+			"attachments": {
+				"1_1": {
+					"name": "1/1",
+					"type": "node",
+					"attachments": {
+						"1_1_1": {
+							"name": "1/1/1",
+							"type": "node",
+							"attachments": {
+								"1_1_1_1": {
+									"name": "1/1/1/1",
+									"type": "node",
+									"attachments": {
+										"1_1_1_1_1": {
+											"name": "1/1/1/1/1",
+											"type": "node"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"1_2": {
+					"name": "1/2",
+					"type": "node",
+					"attachments": {
+						"1_2_1": {
+							"name": "1/2/1",
+							"type": "node",
+							"attachments": {
+								"1_2_1_1": {
+									"name": "1/2/1/1",
+									"type": "node",
+									"attachments": {
+										"1_2_1_1_1": {
+											"name": "1/2/1/1/1",
+											"type": "node"
+										}
+									}
+								},
+								"1_2_2": {
+									"name": "1/2/2",
+									"type": "node",
+									"attachments": {
+										"1_2_2_1": {
+											"name": "1/2/2/1",
+											"type": "node"
+										}
+									}
+								},
+								"1_2_3": {
+									"name": "1/2/3",
+									"type": "node",
+									"attachments": {
+										"1_2_3_1": {
+											"name": "1/2/3/1",
+											"type": "node"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

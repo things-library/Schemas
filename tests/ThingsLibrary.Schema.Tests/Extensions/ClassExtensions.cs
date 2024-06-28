@@ -14,7 +14,7 @@ namespace ThingsLibrary.Schema.Tests.Extensions
         /// <param name="flatten">Flattens all CompositeValidationResults into a single listing</param>
         /// <returns></returns>
         /// <remarks>This method evaluates each ValidationAttribute instance that is attached to the object type. It also checks whether each property that is marked with RequiredAttribute is provided. It does not recursively validate the property values of the object.</remarks>
-        public static ICollection<ValidationResult> ToValidationResults(this object instance, bool flatten = false)
+        public static ICollection<ValidationResult> Validate(this object instance, bool flatten = false)
         {
             var results = new List<ValidationResult>();
 

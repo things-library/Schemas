@@ -10,9 +10,9 @@
                 "key": {
                     "type": "string",
                     "title": "Key",
-                    "minLength": 2,
+                    "minLength": 1,
                     "maxLength": 50,
-                    "pattern": "^[a-z0-9_\\-]*$"
+                    "pattern": "^[a-z0-9_-]{1,50}$"
                 },
 
                 "date": {
@@ -24,22 +24,24 @@
                 "name": {
                     "type": "string",
                     "title": "Name",
-                    "minLength": 2,
+                    "minLength": 1,
                     "maxLength": 50
                 },
 
                 "type": {
                     "type": "string",
                     "title": "Type",
-                    "minLength": 2,
-                    "maxLength": 50,
-                    "pattern": "^[a-z0-9_]*$"
+                    "minLength": 1,
+                    "maxLength": 50
                 },
 
                 "attributes": {
                     "type": "object",
                     "title": "Attributes",
                     "additionalProperties": {
+                        "additionalProperties": {
+                            "type": "string"
+                        },
                         "anyOf": [
                             { "type": "string" },
                             {
@@ -54,7 +56,7 @@
                     "type": "array",
                     "title": "Attachments",
                     "items": {
-                        "$ref": "#/$defs/item"                        
+                        "$ref": "#/$defs/item"
                     }
                 },
 

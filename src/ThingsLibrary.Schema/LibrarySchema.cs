@@ -1,18 +1,26 @@
-﻿namespace ThingsLibrary.Schema
+﻿using ThingsLibrary.Schema.Base;
+
+namespace ThingsLibrary.Schema
 {
     /// <summary>
     /// Library
     /// </summary>
     [DebuggerDisplay("{Name} ({Key})")]
-    public class LibrarySchema : Base.SchemaBase
-    {        
+    public class LibrarySchema : Base.SchemaBase, IJsonOnDeserialized
+    {
+        /// <summary>
+        /// Json Schema Definition
+        /// </summary>
+        [JsonPropertyName("$schema"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public Uri SchemaUrl { get; set; } = new Uri($"{SchemaBase.SchemaBaseUrl}/library.json");
+                
         /// <summary>
         /// Unique Key
         /// </summary> 
         /// <remarks>This is used to align records to know if it is new or update to a existing library</remarks>
         [JsonPropertyName("key"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        [Key, Display(Name = "Key"), StringLength(50, MinimumLength = 5)]
-        [RegularExpression(Base.SchemaBase.RootKeyPattern, ErrorMessage = Base.SchemaBase.RootKeyPatternDescription)]
+        [Key, Display(Name = "Key"), StringLength(50, MinimumLength = 1)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string? Key { get; set; }
 
         /// <summary>
@@ -27,7 +35,7 @@
         /// </summary>
         [ValidateObject<ItemTypeSchema>]
         [JsonPropertyName("types"), Required]
-        public List<ItemTypeSchema> ItemTypes { get; set; } = new();
+        public Dictionary<string, ItemTypeSchema> ItemTypes { get; set; } = new();
 
         /// <summary>
         /// Items
@@ -35,8 +43,36 @@
         /// <remarks>This is required as a empty isn't a library of anything and this helps verify schema types if $schema is missing</remarks>
         [ValidateObject<ItemSchema>, Required]
         [JsonPropertyName("items")]
-        public List<LibraryItemSchema> Items { get; set; } = new();
+        public Dictionary<string, ItemSchema> Items { get; set; } = new();
 
+        #region --- Initialization ---
+
+        /// <summary>
+        /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
+        /// </summary>
+        /// <remarks>Normally only needed to be called after deserialization</remarks>
+        public void Init()
+        {
+            // fix all of the reference variables
+            foreach(var pair in this.ItemTypes)
+            {
+                pair.Value.Key = pair.Key;
+                pair.Value.Init(this);                
+            } 
+            
+            foreach(var pair in this.Items)
+            {
+                pair.Value.Key = pair.Key;
+                pair.Value.Init(this);
+            }
+        }
+
+        public void OnDeserialized()
+        {
+            this.Init();
+        }
+
+        #endregion
 
         /// <summary>
         /// Constructor

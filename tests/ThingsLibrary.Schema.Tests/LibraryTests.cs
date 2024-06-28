@@ -1,8 +1,3 @@
-using Json.Schema;
-using System.Text.Json;
-using ThingsLibrary.Schema.Base;
-using ThingsLibrary.Schema.Tests.Extensions;
-
 namespace ThingsLibrary.Schema.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
@@ -25,13 +20,19 @@ namespace ThingsLibrary.Schema.Tests
         /// <param name="fileName">Test Json Document</param>
         /// <param name="isValid">Expected Validation Result</param>
         [TestMethod]
+        [DataRow("valid/basic.json", true)]
         [DataRow("valid/minimal.json", true)]
+        [DataRow("valid/tree.json", true)]
+        [DataRow("bad/tree_node_name.json", false)]
+        [DataRow("bad/tree_node_type.json", false)]        
+        [DataRow("bad/item_key_pattern1.json", false)]
+        [DataRow("bad/item_key_pattern2.json", false)]
+        [DataRow("bad/item_key_pattern3.json", false)]        
+        [DataRow("bad/type_key_pattern1.json", false)]
+        [DataRow("bad/type_key_pattern2.json", false)]
+        [DataRow("bad/type_key_pattern3.json", false)]        
         [DataRow("bad/empty.json", false)]
         [DataRow("bad/items_missing.json", false)]
-        [DataRow("bad/types_key_length.json", false)]
-        [DataRow("bad/types_key_pattern1.json", false)]
-        [DataRow("bad/types_key_pattern2.json", false)]
-        [DataRow("bad/types_key_pattern3.json", false)]
         [DataRow("bad/types_missing.json", false)]
         public void Validate(string fileName, bool isValid)
         {
@@ -47,6 +48,8 @@ namespace ThingsLibrary.Schema.Tests
 
             // EVALUATE USING JSON SCHEMA
             var results = schema.Evaluate(doc, Base.TestBase.EvaluationOptions);
+            if (Debugger.IsAttached && isValid && !results.IsValid) { this.DebugLogResults(results, fileName); }
+
             Assert.AreEqual(isValid, results.IsValid);        
         }
 
@@ -57,11 +60,12 @@ namespace ThingsLibrary.Schema.Tests
         /// <param name="isValid"></param>
         /// <remarks>The lack of something like 'items' and 'types' is not checked as we don't want to always check for nullable objects and instead initialize as a empty collection</remarks>
         [TestMethod]
+        [DataRow("valid/basic.json", true)]
         [DataRow("valid/minimal.json", true)]
-        [DataRow("bad/types_key_length.json", false)]
-        [DataRow("bad/types_key_pattern1.json", false)]
-        [DataRow("bad/types_key_pattern2.json", false)]
-        [DataRow("bad/types_key_pattern3.json", false)]        
+        [DataRow("valid/tree.json", true)]
+        [DataRow("bad/tree_node_name.json", false)]
+        [DataRow("bad/tree_node_type.json", false)]      
+        
         public void ValidateObjects(string fileName, bool isValid)
         {   
             // LOAD TEST JSON DATA
@@ -75,8 +79,10 @@ namespace ThingsLibrary.Schema.Tests
             var item = doc.Deserialize<LibrarySchema>(SchemaBase.JsonSerializerOptions);
             Assert.IsNotNull(item);
 
-            var validationResults = item.ToValidationResults(false);
-            Assert.AreEqual(isValid, !validationResults.Any());
+            var results = item.Validate(false);
+            if (Debugger.IsAttached) { this.DebugLogResults(results, fileName); }
+
+            Assert.AreEqual(isValid, !results.Any());
         }
     }
 }

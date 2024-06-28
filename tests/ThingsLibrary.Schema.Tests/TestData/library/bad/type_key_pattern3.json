@@ -1,0 +1,8 @@
+{
+	"types": {
+		"test-key": {
+			"name": "Test Type"
+		}	
+	},
+	"items": []
+}

@@ -4,9 +4,9 @@ namespace ThingsLibrary.Schema.Validators
 {
     public class ValidateObjectAttribute<T> : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object? instance, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
-            if (instance == null)
+            if (value == null && validationContext.MemberName != null)
             {
                 var propertyInfo = validationContext.ObjectType.GetProperty(validationContext.MemberName);
 
@@ -22,33 +22,22 @@ namespace ThingsLibrary.Schema.Validators
                     );
                 }
             }
-
-            var subResults = new List<CompositeValidationResult>();
-
+                        
             var compositeResult = new CompositeValidationResult($"Validation failed!",
                 new List<string> { $"{validationContext.MemberName}" }
             );
 
-            //if (instance is IDictionary<string, T> dictionary)
-            //{
-            //    compositeResult.Add(this.ValidateDictionary(dictionary as IDictionary));
-            //}
-            //else if (instance is IList<T> items)
-            //{
-            //    compositeResult.Add(this.ValidateList(items as IList));                
-            //}
-            //else
-            if (instance is IList list)
+            if (value is IList list)
             {
                 compositeResult.Add(ValidateList(list));
             }
-            else if (instance is IDictionary dictionary)
+            else if (value is IDictionary dictionary)
             {
-                compositeResult.Add(ValidateDictionary(dictionary as IDictionary));
+                compositeResult.Add(ValidateDictionary(dictionary));
             }
-            else
+            else if(value != null)
             {
-                compositeResult.Add(Validate(instance));
+                compositeResult.Add(Validate(value));
             }
 
             // if we have validation results then we aren't successful

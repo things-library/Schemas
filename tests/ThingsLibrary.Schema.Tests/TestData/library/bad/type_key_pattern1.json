@@ -1,0 +1,8 @@
+{
+	"types": {
+		"Invalid": {
+			"name": "Test Type"
+		},
+		"items": []
+	}
+}

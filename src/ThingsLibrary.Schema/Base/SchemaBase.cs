@@ -6,7 +6,7 @@ namespace ThingsLibrary.Schema.Base
     /// </summary>
     public class SchemaBase
     {
-        #region --- STATIC ---
+        #region --- Static ---
 
         // Should be sent with mime type: "application/schema+json"
 
@@ -16,35 +16,26 @@ namespace ThingsLibrary.Schema.Base
         public const string CurrentVersion = "1.0";
 
         /// <summary>
+        /// Current Version
+        /// </summary>
+        public static Version SchemaVersion { get; } = new Version(CurrentVersion);
+
+        /// <summary>
         /// Json Schema Definition
         /// </summary>
-        public static string BaseUrl { get; } = $"https://schema.thingslibrary.io/{CurrentVersion}";
+        public static string SchemaBaseUrl { get; } = $"https://schema.thingslibrary.io/{CurrentVersion}";
 
         /// <summary>
         /// Pattern to use for all non-root library keys
         /// </summary>
-        public const string KeyPattern = "^[a-z0-9_]*$";
+        public const string KeyPattern = "^[a-z0-9_-]{1,50}$";
 
         /// <summary>
         /// Key pattern description
         /// </summary>
-        public const string KeyPatternDescription = "Invalid Characters.  Please only use lowercase letters, numeric, and underscores.";
-
-        /// <summary>
-        /// Pattern to use for library and item keys
-        /// </summary>
-        public const string RootKeyPattern = "^[a-z0-9_\\-]*$";
-
-        /// <summary>
-        /// Description of the pattern for users
-        /// </summary>
-        public const string RootKeyPatternDescription = "Invalid Characters.  Please only use lowercase letters, numeric, underscores and hyphens.";
-
-        /// <summary>
-        /// Current Version
-        /// </summary>
-        public static Version Version { get; } = new Version(CurrentVersion);
-
+        public const string KeyPatternDescription = "Invalid Characters.  Please only use lowercase letters, numeric, underscores and hyphens.";
+                
+ 
         /// <summary>
         /// Standard json serialization settings for our libraray objects
         /// </summary>        
@@ -63,16 +54,18 @@ namespace ThingsLibrary.Schema.Base
 
         #endregion
 
-        /// <summary>
-        /// Json Schema Definition
-        /// </summary>
-        [JsonPropertyName("$schema"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Uri? SchemaUrl { get; set; }
 
         /// <summary>
         /// Generic metadata which is a simple key-value dictionary
         /// </summary>
         [JsonPropertyName("metadata"), JsonIgnoreEmptyCollection]
         public Dictionary<string, string> Metadata { get; set; } = new();
+
+
+        /// <summary>
+        /// Revision Number (1 = first)
+        /// </summary>
+        [JsonPropertyName("version"), DefaultValue(1)]
+        public int Version { get; set; } = 1;
     }
 }

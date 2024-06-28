@@ -1,24 +1,22 @@
 {
-	"$schema": "https://schema.thingslibrary.io/1.0/item.json",
-
 	"name": "Root",
-	"type": "node",
+	"type": "Tree Node",
 	"attachments": [
 		{
 			"name": "1/1",
-			"type": "node",
+			"type": "Tree Node",
 			"attachments": [
 				{
 					"name": "1/1/1",
-					"type": "node",
+					"type": "Tree Node",
 					"attachments": [
 						{
 							"name": "1/1/1/1",
-							"type": "node",
+							"type": "Tree Node",
 							"attachments": [
 								{
 									"name": "1/1/1/1/1",
-									"type": "node"
+									"type": "Tree Node"
 								}
 							]
 						}
@@ -28,39 +26,39 @@
 		},
 		{
 			"name": "1/2",
-			"type": "node",
+			"type": "Tree Node",
 			"attachments": [
 				{
 					"name": "1/2/1",
-					"type": "node",
+					"type": "Tree Node",
 					"attachments": [
 						{
 							"name": "1/2/1",
-							"type": "node",
+							"type": "Tree Node",
 							"attachments": [
 								{
 									"name": "1/2/1/1",
-									"type": "node"
+									"type": "Tree Node"
 								}
 							]
 						},
 						{
 							"name": "1/2/2",
-							"type": "node",
+							"type": "Tree Node",
 							"attachments": [
 								{
 									"name": "1/2/2/1",
-									"type": "node"
+									"type": "Tree Node"
 								}
 							]
 						},
 						{
 							"name": "1/2/3",
-							"type": "node",
+							"type": "Tree Node",
 							"attachments": [
 								{
 									"name": "1/2/3/1",
-									"type": "node"
+									"type": "Tree Node"
 								}
 							]
 						}

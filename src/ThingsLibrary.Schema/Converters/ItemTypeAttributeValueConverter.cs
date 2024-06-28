@@ -3,7 +3,7 @@
     /// <summary>
     /// Converts List of item type attributes into a dictionary
     /// </summary>
-    public class AttributeValueConverter : JsonConverter<Dictionary<string, ItemTypeAttributeValueSchema>>
+    public class ItemTypeAttributeValueConverter : JsonConverter<Dictionary<string, ItemTypeAttributeValueSchema>>
     {
         public override Dictionary<string, ItemTypeAttributeValueSchema> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

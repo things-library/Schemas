@@ -1,19 +1,20 @@
-{	
+{
 	"key": "test_library",
 	"name": "Test Library",
-
-	"types": [
-		{
-			"key": "test_type",
+	
+	"types": {
+		"test_type": {
 			"name": "Test Type",
-			"attributes": [
-				{
-					"key": "brand",
-					"name": "Color",
+			"attributes": {
+				"brand": {
+					"name": "Brand",
 					"type": "string"
 				},
-				{
-					"key": "color",
+				"model": {
+					"name": "Model",
+					"type": "string"
+				},
+				"color": {
 					"name": "Color",
 					"type": "enum",
 					"values": {
@@ -22,20 +23,19 @@
 						"blue": "Blue"
 					}
 				}
-			]
+			}
 		}
-	],
+	},
 
-	"items": [
-		{
-			"key": "test_item",
+	"items": {
+		"test_item": {			
 			"name": "Test Item",
 			"type": "test_type",
 			"attributes": {
-				"brand": "Test",				
-				"color": [ "Black", "Red", "Blue" ]
+				"brand": "Test",
+				"color": [ "red", "blue" ],
+				"model": ""
 			}
 		}
-
-	]
+	}
 }

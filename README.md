@@ -79,6 +79,26 @@ A more typical item structure would look like this:
 }
 ```
 
+## HTTP Headers
+
+### Request Headers:
+
+| Key | Value | Description |
+| -- | -- | -- |
+| Accept | application/schema+json | Specifies what is the acceptable content-type for the requesting agent. |
+| Accept-Schema | {{URL}} | Specifies the acceptable json schema |
+
+### Response Headers:
+
+| Key | Value | Description |
+| -- | -- | -- |
+| Schema | {{Url}} | Specifies the schema which returned content follows |
+| Cache-Control | public, max-age=31536000 |
+| Last-Modified | {{date-time}} | |
+| ETag | {{string}} | |
+| Content-Type | application/schema+json | |
+
+
 
 # Latest Schema Document
 

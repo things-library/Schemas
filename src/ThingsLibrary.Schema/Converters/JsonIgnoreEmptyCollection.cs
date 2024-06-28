@@ -28,7 +28,7 @@
             foreach (JsonPropertyInfo propertyInfo in jsonTypeInfo.Properties)
             {
                 // property MUST have a JsonIgnoreEmptyCollection attribute declaration
-                if (propertyInfo.AttributeProvider.GetCustomAttributes(typeof(JsonIgnoreEmptyCollectionAttribute), true).Length == 0)
+                if (propertyInfo.AttributeProvider?.GetCustomAttributes(typeof(JsonIgnoreEmptyCollectionAttribute), true).Length == 0)
                 {
                     continue;
                 }
@@ -44,7 +44,7 @@
                         if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == collectionType)
                         {
                             var countProperty = interfaceType.GetProperty("Count");
-                            if (countProperty != null && (int)countProperty.GetValue(prop) == 0)
+                            if (countProperty != null && (int)countProperty.GetValue(prop)! == 0)   //if the property exist then it is a int
                             {
                                 return false;
                             }

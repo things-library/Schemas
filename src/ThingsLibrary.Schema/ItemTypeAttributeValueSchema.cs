@@ -9,8 +9,8 @@
         /// <summary>
         /// Attribute Unique Key
         /// </summary>  
-        [JsonPropertyName("key")]
-        [Display(Name = "Key"), StringLength(50, MinimumLength = 2), Required]
+        [JsonIgnore]
+        [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
         [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string Key { get; set; } = string.Empty;
 
@@ -18,8 +18,30 @@
         /// Attribute Name
         /// </summary>
         [JsonPropertyName("name")]
-        [Display(Name = "Name"), StringLength(50, MinimumLength = 2), Required]
+        [Display(Name = "Name"), StringLength(50, MinimumLength = 1), Required]
         public string Name { get; set; } = string.Empty;
+
+
+        #region --- Extended ---
+
+        public ItemTypeAttributeSchema? Attribute { get; set; }
+
+        #endregion
+
+        #region --- Initialization ---
+
+        /// <summary>
+        /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
+        /// </summary>
+        /// <remarks>Normally only needed to be called after deserialization</remarks>
+        public void Init(ItemTypeAttributeSchema parent)
+        {
+            this.Attribute = parent;            
+        }
+
+        #endregion
+
+        
 
         /// <summary>
         /// Constructor

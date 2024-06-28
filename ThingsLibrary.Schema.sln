@@ -13,11 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schemas", "Schemas", "{1E49
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.0", "1.0", "{52BAFC07-0756-49E4-B8B6-7527C151E370}"
 	ProjectSection(SolutionItems) = preProject
-		1.0\item-type-attachment.json = 1.0\item-type-attachment.json
-		1.0\item-type-attribute.json = 1.0\item-type-attribute.json
-		1.0\item-type.json = 1.0\item-type.json
 		1.0\item.json = 1.0\item.json
-		1.0\library-item.json = 1.0\library-item.json
 		1.0\library.json = 1.0\library.json
 	EndProjectSection
 EndProject
@@ -25,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{657544
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\action_build_deploy.yml = .github\workflows\action_build_deploy.yml
 		.github\workflows\action_pull_requests.yml = .github\workflows\action_pull_requests.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
