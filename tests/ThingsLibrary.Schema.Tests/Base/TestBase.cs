@@ -1,7 +1,4 @@
-﻿using Json.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ThingsLibrary.Schema.Tests.Base
 {
@@ -22,22 +19,18 @@ namespace ThingsLibrary.Schema.Tests.Base
         {
             // https://docs.json-everything.net/schema/examples/external-schemas/
 
-            var schemaFolderPath = "TestData/schemas";
+            var schemaFolderPath = "Schemas/1.0";
             Assert.IsTrue(Directory.Exists(schemaFolderPath));
 
-            Console.WriteLine("Loading Schemas...");
+            Console.WriteLine("Loading Item Schemas...");
+            var schemaDoc = JsonSchema.FromFile("Schemas/1.0/item.json");
+            SchemaRegistry.Global.Register(schemaDoc);
+            TestBase.ItemSchemaDoc = schemaDoc;
 
-            var filePaths = Directory.GetFiles("TestData/schemas", "*.json");
-            foreach (var filePath in filePaths)
-            {
-                Console.WriteLine($"+ {Path.GetFileName(filePath)}");
-
-                var schema = JsonSchema.FromFile(filePath);
-                SchemaRegistry.Global.Register(schema);
-            }
-
-            TestBase.ItemSchemaDoc = (TestBase.EvaluationOptions.SchemaRegistry.Get(ItemSchemaUrl) as JsonSchema)!;
-            TestBase.LibrarySchemaDoc = (TestBase.EvaluationOptions.SchemaRegistry.Get(LibrarySchemaUrl) as JsonSchema)!;
+            Console.WriteLine("Loading Item Schemas...");
+            schemaDoc = JsonSchema.FromFile("Schemas/1.0/library.json");
+            SchemaRegistry.Global.Register(schemaDoc);
+            TestBase.LibrarySchemaDoc = schemaDoc;            
         }
 
         public void DebugLogResults(EvaluationResults? results, string filename)

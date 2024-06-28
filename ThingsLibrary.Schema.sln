@@ -9,14 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Schema", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Schema.Tests", "tests\ThingsLibrary.Schema.Tests\ThingsLibrary.Schema.Tests.csproj", "{F029CE58-D961-4E4C-AAA2-8404BBFA198F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schemas", "Schemas", "{1E494AA8-828C-49C3-B0EA-861B96FA08CD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.0", "1.0", "{52BAFC07-0756-49E4-B8B6-7527C151E370}"
-	ProjectSection(SolutionItems) = preProject
-		1.0\item.json = 1.0\item.json
-		1.0\library.json = 1.0\library.json
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{65754430-9CB2-4618-8195-9FDE4F58E946}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\action_build_deploy.yml = .github\workflows\action_build_deploy.yml
@@ -74,7 +66,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F029CE58-D961-4E4C-AAA2-8404BBFA198F} = {7424733F-426B-41BA-89BE-532A55775D7D}
-		{52BAFC07-0756-49E4-B8B6-7527C151E370} = {1E494AA8-828C-49C3-B0EA-861B96FA08CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {784A0195-CCFA-41EE-A700-E0FAF6511A2E}

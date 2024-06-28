@@ -126,9 +126,5 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-	
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="xcopy /i /e /s /y /f &quot;$(SolutionDir)1.0/*&quot; &quot;$(TargetDir)TestData/schemas&quot;" />
-	</Target>
 
 </Project>

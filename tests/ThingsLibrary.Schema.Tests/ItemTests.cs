@@ -52,17 +52,14 @@ namespace ThingsLibrary.Schema.Tests
         [DataRow("bad/type_max.json", false)]
         [DataRow("bad/type_min.json", false)]
         public void Validate(string fileName, bool isValid)
-        {
-            var schema = Base.TestBase.EvaluationOptions.SchemaRegistry.Get(ItemSchemaUrl) as JsonSchema;
-            Assert.IsNotNull(schema);
-
+        {            
             var filePath = $"TestData/items/{fileName}";
             Assert.IsTrue(File.Exists(filePath));
 
             var json = File.ReadAllText(filePath);
             var doc = JsonDocument.Parse(json);
 
-            var results = schema.Evaluate(doc, Base.TestBase.EvaluationOptions);
+            var results = Base.TestBase.ItemSchemaDoc.Evaluate(doc, Base.TestBase.EvaluationOptions);
             if (Debugger.IsAttached && isValid && !results.IsValid) { this.DebugLogResults(results, fileName); }
 
             Assert.AreEqual(isValid, results.IsValid);

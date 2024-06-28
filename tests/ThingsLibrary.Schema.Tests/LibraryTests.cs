@@ -36,10 +36,7 @@ namespace ThingsLibrary.Schema.Tests
         [DataRow("bad/types_missing.json", false)]
         [DataRow("bad/version.json", false)]
         public void Validate(string fileName, bool isValid)
-        {
-            var schema = Base.TestBase.EvaluationOptions.SchemaRegistry.Get(LibrarySchemaUrl) as JsonSchema;
-            Assert.IsNotNull(schema);
-
+        {            
             // LOAD TEST JSON DATA
             var filePath = $"TestData/library/{fileName}";
             Assert.IsTrue(File.Exists(filePath));
@@ -48,7 +45,7 @@ namespace ThingsLibrary.Schema.Tests
             var doc = JsonDocument.Parse(json);
 
             // EVALUATE USING JSON SCHEMA
-            var results = schema.Evaluate(doc, Base.TestBase.EvaluationOptions);
+            var results = Base.TestBase.LibrarySchemaDoc.Evaluate(doc, Base.TestBase.EvaluationOptions);
             if (Debugger.IsAttached && isValid && !results.IsValid) { this.DebugLogResults(results, fileName); }
 
             Assert.AreEqual(isValid, results.IsValid);        
