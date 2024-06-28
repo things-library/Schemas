@@ -34,6 +34,7 @@ namespace ThingsLibrary.Schema.Tests
         [DataRow("bad/empty.json", false)]
         [DataRow("bad/items_missing.json", false)]
         [DataRow("bad/types_missing.json", false)]
+        [DataRow("bad/version.json", false)]
         public void Validate(string fileName, bool isValid)
         {
             var schema = Base.TestBase.EvaluationOptions.SchemaRegistry.Get(LibrarySchemaUrl) as JsonSchema;
@@ -64,8 +65,8 @@ namespace ThingsLibrary.Schema.Tests
         [DataRow("valid/minimal.json", true)]
         [DataRow("valid/tree.json", true)]
         [DataRow("bad/tree_node_name.json", false)]
-        [DataRow("bad/tree_node_type.json", false)]      
-        
+        [DataRow("bad/tree_node_type.json", false)]
+        [DataRow("bad/version.json", false)]
         public void ValidateObjects(string fileName, bool isValid)
         {   
             // LOAD TEST JSON DATA

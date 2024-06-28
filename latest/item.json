@@ -35,13 +35,17 @@
                     "maxLength": 50
                 },
 
+                "version": {
+                    "type": "integer",
+                    "title": "Version",
+                    "minimum": 1,
+                    "default": 1
+                },
+
                 "attributes": {
                     "type": "object",
                     "title": "Attributes",
                     "additionalProperties": {
-                        "additionalProperties": {
-                            "type": "string"
-                        },
                         "anyOf": [
                             { "type": "string" },
                             {

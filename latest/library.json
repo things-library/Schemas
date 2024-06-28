@@ -13,7 +13,14 @@
                     "minLength": 1,
                     "maxLength": 50
                 },
-                
+
+                "version": {
+                    "type": "integer",
+                    "title": "Version",
+                    "minimum": 1,
+                    "default": 1
+                },
+
                 "attributes": {
                     "type": "object",
                     "title": "Attributes",
@@ -27,7 +34,7 @@
 
                 "attachments": {
                     "type": "object",
-                    "title": "Attachments",                    
+                    "title": "Attachments",
                     "patternProperties": {
                         "^[a-z0-9_-]{1,50}$": {
                             "$ref": "#/$defs/item-type-attachment"
@@ -66,6 +73,13 @@
                     "maxLength": 50
                 },
 
+                "version": {
+                    "type": "integer",
+                    "title": "Version",
+                    "minimum": 1,
+                    "default": 1
+                },
+
                 "metadata": {
                     "type": "object",
                     "title": "Metadata",
@@ -92,6 +106,13 @@
                     "type": "string",
                     "title": "Data Type",
                     "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
+                },
+
+                "version": {
+                    "type": "integer",
+                    "title": "Version",
+                    "minimum": 1,
+                    "default": 1
                 },
 
                 "units": {
@@ -152,6 +173,13 @@
                     "minLength": 1,
                     "maxLength": 50,
                     "pattern": "^[a-z0-9_-]{1,50}$"
+                },
+
+                "version": {
+                    "type": "integer",
+                    "title": "Version",
+                    "minimum": 1,
+                    "default": 1
                 },
 
                 "attributes": {
@@ -215,6 +243,13 @@
                     "title": "Name",
                     "minLength": 1,
                     "maxLength": 50
+                },
+
+                "version": {
+                    "type": "integer",
+                    "title": "Version",
+                    "minimum": 1,
+                    "default": 1
                 },
 
                 "types": {

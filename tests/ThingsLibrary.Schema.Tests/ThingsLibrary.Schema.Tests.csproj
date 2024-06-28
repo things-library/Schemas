@@ -77,6 +77,9 @@
 		<None Update="TestData\items\valid\simple.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
+		<None Update="TestData\library\bad\version.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 	
 	<ItemGroup>		
@@ -125,7 +128,7 @@
 	</ItemGroup>
 	
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="xcopy /i /e /s /y /f &quot;$(SolutionDir)1.0\*&quot; &quot;$(TargetDir)TestData\schemas&quot;" />
+	  <Exec Command="xcopy /i /e /s /y /f &quot;$(SolutionDir)1.0/*&quot; &quot;$(TargetDir)TestData/schemas&quot;" />
 	</Target>
 
 </Project>

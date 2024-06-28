@@ -4,7 +4,7 @@
     /// Attribute
     /// </summary>
     [DebuggerDisplay("{Key}: {Value}")]
-    public class ItemBasicAttributeSchema
+    public class ItemBasicAttributeSchema : Base.SchemaBase
     {        
         /// <summary>
         /// Library Unique Key

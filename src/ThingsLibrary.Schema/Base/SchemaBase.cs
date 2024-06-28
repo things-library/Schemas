@@ -65,7 +65,7 @@ namespace ThingsLibrary.Schema.Base
         /// <summary>
         /// Revision Number (1 = first)
         /// </summary>
-        [JsonPropertyName("version"), DefaultValue(1)]
+        [JsonPropertyName("version"), DefaultValue(1), Range(1, int.MaxValue)]
         public int Version { get; set; } = 1;
     }
 }

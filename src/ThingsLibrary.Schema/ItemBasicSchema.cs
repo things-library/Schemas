@@ -56,13 +56,7 @@ namespace ThingsLibrary.Schema
         [ValidateObject<ItemBasicSchema>]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
         public List<ItemBasicSchema> Attachments { get; set; } = new();
-
-        /// <summary>
-        /// Version (Revision) Number
-        /// </summary>
-        [JsonPropertyName("version"), DefaultValue(1)]
-        public int Version { get; set; } = 1;
-        
+                
         /// <summary>
         /// Constructor
         /// </summary>
