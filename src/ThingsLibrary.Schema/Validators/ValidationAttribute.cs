@@ -2,7 +2,7 @@
 
 namespace ThingsLibrary.Schema.Validators
 {
-    public class ValidateObjectAttribute<T> : ValidationAttribute
+    public class ValidateCollectionItemsAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
@@ -87,34 +87,6 @@ namespace ThingsLibrary.Schema.Validators
             return results;
         }
 
-        //private List<CompositeValidationResult> ValidateList<T>(IList<T> list)
-        //{
-        //    var results = new List<CompositeValidationResult>();
-
-        //    int i = -1; // so our first loop is correct
-        //    foreach (var item in list)
-        //    {
-        //        i++;
-        //        if (item == null) { continue; }
-
-        //        var subResults = new List<ValidationResult>();
-        //        var context = new ValidationContext(item, null, null);
-
-        //        Validator.TryValidateObject(item, context, subResults, true);
-        //        if (!subResults.Any()) { continue; }
-
-        //        var compositeResult = new CompositeValidationResult($"Validation failed!",
-        //            new List<string> { $"[{i}]" }
-        //        );
-
-        //        compositeResult.Add(subResults);
-
-        //        results.Add(compositeResult);
-        //    }
-
-        //    return results;
-        //}
-
         private List<CompositeValidationResult> ValidateDictionary(IDictionary dictionary)
         {
             var results = new List<CompositeValidationResult>();
@@ -142,33 +114,6 @@ namespace ThingsLibrary.Schema.Validators
 
             return results;
         }
-
-        //private List<CompositeValidationResult> ValidateDictionary<T>(IDictionary<string, T> dictionary)
-        //{
-        //    var results = new List<CompositeValidationResult>();
-
-        //    foreach (var keyPair in dictionary)
-        //    {
-        //        if (keyPair.Value == null) { continue; }
-
-        //        var subResults = new List<ValidationResult>();
-        //        var context = new ValidationContext(keyPair.Value, null, null);
-
-        //        // Validate the collection item
-        //        if (Validator.TryValidateObject(keyPair.Value, context, subResults, true)) { continue; }
-        //        if (!subResults.Any()) { continue; }
-
-        //        var compositeResult = new CompositeValidationResult($"Validation failed!",
-        //            new List<string> { $"[\"{keyPair.Key}\"]" }
-        //        );
-
-        //        compositeResult.Add(subResults);
-
-        //        results.Add(compositeResult);
-        //    }
-
-        //    return results;
-        //}
     }
 
     public class CompositeValidationResult : ValidationResult

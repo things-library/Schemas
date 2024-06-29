@@ -69,7 +69,7 @@
         /// </summary>
         /// <remarks>Only used for enum (picklist) attributes</remarks>
         [JsonPropertyName("values"), JsonConverter(typeof(ItemTypeAttributeValueConverter)), JsonIgnoreEmptyCollection]
-        [ValidateObject<ItemTypeAttributeValueSchema>]
+        [ValidateCollectionItems]
         public Dictionary<string, ItemTypeAttributeValueSchema> Values { get; set; } = new();
 
         #region --- Extended ---

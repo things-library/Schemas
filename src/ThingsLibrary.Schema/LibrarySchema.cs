@@ -33,7 +33,7 @@ namespace ThingsLibrary.Schema
         /// <summary>
         /// Item Types - what kind of items do we expect and how do we explain them
         /// </summary>
-        [ValidateObject<ItemTypeSchema>]
+        [ValidateCollectionItems]
         [JsonPropertyName("types"), Required]
         public Dictionary<string, ItemTypeSchema> ItemTypes { get; set; } = new();
 
@@ -41,7 +41,7 @@ namespace ThingsLibrary.Schema
         /// Items
         /// </summary>
         /// <remarks>This is required as a empty isn't a library of anything and this helps verify schema types if $schema is missing</remarks>
-        [ValidateObject<ItemSchema>, Required]
+        [ValidateCollectionItems, Required]
         [JsonPropertyName("items")]
         public Dictionary<string, ItemSchema> Items { get; set; } = new();
 

@@ -45,7 +45,7 @@
         /// <summary>
         /// Attachments
         /// </summary>
-        [ValidateObject<ItemSchema>]
+        [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
         public Dictionary<string, ItemSchema> Attachments { get; set; } = new();
 
