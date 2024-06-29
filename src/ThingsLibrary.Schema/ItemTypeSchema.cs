@@ -24,14 +24,14 @@
         /// <summary>
         /// Attributes
         /// </summary>
-        [ValidateObject<ItemTypeAttributeSchema>]
+        [ValidateCollectionItems]
         [JsonPropertyName("attributes"), JsonIgnoreEmptyCollection]
         public Dictionary<string, ItemTypeAttributeSchema> Attributes { get; set; } = new();
 
         /// <summary>
         /// Attachments
         /// </summary>
-        [ValidateObject<ItemTypeAttachmentSchema>]
+        [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
         public Dictionary<string, ItemTypeAttachmentSchema> Attachments { get; set; } = new();
 

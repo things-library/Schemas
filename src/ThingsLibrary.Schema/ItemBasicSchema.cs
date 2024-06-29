@@ -53,7 +53,7 @@ namespace ThingsLibrary.Schema
         /// <summary>
         /// Attachments
         /// </summary>
-        [ValidateObject<ItemBasicSchema>]
+        [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
         public List<ItemBasicSchema> Attachments { get; set; } = new();
                 

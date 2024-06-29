@@ -8,10 +8,10 @@ namespace ThingsLibrary.Schema.Tests.Base
         public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.0/item.json");
         public static Uri LibrarySchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.0/library.json");
 
-        public static JsonSchema ItemSchemaDoc { get; set; }
-        public static JsonSchema LibrarySchemaDoc { get; set; }
+        public static JsonSchema ItemSchemaDoc { get; set; } = JsonSchema.Empty;
+        public static JsonSchema LibrarySchemaDoc { get; set; } = JsonSchema.Empty;
 
-        public static EvaluationOptions EvaluationOptions = new EvaluationOptions { OutputFormat = OutputFormat.List };
+        public static EvaluationOptions EvaluationOptions = new () { OutputFormat = OutputFormat.List };
 
 
 
@@ -76,7 +76,6 @@ namespace ThingsLibrary.Schema.Tests.Base
                 Debug.WriteLine("Error: " + error.ErrorMessage);
                 Debug.WriteLine("");
             }
-
         }
     }
 }
