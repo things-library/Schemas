@@ -1,0 +1,10 @@
+{
+    "name": "TEST 2024",
+    "type": "Vehicle",
+
+    "attributes": {
+        "Brand": "Test Brand",
+        "Model": "",
+        "Color": [ "Red", "Black" ]
+    }
+}

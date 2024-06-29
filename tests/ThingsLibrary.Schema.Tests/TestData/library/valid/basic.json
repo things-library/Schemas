@@ -1,0 +1,42 @@
+{
+	"key": "test_library",
+	"name": "Test Library",
+	
+	"types": {
+		"test_type": {
+			"name": "Test Type",
+			"attributes": {
+				"brand": {
+					"name": "Brand",
+					"type": "string"
+				},
+				"model": {
+					"name": "Model",
+					"type": "string"
+				},
+				"color": {
+					"name": "Color",
+					"type": "enum",
+					"values": {
+						"black": "Black",
+						"red": "Red",
+						"blue": "Blue"
+					}
+				}
+			}
+		}
+	},
+
+	"items": {
+		"test_item": {			
+			"name": "Test Item",
+			"type": "test_type",
+			"version": 1,
+			"attributes": {
+				"brand": "Test",
+				"color": [ "red", "blue" ],
+				"model": ""
+			}
+		}
+	}
+}

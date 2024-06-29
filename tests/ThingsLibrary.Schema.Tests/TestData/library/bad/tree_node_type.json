@@ -1,0 +1,41 @@
+{
+	"key": "test_library",
+	"name": "Test Library",
+
+	"types": {
+		"node": {
+			"name": "Test Node"
+		}
+	},
+
+	"items": {
+		"root": {
+			"name": "Root",
+			"type": "node",
+			"attachments": {
+				"1_1": {
+					"name": "1/1",
+					"type": "node",
+					"attachments": {
+						"1_1_1": {
+							"name": "1/1/1",
+							"type": "node",
+							"attachments": {
+								"1_1_1_1": {
+									"name": "1/1/1/1",
+									"type": "node",
+									"attachments": {
+										"1_1_1_1_1": {
+											"name": "1/1/1/1/1",
+											"type": "B"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

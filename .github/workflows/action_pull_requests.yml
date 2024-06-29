@@ -1,0 +1,43 @@
+# ======================================================================
+# PULL Request Test / Builder
+# ======================================================================
+name: 'Pull Request Builder'
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:    
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Setup .NET 8.0.x
+      uses: actions/setup-dotnet@v3
+      with:
+        # Semantic version range syntax or exact version of a dotnet version
+        dotnet-version: '8.0.x'
+        
+    # You can test your matrix by printing the current dotnet version
+    - name: Display dotnet version
+      run: dotnet --version
+
+    - name: List NuGet Package Sources
+      run: dotnet nuget list source
+    
+    - name: Restore Files
+      run: dotnet restore ./ThingsLibrary.Schema.sln
+
+    - name: Build
+      run: dotnet build ./ThingsLibrary.Schema.sln --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test ./ThingsLibrary.Schema.sln --configuration Release --no-build
