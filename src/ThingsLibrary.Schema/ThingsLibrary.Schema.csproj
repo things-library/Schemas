@@ -5,14 +5,27 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	
-	<ItemGroup>
-	  <None Update="Schemas\1.0\item.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Schemas\1.0\library.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
 
+	<ItemGroup>
+		<None Update="Schemas\1.0\item.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="Schemas\1.0\library.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	
+	<Target Name="CopySchemas" AfterTargets="Build">
+		<Message Text="Copying Schema Documents..." Importance="High" />
+
+		<Copy
+		  SourceFiles="$(TargetDir)Schemas\1.0\item.json;$(TargetDir)Schemas\1.0\library.json"
+		  DestinationFolder="$(SolutionDir)1.0" />
+
+		<Copy
+		  SourceFiles="$(TargetDir)Schemas\1.0\item.json;$(TargetDir)Schemas\1.0\library.json"
+		  DestinationFolder="$(SolutionDir)latest" />
+
+		<Message Text="Schemas Copied" Importance="High" />
+	</Target>
 </Project>
