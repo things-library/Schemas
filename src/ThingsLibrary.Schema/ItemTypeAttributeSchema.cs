@@ -26,27 +26,27 @@
         /// Data Type that this attribute represents.. like pick list, date-time, etc
         /// </summary>        
         [JsonPropertyName("type")]
-        [Display(Name = "Data Type"), DefaultValue("string"), Required]
+        [Display(Name = "Data Type"), DefaultValue(AttributeDataTypes.String), Required]
         [AllowedValues(
-            "boolean",
-            "currency",
-            "currency_range",
-            "date",
-            "date_time",
-            "decimal",
-            "decimal_range",
-            "duration",
-            "email",
-            "enum",            
-            "html",
-            "int",
-            "int_range",
-            "password",
-            "phone",
-            "string",
-            "text",
-            "time",
-            "url"
+            AttributeDataTypes.Boolean,
+            AttributeDataTypes.Currency,
+            AttributeDataTypes.CurrencyRange,
+            AttributeDataTypes.Date,
+            AttributeDataTypes.DateTime,
+            AttributeDataTypes.Duration,
+            AttributeDataTypes.Email,
+            AttributeDataTypes.Enum,
+            AttributeDataTypes.Html,
+            AttributeDataTypes.Password,
+            AttributeDataTypes.Phone,
+            AttributeDataTypes.String,
+            AttributeDataTypes.TextArea,
+            AttributeDataTypes.Time,
+            AttributeDataTypes.Url,
+            AttributeDataTypes.Decimal,
+            AttributeDataTypes.Integer,
+            AttributeDataTypes.IntegerRange,
+            AttributeDataTypes.DecimalRange
         )]
         public string Type { get; set; } = "string";
 
