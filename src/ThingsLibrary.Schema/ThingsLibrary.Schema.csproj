@@ -6,6 +6,20 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Schema</PackageId>
+		<ProductName>ThingsLibrary.Schema</ProductName>
+		<Title>Things Library Base Schema Library</Title>
+		<Description>Deserialization objects library for thingslibrary.io schema documents.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Things Library</Company>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/things-library/ThingsLibrary.Schema</RepositoryUrl>
+	</PropertyGroup>
+
+
 	<ItemGroup>
 		<None Update="Schemas\1.0\item.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
