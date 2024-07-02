@@ -106,6 +106,8 @@ The item is the core building block of the library as it defines all the various
 
 ## HTTP Headers
 
+Json Schema document should be sent with the right headers seen below.
+
 ### Request Headers:
 
 | Key | Value | Description |
