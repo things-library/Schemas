@@ -14,6 +14,15 @@ One of the goals is to make the general data structure as simple as possible at 
 There are two core schema documents.  The **item schema** is designed to be as flexible as possible with the least number of requirements as the only requrements is a name and a type.
 The **library schema** is designed to be a robust schema to hold many items that are all tied together in various ways such as item attributes are tied to type attributes.
 
+## Schema Documents
+
+The latest schema documents are always found in the **/latest** folder but within the document will refer to the actual version it represents:
+
+* [Item Schema](https://schema.thingslibrary.io/latest/item.json)
+* [Library Schema](https://schema.thingslibrary.io/latest/library.json)
+
+<hr />
+<br />
 
 # Item Schema Document
 
@@ -110,18 +119,18 @@ The item is the core building block of the library as it defines all the various
 * Every object in the data structure supports a metadata property which is additional key-value attributes that can be used for various system or user needs such as change history tracking.  These key-value pairs are not considered type attributes.
 
 
-## HTTP Headers
+# HTTP Headers
 
 Json Schema document should be sent with the right headers seen below.
 
-### Request Headers:
+## Request Headers:
 
 | Key | Value | Description |
 | -- | -- | -- |
 | Accept | application/schema+json | Specifies what is the acceptable content-type for the requesting agent. |
 | Accept-Schema | {{URL}} | Specifies the acceptable json schema |
 
-### Response Headers:
+## Response Headers:
 
 | Key | Value | Description |
 | -- | -- | -- |
