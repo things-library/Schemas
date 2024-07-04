@@ -1,4 +1,8 @@
-# Things Library Open Schema
+---
+layout: default
+title: Things Library Open Schema
+permalink: /
+---
 
 # Overview
 
