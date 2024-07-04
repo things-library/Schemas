@@ -1,3 +1,5 @@
+# Things Library Open Schema
+
 # Overview
 
 The general concept of the Things Library is that every library item has a series of key-value attributes that describe the item.
