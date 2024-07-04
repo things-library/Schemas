@@ -1,0 +1,77 @@
+# ======================================================================
+# Publish Nugets: Build, Test and Publish Nuget Packages
+# ======================================================================
+name: 'Build/Deploy Nugets'
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Tag to publish v[0-9]+.[0-9]+.[0-9]+*'
+        required: true
+        default: ''
+        type: string
+  push:
+    tags: 
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+
+jobs:
+  get-version:
+    name: Get version to deploy
+    runs-on: ubuntu-latest
+    env:
+      VERSION: 1.0.0
+    outputs:
+      VERSION: ${{ steps.output-version.outputs.VERSION }}
+    steps:
+    - name: Set tag from input
+      if: ${{ github.event.inputs.version != '' }}
+      env:
+        TAG: ${{ github.event.inputs.version }}
+      run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
+
+    - name: Set version variable from tag
+      if: ${{ github.ref_type == 'tag' }}
+      env:
+        TAG: ${{ github.ref_name }}
+      run: echo "VERSION=${TAG#v}" >> $GITHUB_ENV
+
+    - name: VERSION to job output
+      id: output-version
+      run: echo "VERSION=${{ env.VERSION }}" >> $GITHUB_OUTPUT
+  
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      packages: write
+    
+    steps:    
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        ref: 'refs/tags/v${{ needs.get-version.outputs.VERSION }}'
+
+    - name: Setup .NET 8.0.x
+      uses: actions/setup-dotnet@v3
+      with:
+        # Semantic version range syntax or exact version of a dotnet version
+        dotnet-version: '8.0.x'
+    
+    - name: Restore
+      run: dotnet restore ./ThingsLibrary.Schema.sln
+      
+    - name: Build
+      run: dotnet build ./ThingsLibrary.Schema.sln --configuration Release /p:Version=${{ needs.get-version.outputs.VERSION }} --no-restore
+      
+    - name: Test
+      run: dotnet test ./ThingsLibrary.Schema.sln --configuration Release /p:Version=${{ needs.get-version.outputs.VERSION }} --no-build
+    
+    - name: Pack
+      run: dotnet pack ./ThingsLibrary.Schema.sln -v normal -c Release /p:Version=${{ needs.get-version.outputs.VERSION }} --no-restore --no-build
+      if: success()
+      
+    - name: Push
+      run: dotnet nuget push **/*.nupkg --api-key ${GITHUB_TOKEN} --source "https://nuget.pkg.github.com/things-library/index.json" --skip-duplicate
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
