@@ -126,14 +126,25 @@
                 <a href="https://thingslibrary.io" class="nav-link text-white" aria-current="page"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#home"></use></svg>Home</a>
             </li>
             <li>
-                {% if page.title == "Schemas" %}
-                <a href="/" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Schema</a>
+                {% if page.title == "Overview" %}
+                <a href="/" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Overview</a>
                 {% else %}
-                <a href="/" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Schema</a>
+                <a href="/" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Overview</a>
                 {% endif %}
             </li>
             <li>
-                <a href="#" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#grid"></use></svg>Items</a>
+                {% if page.title == "Item Schema" %}
+                <a href="/item-schema" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#grid"></use></svg>Item Schema</a>
+                {% else %}
+                <a href="/item-schema" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#grid"></use></svg>Item Schema</a>
+                {% endif %}
+            </li>
+            <li>
+                {% if page.title == "Library Schema" %}
+                <a href="/library-schema" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#grid"></use></svg>Library Schema</a>
+                {% else %}
+                <a href="/library-schema" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#grid"></use></svg>Library Schema</a>
+                {% endif %}
             </li>
             <li>
                 {% if page.title == "History" %}
