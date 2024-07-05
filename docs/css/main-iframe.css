@@ -1,0 +1,41 @@
+
+.page-body {
+    padding: 10px;
+    max-width: 500px;
+}
+
+.page-body {
+    font-size: 90%;
+}
+
+    .page-body .card-header {
+        color: #fff !important;
+        background-color: #7aab6d !important;
+    }
+
+td i::before {
+    line-height: inherit !important;
+}
+
+table.nowrap tr td, table.nowrap tr th {
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.table .icon {
+    padding: 5px 0;
+    width: 40px;
+    text-align: center!important;
+}
+
+
+.card-header .breadcrumb {
+    --bs-breadcrumb-divider-color: #fff;
+    margin-bottom: 0;
+}
+
+.card-header .breadcrumb a, .breadcrumb-item.active {
+    color: #fff;
+}

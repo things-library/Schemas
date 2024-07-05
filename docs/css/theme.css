@@ -1,0 +1,96 @@
+/*
+    Theme Colors (https://issaic.saic.com/sites/brand-resources/Documents/SAIC%20Brand%20Guidelines.pdf)
+
+    Primary Palette:
+
+        Dark Blue:  #006BB5;
+        Light Blue: #00ACD4;
+        Green: #BCD63E;
+        Dark Gray:  #64696F;
+        Light Gray: #e1e1e1;
+
+    Secondary Palette:
+
+        Yellow: #FDB913;
+        Rich Magenta: #DD1E79;
+*/
+
+nav {
+    color: #006BB5;
+    text-decoration: none;
+}
+
+a {
+    color: #006BB5;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #006BB5;
+        text-decoration: underline;
+    }
+
+.btn-primary, .btn-outline-primary:hover {
+    color: #fff;
+    background-color: #006BB5;
+    border-color: #006BB5;
+}
+
+.btn-outline-primary {
+    color: #006BB5;
+    border-color: #006BB5;
+}
+
+
+    .btn-secondary, .btn-outline-primary:hover {
+        color: #fff;
+        background-color: #64696F;
+        border-color: #64696F;
+    }
+
+.btn-outline-primary {
+    color: #64696F;
+    border-color: #64696F;
+}
+
+
+.page-item.active .page-link {
+    background-color: #006BB5;
+    border-color: #006BB5;
+}
+
+.page-link {
+    color: #006BB5;
+}
+
+.navbar-nav > li > a.nav-link:hover,
+.navbar-nav > li > a:focus,
+.navbar-nav > li > a:active {
+    color: #6EA94C !important;
+}
+
+.modal-header {
+    background-color: #006BB5;
+}
+
+.sidebar .nav-link.active {
+    background-color: #006BB5;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #64696F;
+    text-decoration: none;
+}
+
+.card h4 a {
+    color: #64696F;
+}
+
+.card h4, h4.card-header {
+    color: #64696F;
+}
+
+.sidenav-group li a.active {
+    background-color: #006BB5;
+    color: #fff;
+}

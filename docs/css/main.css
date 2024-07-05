@@ -1,0 +1,435 @@
+/*
+    Theme Colors (https://issaic.saic.com/sites/brand-resources/Documents/SAIC%20Brand%20Guidelines.pdf)
+
+    Primary Palette:
+
+        Dark Blue:  #006BB5;
+        Light Blue: #00ACD4;
+        Green: #BCD63E;
+        Dark Gray:  #64696F;
+        Light Gray: #e1e1e1;
+
+    Secondary Palette:
+
+        Yellow: #FDB913;
+        Rich Magenta: #DD1E79;
+*/
+
+/* MAIN CSS */
+
+.card .btn {
+    line-height: inherit;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-white a {
+    color: #fff !important;
+}
+
+.min-width {
+    width: 1%;
+}
+
+    .min-width td, .min-width th {
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+.shell {
+    padding-top: 20px;
+}
+
+.p-3 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
+.card h4, h4.card-header {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 25px;
+    margin: 0 0 13px 0;
+    position: relative;
+    max-width: calc(100% - 28px);
+}
+
+    .card h4 a {
+        text-decoration: none;
+    }
+
+        .card h4 a:hover {
+            text-decoration: underline;
+        }
+
+footer {
+    background-color: #fff;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.form-body {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+}
+
+.form {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin: auto;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.sticky-top
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;    
+}
+
+header nav.navbar {
+    height: 55px;
+}
+
+.navbar {
+    font-weight: 500;
+}
+
+.navbar ol.breadcrumb
+{
+    margin-bottom: 0;
+}
+
+.navbar .dropdown-icon{
+    margin-right: 0.5rem;
+    color: #a6abbd;    
+}
+
+.navbar .dropdown-menu {
+    min-width: 5rem;
+    margin: 0;   
+    padding: 0; 
+    font-weight: 400;
+    box-shadow: 0 0 0 1px rgba(20,20,31,.05),0 2px 7px 1px rgba(20,20,31,.16);
+    -webkit-animation-duration: .2s;
+    animation-duration: .2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.navbar .dropdown-divider
+{
+    margin: 0;
+}
+
+.field-validation-error {
+    color: red;
+}
+
+/* Modal */
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    color: #fff;
+}
+
+.modal-header {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 55px;
+}
+
+.modal {
+    z-index: 99999;
+}
+
+    .modal.right .modal-dialog {
+        position: fixed;
+        top: 0px;
+        margin: auto;
+        max-width: 420px;
+        width: 100%;
+        height: 100%;
+        -webkit-transform: translate3d(0%, 0, 0);
+        -ms-transform: translate3d(0%, 0, 0);
+        -o-transform: translate3d(0%, 0, 0);
+        transform: translate3d(0%, 0, 0);
+    }
+
+    .modal.right .modal-content {
+        height: 100%;
+        /* overflow-y: auto; */
+    }
+
+    .modal.right .modal-body {
+        padding: 0;
+    }
+
+    .modal.right.fade .modal-dialog {
+        right: -500px;
+        -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+        -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+        -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+        transition: opacity 0.3s linear, right 0.3s ease-out;
+    }
+
+    .modal.right.fade.show .modal-dialog {
+        right: 0;
+    }
+
+.modal-content {
+    border-radius: 0;
+    border: none;
+}
+
+.modal-footer {
+    padding: 1rem;
+}
+
+
+.req {
+    color: #ff0000;
+}
+
+/* Dashboard CSS */
+
+body {
+    font-size: .875rem;
+}
+
+.bread {
+    padding-left: 15px;
+}
+
+.main {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+
+.env {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #dc3545;
+    color: #fff;
+    font-size: 70%;
+    z-index: 9999;
+    /* Rotate from top left corner (not default) */
+    transform: rotate(180deg);
+    writing-mode: vertical-lr;
+    text-align: center;
+    /*    transform: rotate(180deg);
+    transform-origin: right, top;
+    -ms-transform: rotate(180deg);
+    -ms-transform-origin: right, top;
+    -webkit-transform: rotate(180deg);
+    -webkit-transform-origin: right, top;*/
+}
+
+
+/* SIDEBAR CSS */
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10000; /* Behind the navbar */
+    padding: .3125rem 0 0; /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    width: 225px;
+    border-right: solid 1px #64696F;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.flex-noshrink {
+    flex-grow: 0;
+}
+
+/* .sidebar svg {
+    fill: #fff;
+} */
+
+.sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+    font-weight: 600;
+    color: #333;
+}
+
+    .sidebar .nav-link .feather {
+        margin-right: 4px;
+        color: #727272;
+    }
+
+    .sidebar .nav-link.active {
+        color: #007bff;
+    }
+
+        .sidebar .nav-link:hover .feather,
+        .sidebar .nav-link.active .feather {
+            color: inherit;
+        }
+
+.sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+}
+
+.btn-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: .25rem .5rem;
+    font-weight: 600;  
+    color: var(--bs-emphasis-color);  
+    background-color: transparent;
+    border: 0;
+}
+
+    .btn-toggle:hover,
+    .btn-toggle:focus {
+        color: #fff;
+        background-color: #7c7c7c;
+    }
+
+    .btn-toggle::before {
+        width: 1.25em;
+        line-height: 0;
+        content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+        transition: transform .35s ease;
+        transform-origin: .5em 50%;
+    }
+
+        .btn-toggle[aria-expanded="true"]::before {
+            transform: rotate(90deg);
+        }
+
+.btn-toggle-nav a {
+    display: inline-flex;
+    padding: .1875rem .5rem;
+    margin-top: .125rem;
+    margin-left: 1.25rem;
+    text-decoration: none;
+}
+
+    .btn-toggle-nav a:hover,
+    .btn-toggle-nav a:focus {
+        color: #fff;
+        background-color: #626262;
+    }
+
+
+.scrollarea {
+    overflow-y: auto;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+.navbar-expand-md .navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+@media (min-width: 768px) {
+    .main {
+        padding-left: 235px;
+    }
+
+    /* #profile {
+        display: block;
+    } */
+
+    #breadcrumbs {
+        position: fixed;
+        top: 17px;
+        z-index: 10002;
+        font-weight: 500;
+    }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100; /* Behind the navbar */
+    }
+}
+
+/* Sidebar */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        position: fixed;
+        top: 0px;
+    }
+
+    .navbar-collapse.collapsing {
+        height: 100%;
+        left: -75%;
+        transition: height 0s ease;
+    }
+
+    .navbar-collapse.show {
+        height: 100%;
+        left: 0;
+        transition: left 400ms ease-in-out;
+    }
+
+    .navbar-toggler.collapsed ~ .navbar-collapse {
+        transition: left 400ms ease-in;
+    }
+}
