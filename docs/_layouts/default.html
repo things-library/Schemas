@@ -118,15 +118,12 @@
 <div class="container-fluid">  
     <nav id="sidebarMenu" class="collapse navbar-collapse col-md-3 col-lg-2 d-md-block sidebar collapse bg-body-tertiary">          
         <div class="position-sticky pt-3" style="margin-top: 40px;"> 
-        <ul class="nav flex-column mb-auto">
-            <li class="nav-item">
-                <a href="https://thingslibrary.io" class="nav-link text-white" aria-current="page"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#home"></use></svg>Home</a>
-            </li>
+        <ul class="nav flex-column mb-auto">            
             <li>
                 {% if page.title == "Overview" %}
-                <a href="/" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Overview</a>
+                <a href="/" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#home"></use></svg>Overview</a>
                 {% else %}
-                <a href="/" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Overview</a>
+                <a href="/" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#home"></use></svg>Overview</a>
                 {% endif %}
             </li>
             <li>
@@ -149,10 +146,7 @@
                 {% else %}
                 <a href="/history" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#table"></use></svg>History</a>
                 {% endif %}
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#people-circle"></use></svg>Users</a>
-            </li>
+            </li>            
         </ul>     
         </div>
         <!-- <environment exclude="Production"><div class="env">Local Environment</div></environment> -->
@@ -161,6 +155,18 @@
 <!-- MAIN BODY -->
 <main class="main mb-4" style="padding-top: 55px;">
         
+    <div id="breadcrumbs">
+        <div class="navbar-nav me-auto my-lg-0 navbar-nav-scroll">
+            <!-- BREADCRUMBS -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Item Schema</li>
+                </ol>
+            </nav>
+            <!-- END BREADCRUMBS -->
+        </div>
+    </div>
 {{ content }}
 
 </main>
