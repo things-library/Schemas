@@ -126,13 +126,21 @@
                 <a href="https://thingslibrary.io" class="nav-link text-white" aria-current="page"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#home"></use></svg>Home</a>
             </li>
             <li>
-                <a href="/" class="nav-link text-white{% if page.title == "Schemas" %}active{% endif %}"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Schema</a>
+                {% if page.url == "/" %}
+                <a href="/" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Schema</a>
+                {% else %}
+                <a href="/" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Schema</a>
+                {% endif %}
             </li>
             <li>
-                <a href="#" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#grid"></use></svg>Things</a>
+                <a href="#" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#grid"></use></svg>Items</a>
             </li>
             <li>
-                <a href="/history" class="nav-link text-white {% if page.title == "History" %}active{% endif %}"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#table"></use></svg>History</a>
+                {% if page.url == "/" %}
+                <a href="/history" class="nav-link text-white ative"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#table"></use></svg>History</a>
+                {% else %}
+                <a href="/history" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#table"></use></svg>History</a>
+                {% endif %}
             </li>
             <li>
                 <a href="#" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#people-circle"></use></svg>Users</a>
