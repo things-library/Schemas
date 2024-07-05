@@ -6,10 +6,16 @@ name: 'Pull Request Builder'
 on:
   push:
     branches:
-    - main
+      - main
+    paths:
+      - src/**
+      - tests/**
   pull_request:
     branches:
-    - main
+      - main
+    paths:
+      - src/**
+      - tests/**
 
 jobs:
   build:
