@@ -4,9 +4,7 @@ title: Overview
 permalink: /
 ---
 
-# Things Library Open Schema 
-
-## Overview
+# Schema Overview
 
 The general concept of the Things Library is that every library item has a series of key-value attributes that describe the item.
 Every item can have attachments which are other items that have key/value attributes. Attributes are global to the item type to which they belong and help explain what the value is and how to parse it such as a pick list item or a date or time or decimal number.
