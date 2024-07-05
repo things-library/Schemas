@@ -115,21 +115,24 @@
     </nav>  
 </header>
 
+
+    
+
 <div class="container-fluid">  
     <nav id="sidebarMenu" class="collapse navbar-collapse col-md-3 col-lg-2 d-md-block sidebar collapse bg-body-tertiary">          
         <div class="position-sticky pt-3" style="margin-top: 40px;"> 
         <ul class="nav flex-column mb-auto">
             <li class="nav-item">
-                <a href="#" class="nav-link text-white" aria-current="page"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#home"></use></svg>Home</a>
+                <a href="/" class="nav-link text-white {% if page.baseurl contains / %}active{% endif %}" aria-current="page"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#home"></use></svg>Home</a>
             </li>
             <li>
-                <a href="#" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Dashboard</a>
+                <a href="#" class="nav-link text-white{% if page.baseurl contains /history %}active{% endif %}"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>Dashboard</a>
             </li>
             <li>
                 <a href="#" class="nav-link text-white active"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#grid"></use></svg>Things</a>
             </li>
             <li>
-                <a href="#" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#table"></use></svg>Types</a>
+                <a href="#" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#table"></use></svg>{{ page.baseurl }}</a>
             </li>
             <li>
                 <a href="#" class="nav-link text-white"><svg class="bi me-2" fill="currentColor" width="16" height="16"><use xlink:href="#people-circle"></use></svg>Users</a>
