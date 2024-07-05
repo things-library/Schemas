@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Things Library Open Schema
+title: Schemas
 permalink: /
 ---
 
