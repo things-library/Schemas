@@ -154,19 +154,22 @@
     
 <!-- MAIN BODY -->
 <main class="main mb-4" style="padding-top: 55px;">
-        
+    {% if page.title != "Overview" %}  
     <div id="breadcrumbs">
         <div class="navbar-nav me-auto my-lg-0 navbar-nav-scroll">
             <!-- BREADCRUMBS -->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Item Schema</li>
+                    
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>                                    
+                    <li class="breadcrumb-item active" aria-current="page">{{ page.title }}</li>
                 </ol>
             </nav>
             <!-- END BREADCRUMBS -->
         </div>
     </div>
+    {% endif %}    
+
 {{ content }}
 
 </main>

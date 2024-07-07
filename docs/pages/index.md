@@ -4,7 +4,7 @@ title: Overview
 permalink: /
 ---
 
-# Overview
+# Schema Overview
 
 The general concept of the Things Library is that every library item has a series of key-value attributes that describe the item.
 Every item can have attachments which are other items that have key/value attributes. Attributes are global to the item type to which they belong and help explain what the value is and how to parse it such as a pick list item or a date or time or decimal number.
@@ -16,7 +16,7 @@ The **library schema** is designed to be a robust schema to hold many items that
 
 ## Schema Documents
 
-The latest schema documents are always found in the **/latest** folder but within the document will refer to the actual version it represents:
+The latest schema documents are always found in the **/latest** folder but within the document it will refer to the actual version it represents:
 
 * [Item Schema](item-schema.md)
 * [Library Schema](library-schema.md)
