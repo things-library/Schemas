@@ -1,0 +1,80 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://schema.thingslibrary.io/1.0/item.json",
+    "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.",
+    
+    "$defs": {
+        "item": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "type": "string",
+                    "title": "Key",
+                    "minLength": 1,
+                    "maxLength": 50,
+                    "pattern": "^[a-z0-9_-]{1,50}$"
+                },
+
+                "date": {
+                    "type": "string",
+                    "title": "Date",
+                    "format": "date-time"
+                },
+
+                "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "minLength": 1,
+                    "maxLength": 50
+                },
+
+                "type": {
+                    "type": "string",
+                    "title": "Type",
+                    "minLength": 1,
+                    "maxLength": 50
+                },
+
+                "version": {
+                    "type": "integer",
+                    "title": "Version",
+                    "minimum": 1,
+                    "default": 1
+                },
+
+                "attributes": {
+                    "type": "object",
+                    "title": "Attributes",
+                    "additionalProperties": {
+                        "anyOf": [
+                            { "type": "string" },
+                            {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
+                        ]
+                    }
+                },
+
+                "attachments": {
+                    "type": "array",
+                    "title": "Attachments",
+                    "items": {
+                        "$ref": "#/$defs/item"
+                    }
+                },
+
+                "metadata": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [ "name", "type" ]
+        }
+    },
+
+    "$ref": "#/$defs/item"
+}
