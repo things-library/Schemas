@@ -17,6 +17,10 @@ jobs:
       contents: read
       id-token: write
 
+    env:
+      # We are going to build just the deploy projects and push those nuget packages
+      SOLUTION_PATH: './ThingsLibrary.Schema.Deploy.sln'
+
     steps:    
     - name: Checkout
       uses: actions/checkout@v3
@@ -31,16 +35,16 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
       
     - name: Restore
-      run: dotnet restore ./ThingsLibrary.Schema.sln
+      run: dotnet restore ${{env.SOLUTION_PATH}}
       
     - name: Build
-      run: dotnet build ./ThingsLibrary.Schema.sln --configuration Release /p:Version="${VERSION}" --no-restore
+      run: dotnet build ${{env.SOLUTION_PATH}} --configuration Release /p:Version="${VERSION}" --no-restore
       
     - name: Test
-      run: dotnet test ./ThingsLibrary.Schema.sln -c Release --nologo --no-build --results-directory "./Artifacts/Test/${VERSION}" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      run: dotnet test ${{env.SOLUTION_PATH}} -c Release --nologo --no-build --results-directory "./Artifacts/Test/${VERSION}" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
     
     - name: Pack
-      run: dotnet pack ./ThingsLibrary.Schema.sln -v normal -c Release /p:Version="${VERSION}" /p:PackageVersion="${VERSION}" /p:PackageReleaseNotes="${{ github.event.inputs.releaseNotes }}" --no-restore --no-build --output "./Artifacts/Build"
+      run: dotnet pack ${{env.SOLUTION_PATH}} -v normal -c Release /p:Version="${VERSION}" /p:PackageVersion="${VERSION}" /p:PackageReleaseNotes="${{ github.event.inputs.releaseNotes }}" --no-restore --no-build --output "./Artifacts/Build"
       if: success()
 
     - name: File Tree

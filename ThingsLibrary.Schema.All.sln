@@ -9,6 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Schema", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Schema.Tests", "tests\ThingsLibrary.Schema.Tests\ThingsLibrary.Schema.Tests.csproj", "{F029CE58-D961-4E4C-AAA2-8404BBFA198F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github", "Github", "{B0E68A35-280D-4879-A34B-52B06726502F}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codeql.yml = .github\workflows\codeql.yml
+		.github\workflows\markdown_checker.yml = .github\workflows\markdown_checker.yml
+		.github\workflows\publish_nugets.yml = .github\workflows\publish_nugets.yml
+		.github\workflows\pull_requests.yml = .github\workflows\pull_requests.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

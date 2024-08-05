@@ -22,6 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     
+    env:
+      # We are going to build just the deploy projects and push those nuget packages
+      SOLUTION_PATH: './ThingsLibrary.Schema.Deploy.sln'
+
     steps:    
     - name: Checkout
       uses: actions/checkout@v3
@@ -39,11 +43,14 @@ jobs:
     - name: List NuGet Package Sources
       run: dotnet nuget list source
     
-    - name: Restore Files
-      run: dotnet restore ./ThingsLibrary.Schema.sln
-
+    - name: Restore
+      run: dotnet restore ${{env.SOLUTION_PATH}}
+      
     - name: Build
-      run: dotnet build ./ThingsLibrary.Schema.sln --configuration Release --no-restore
+      run: dotnet build ${{env.SOLUTION_PATH}} --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test ./ThingsLibrary.Schema.sln --configuration Release --no-build
+      run: dotnet test ${{env.SOLUTION_PATH}} -c Release --nologo --no-build --results-directory "./Artifacts/Test/0.0.0" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+
+    - name: File Tree
+      run: tree -a ./Artifacts

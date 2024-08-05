@@ -1,0 +1,74 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7424733F-426B-41BA-89BE-532A55775D7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Schema", "src\ThingsLibrary.Schema\ThingsLibrary.Schema.csproj", "{BF200913-777C-48AE-9443-6F9EC9A053D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThingsLibrary.Schema.Tests", "tests\ThingsLibrary.Schema.Tests\ThingsLibrary.Schema.Tests.csproj", "{F029CE58-D961-4E4C-AAA2-8404BBFA198F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github", "Github", "{B0E68A35-280D-4879-A34B-52B06726502F}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codeql.yml = .github\workflows\codeql.yml
+		.github\workflows\markdown_checker.yml = .github\workflows\markdown_checker.yml
+		.github\workflows\publish_nugets.yml = .github\workflows\publish_nugets.yml
+		.github\workflows\pull_requests.yml = .github\workflows\pull_requests.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Debug|x64.Build.0 = Debug|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Debug|x86.Build.0 = Debug|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Release|ARM64.Build.0 = Release|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Release|x64.ActiveCfg = Release|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Release|x64.Build.0 = Release|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Release|x86.ActiveCfg = Release|Any CPU
+		{BF200913-777C-48AE-9443-6F9EC9A053D1}.Release|x86.Build.0 = Release|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Debug|x64.Build.0 = Debug|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Debug|x86.Build.0 = Debug|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Release|ARM64.Build.0 = Release|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Release|x64.ActiveCfg = Release|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Release|x64.Build.0 = Release|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Release|x86.ActiveCfg = Release|Any CPU
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F029CE58-D961-4E4C-AAA2-8404BBFA198F} = {7424733F-426B-41BA-89BE-532A55775D7D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {784A0195-CCFA-41EE-A700-E0FAF6511A2E}
+	EndGlobalSection
+EndGlobal

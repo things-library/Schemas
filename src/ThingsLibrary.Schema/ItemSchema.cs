@@ -107,5 +107,19 @@
         {
             //nothing
         }
+
+        /// <summary>
+        /// Adds the flat listing of attributes (replacing existing)
+        /// </summary>
+        /// <param name="attributes">Flat attribute listing</param>
+        public void Add(IEnumerable<ItemAttributeSchema> attributes)
+        {
+            ArgumentNullException.ThrowIfNull(attributes);
+
+            foreach (var attribute in attributes)
+            {
+                this.Attributes[attribute.Key] = attribute;
+            }
+        }
     }
 }

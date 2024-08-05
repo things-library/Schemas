@@ -56,13 +56,27 @@ namespace ThingsLibrary.Schema
         [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
         public List<ItemBasicSchema> Attachments { get; set; } = new();
-                
+
         /// <summary>
         /// Constructor
         /// </summary>
         public ItemBasicSchema()
         {
             //nothing
+        }
+
+        /// <summary>
+        /// Add basic collection of attributes to the listing
+        /// </summary>
+        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
+        public void Add(IEnumerable<ItemBasicAttributeSchema> attributes)
+        {
+            ArgumentNullException.ThrowIfNull(attributes);
+
+            foreach (var attribute in attributes)
+            {
+                this.Attributes[attribute.Key] = attribute;
+            }
         }
     }
 }
