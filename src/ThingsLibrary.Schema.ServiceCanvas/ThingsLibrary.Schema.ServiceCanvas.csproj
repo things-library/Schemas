@@ -18,7 +18,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\ThingsLibrary.Schema\ThingsLibrary.Schema.csproj" />
+	  <ProjectReference Include="..\ThingsLibrary.Schema\ThingsLibrary.Schema.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
