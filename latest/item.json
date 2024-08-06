@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://schema.thingslibrary.io/1.0/item.json",
     "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.",
-    
+
     "$defs": {
         "item": {
             "type": "object",
