@@ -4,7 +4,7 @@
     /// Attribute
     /// </summary>
     [DebuggerDisplay("{Name}, ({Key}, Type: {Type}, Units: {Units})")]
-    public class LibraryItemTypeAttributeDto : SchemaBase
+    public class LibraryItemTypeAttributeDto : Base.SchemaBase
     {        
         /// <summary>
         /// Library Unique Key
@@ -12,7 +12,7 @@
         /// <remarks>(Pattern: {library_key}/{item_type_key}</remarks>
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>

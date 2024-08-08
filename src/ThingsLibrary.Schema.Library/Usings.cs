@@ -12,7 +12,5 @@ global using System.Text.Json.Serialization.Metadata;
 // ================================================================================
 // LOCAL 
 // ================================================================================
-global using ThingsLibrary.Schema.Converters;
-global using ThingsLibrary.Schema.Validators;
-
 global using ThingsLibrary.Schema.Library.Converters;
+global using ThingsLibrary.Schema.Library.Validators;

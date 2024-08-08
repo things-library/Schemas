@@ -1,4 +1,4 @@
-﻿namespace ThingsLibrary.Schema.Converters
+﻿namespace ThingsLibrary.Schema.Library.Converters
 {
     /// <summary>
     /// Json Ignore Attribute that when added to collections will JsonIgnore the collection when empty.

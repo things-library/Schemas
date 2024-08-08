@@ -6,13 +6,13 @@ namespace ThingsLibrary.Schema.Library
     /// Library
     /// </summary>
     [DebuggerDisplay("{Name} ({Key})")]
-    public class LibraryDto : SchemaBase, IJsonOnDeserialized
+    public class LibraryDto : Base.SchemaBase, IJsonOnDeserialized
     {
         /// <summary>
         /// Json Schema Definition
         /// </summary>
         [JsonPropertyName("$schema"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Uri SchemaUrl { get; set; } = new Uri($"{SchemaBase.SchemaBaseUrl}/library.json");
+        public Uri SchemaUrl { get; set; } = new Uri($"{Base.SchemaBase.SchemaBaseUrl}/library.json");
                 
         /// <summary>
         /// Unique Key
@@ -20,7 +20,7 @@ namespace ThingsLibrary.Schema.Library
         /// <remarks>This is used to align records to know if it is new or update to a existing library</remarks>
         [JsonPropertyName("key"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         [Key, Display(Name = "Key"), StringLength(50, MinimumLength = 1)]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string? Key { get; set; }
 
         /// <summary>

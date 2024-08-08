@@ -1,5 +1,5 @@
 ﻿
-namespace ThingsLibrary.Schema
+namespace ThingsLibrary.Schema.ServiceCanvas.Base
 {
     /// <summary>
     /// Base Schema Attributes

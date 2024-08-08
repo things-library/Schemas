@@ -4,20 +4,20 @@
     /// Item Schema - Flexible
     /// </summary>
     [DebuggerDisplay("{Name} (Key: {Key}, Type: {Type})")]
-    public class BasicItemDto : SchemaBase
+    public class BasicItemDto : Base.SchemaBase
     {
         /// <summary>
         /// Json Schema Definition
         /// </summary>
         [JsonPropertyName("$schema"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Uri? SchemaUrl { get; set; } = new Uri($"{SchemaBase.SchemaBaseUrl}/item.json");
+        public Uri? SchemaUrl { get; set; } = new Uri($"{Base.SchemaBase.SchemaBaseUrl}/item.json");
 
         /// <summary>
         /// Resource Key
         /// </summary>  
         [JsonPropertyName("key")]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1)]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string? Key { get; set; }
 
         /// <summary>

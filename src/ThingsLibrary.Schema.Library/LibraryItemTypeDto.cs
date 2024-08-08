@@ -4,14 +4,14 @@
     /// Item type
     /// </summary>    
     [DebuggerDisplay("{Name} ({Key})")]
-    public class LibraryItemTypeDto : SchemaBase
+    public class LibraryItemTypeDto : Base.SchemaBase
     {        
         /// <summary>
         /// Library Unique Key
         /// </summary>        
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>

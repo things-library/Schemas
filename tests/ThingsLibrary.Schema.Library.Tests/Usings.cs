@@ -10,5 +10,6 @@ global using Json.Schema;
 // ================================================================================
 // FIRST PARTY 
 // ================================================================================
-global using ThingsLibrary.Schema;
+global using ThingsLibrary.Schema.Library.Base;
 global using ThingsLibrary.Schema.Library.Tests.Extensions;
+global using ThingsLibrary.Schema.Library.Validators;

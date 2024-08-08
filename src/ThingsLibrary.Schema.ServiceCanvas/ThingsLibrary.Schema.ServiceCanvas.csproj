@@ -18,10 +18,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ThingsLibrary.Schema\ThingsLibrary.Schema.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Update="Schemas\1.0\canvas.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>		

@@ -4,14 +4,14 @@
     /// Library Item
     /// </summary>
     [DebuggerDisplay("{Name} (Key: {Key}, Type: {Type})")]
-    public class LibraryItemDto : SchemaBase
+    public class LibraryItemDto : Base.SchemaBase
     {        
         /// <summary>
         /// Resource Key
         /// </summary>  
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
@@ -33,7 +33,7 @@
         /// </summary>
         [JsonPropertyName("type")]
         [Display(Name = "Item Type"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string Type { get; set; } = string.Empty;
 
         /// <summary>

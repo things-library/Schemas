@@ -110,7 +110,7 @@
         /// Unique Key
         /// </summary>
         [Key, Required, Display(Name = "Key"), StringLength(50, MinimumLength = 2)]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string Key { get; init; } = string.Empty;
 
         [Display(Name = "Name"), StringLength(50, MinimumLength = 2), Required]

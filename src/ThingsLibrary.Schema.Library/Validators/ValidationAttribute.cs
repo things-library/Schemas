@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace ThingsLibrary.Schema.Validators
+namespace ThingsLibrary.Schema.Library.Validators
 {
     public class ValidateCollectionItemsAttribute : ValidationAttribute
     {

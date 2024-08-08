@@ -4,14 +4,14 @@
     /// Attribute Value
     /// </summary>
     [DebuggerDisplay("{Name} ({Key})")]
-    public class LibraryItemTypeAttributeValueDto : SchemaBase
+    public class LibraryItemTypeAttributeValueDto : Base.SchemaBase
     {        
         /// <summary>
         /// Attribute Unique Key
         /// </summary>  
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
