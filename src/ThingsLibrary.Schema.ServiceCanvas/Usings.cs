@@ -14,5 +14,5 @@ global using DA = System.ComponentModel.DataAnnotations;
 // ================================================================================
 // LOCAL 
 // ================================================================================
-global using ThingsLibrary.Schema.Converters;
-global using ThingsLibrary.Schema.Validators;
+global using ThingsLibrary.Schema.ServiceCanvas.Converters;
+
