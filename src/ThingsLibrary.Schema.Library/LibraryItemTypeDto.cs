@@ -1,10 +1,10 @@
 ﻿namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
-    /// Item types
+    /// Item type
     /// </summary>    
     [DebuggerDisplay("{Name} ({Key})")]
-    public class ItemTypeSchema : SchemaBase
+    public class LibraryItemTypeDto : SchemaBase
     {        
         /// <summary>
         /// Library Unique Key
@@ -26,19 +26,19 @@
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attributes"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, ItemTypeAttributeSchema> Attributes { get; set; } = new();
+        public Dictionary<string, LibraryItemTypeAttributeDto> Attributes { get; set; } = new();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, ItemTypeAttachmentSchema> Attachments { get; set; } = new();
+        public Dictionary<string, LibraryItemTypeAttachment> Attachments { get; set; } = new();
 
 
         #region --- Extended ---
 
-        public LibrarySchema? Library { get; set; }
+        public LibraryDto? Library { get; set; }
 
         #endregion
 
@@ -48,7 +48,7 @@
         /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
-        public void Init(LibrarySchema parent)
+        public void Init(LibraryDto parent)
         {
             this.Library = parent;
 
@@ -71,7 +71,7 @@
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemTypeSchema()
+        public LibraryItemTypeDto()
         {
             //nothing
         }
@@ -81,7 +81,7 @@
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="name">Name</param>
-        public ItemTypeSchema(string key, string name)
+        public LibraryItemTypeDto(string key, string name)
         {
             this.Key = key;
             this.Name = name;

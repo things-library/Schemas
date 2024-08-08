@@ -4,8 +4,8 @@
     /// Attribute
     /// </summary>
     [DebuggerDisplay("{Key}: {Value}")]
-    public class ItemBasicAttributeSchema : SchemaBase
-    {        
+    public class BasicItemAttributeDto : SchemaBase
+    {
         /// <summary>
         /// Library Unique Key
         /// </summary>
@@ -15,23 +15,40 @@
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
-        /// Attribute Value
+        /// Value
         /// </summary>
+        /// <remarks>This always return the first even if there are more than one.  Setting the value when more then one existing will remote the other items.</remarks>
         [JsonPropertyName("value")]
         [Display(Name = "Value"), StringLength(50, MinimumLength = 1)]
-        public string Value { get; set; } = string.Empty;
+        public string Value
+        {
+            get => this.Values[0];  
+            set 
+            {
+                // simple replace?
+                if (this.Values.Count == 1) { this.Values[0] = value; }
+                else 
+                {
+                    // clear the listing and add one (this works for all != 1 cases)
+                    this.Values.Clear();
+                    this.Values.Add(value);
+                }
+            }
+        }
 
         /// <summary>
-        /// Attribute Value
+        /// Values
         /// </summary>
+        /// <remarks>Collection should always have at least 1 cell</remarks>
         [JsonPropertyName("values")]
         [Display(Name = "Values"), StringLength(50, MinimumLength = 1)]
-        public List<string> Values { get; set; } = new();
+        public List<string> Values { get; set; } = new() { string.Empty };  // array should always have at least one cell
+
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemBasicAttributeSchema()
+        public BasicItemAttributeDto()
         {
             //nothing
         }
@@ -41,11 +58,10 @@
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="value">Value (or Value Key)</param>
-        public ItemBasicAttributeSchema(string key, string value)
+        public BasicItemAttributeDto(string key, string value)
         {
             this.Key = key;
-            this.Value = value;
-            this.Values = new() { value };
+            this.Value = value;            
         }
 
         /// <summary>
@@ -53,13 +69,9 @@
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="values">Values</param>
-        public ItemBasicAttributeSchema(string key, List<string> values)
+        public BasicItemAttributeDto(string key, List<string> values)
         {
-            this.Key = key;
-            if (values.Any())
-            {
-                this.Value = values[0];
-            }            
+            this.Key = key;            
             this.Values = values;
         }
     }

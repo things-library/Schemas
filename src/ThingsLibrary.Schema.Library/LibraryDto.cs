@@ -6,7 +6,7 @@ namespace ThingsLibrary.Schema.Library
     /// Library
     /// </summary>
     [DebuggerDisplay("{Name} ({Key})")]
-    public class LibrarySchema : SchemaBase, IJsonOnDeserialized
+    public class LibraryDto : SchemaBase, IJsonOnDeserialized
     {
         /// <summary>
         /// Json Schema Definition
@@ -35,7 +35,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("types"), Required]
-        public Dictionary<string, ItemTypeSchema> ItemTypes { get; set; } = new();
+        public Dictionary<string, LibraryItemTypeDto> ItemTypes { get; set; } = new();
 
         /// <summary>
         /// Items
@@ -43,7 +43,7 @@ namespace ThingsLibrary.Schema.Library
         /// <remarks>This is required as a empty isn't a library of anything and this helps verify schema types if $schema is missing</remarks>
         [ValidateCollectionItems, Required]
         [JsonPropertyName("items")]
-        public Dictionary<string, ItemSchema> Items { get; set; } = new();
+        public Dictionary<string, LibraryItemDto> Items { get; set; } = new();
 
         #region --- Initialization ---
 
@@ -77,7 +77,7 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Constructor
         /// </summary>
-        public LibrarySchema()
+        public LibraryDto()
         {
             //nothing
         }        

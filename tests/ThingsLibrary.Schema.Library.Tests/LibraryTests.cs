@@ -74,7 +74,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             var doc = JsonDocument.Parse(json);
                         
             // DESERIALIZE USING OBJECTS AND EVALUATE
-            var item = doc.Deserialize<LibrarySchema>(SchemaBase.JsonSerializerOptions);
+            var item = doc.Deserialize<LibraryDto>(SchemaBase.JsonSerializerOptions);
             Assert.IsNotNull(item);
 
             var results = item.Validate(false);

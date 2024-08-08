@@ -1,12 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ThingsLibrary.Schema.Library
+﻿namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Attribute
     /// </summary>
     [DebuggerDisplay("{Key}: {Value}")]
-    public class ItemAttributeSchema : SchemaBase
+    public class LibraryItemAttributeDto : SchemaBase
     {        
         /// <summary>
         /// Library Unique Key
@@ -36,26 +34,26 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Item (aka: parent)
         /// </summary>
-        [NotMapped]
-        public ItemSchema? Item { get; set; }
+        [JsonIgnore]
+        public LibraryItemDto? Item { get; set; }
 
         /// <summary>
         /// Item Type Attribute
         /// </summary>
-        [NotMapped]
-        public ItemTypeAttributeSchema? ItemTypeAttribute { get; set; }
+        [JsonIgnore]
+        public LibraryItemTypeAttributeDto? ItemTypeAttribute { get; set; }
 
         /// <summary>
         /// Attribute Value (if pick list)
         /// </summary>
-        [NotMapped]
-        public ItemTypeAttributeValueSchema? ItemTypeAttributeValue { get; set; }
+        [JsonIgnore]
+        public LibraryItemTypeAttributeValueDto? ItemTypeAttributeValue { get; set; }
 
         /// <summary>
         /// Attribute Values (if pick list)
         /// </summary>
-        [NotMapped]
-        public Dictionary<string, ItemTypeAttributeValueSchema> ItemTypeAttributeValues { get; set; } = new();
+        [JsonIgnore]
+        public Dictionary<string, LibraryItemTypeAttributeValueDto> ItemTypeAttributeValues { get; set; } = new();
 
         #endregion
 
@@ -65,18 +63,18 @@ namespace ThingsLibrary.Schema.Library
         /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
-        public void Init(ItemSchema parent)
+        public void Init(LibraryItemDto parent)
         {
             this.Item = parent;
 
-            ItemTypeAttributeSchema? itemTypeAttribute;
+            LibraryItemTypeAttributeDto? itemTypeAttribute;
             if (parent.ItemType?.Attributes.TryGetValue(this.Key, out itemTypeAttribute) == true)
             {
                 this.ItemTypeAttribute = itemTypeAttribute;
                 if (itemTypeAttribute.Type == "enum")
                 {
                     // lookup value if there is one
-                    ItemTypeAttributeValueSchema? itemTypeAttributeValue;
+                    LibraryItemTypeAttributeValueDto? itemTypeAttributeValue;
                     if (itemTypeAttribute.Values.TryGetValue(this.Value, out itemTypeAttributeValue))
                     {
                         this.ItemTypeAttributeValue = itemTypeAttributeValue;
@@ -98,7 +96,7 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemAttributeSchema()
+        public LibraryItemAttributeDto()
         {
             //nothing
         }
@@ -108,7 +106,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="value">Value (or Value Key)</param>
-        public ItemAttributeSchema(string key, string value)
+        public LibraryItemAttributeDto(string key, string value)
         {
             this.Key = key;
             this.Value = value;
@@ -120,7 +118,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="values">Values</param>
-        public ItemAttributeSchema(string key, List<string> values)
+        public LibraryItemAttributeDto(string key, List<string> values)
         {
             this.Key = key;
             if (values.Any())

@@ -1,7 +1,7 @@
 namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
-    public class ItemTests : Base.TestBase
+    public class LibraryItemTests : Base.TestBase
     {
         #region --- Setup/Cleanup ---
 
@@ -53,7 +53,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [DataRow("bad/type_min.json", false)]
         public void Validate(string fileName, bool isValid)
         {            
-            var filePath = $"TestData/items/{fileName}";
+            var filePath = $"TestData/library-items/{fileName}";
             Assert.IsTrue(File.Exists(filePath));
 
             var json = File.ReadAllText(filePath);
@@ -79,13 +79,13 @@ namespace ThingsLibrary.Schema.Library.Tests
         [DataRow("bad/type_min.json", false)]
         public void ValidateObjects(string fileName, bool isValid)
         {
-            var filePath = $"TestData/items/{fileName}";
+            var filePath = $"TestData/library-items/{fileName}";
             Assert.IsTrue(File.Exists(filePath));
 
             var json = File.ReadAllText(filePath);
             var doc = JsonDocument.Parse(json);
 
-            var item = doc.Deserialize<ItemBasicSchema>(SchemaBase.JsonSerializerOptions);
+            var item = doc.Deserialize<BasicItemDto>(SchemaBase.JsonSerializerOptions);
             Assert.IsNotNull(item);
 
             var validationErrors = item.Validate();

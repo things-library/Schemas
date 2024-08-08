@@ -1,38 +1,30 @@
 ﻿namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
-    /// Item type attachments
-    /// </summary>    
-    [DebuggerDisplay("{Type} ({Name})")]
-    public class ItemTypeAttachmentSchema : SchemaBase
-    {
+    /// Attribute Value
+    /// </summary>
+    [DebuggerDisplay("{Name} ({Key})")]
+    public class LibraryItemTypeAttributeValueDto : SchemaBase
+    {        
         /// <summary>
-        /// Attachment Key
-        /// </summary>
-        /// <remarks>(Pattern: {library_key}/{item_type_key}</remarks>
+        /// Attribute Unique Key
+        /// </summary>  
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
         [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
-        /// Item Type
-        /// </summary>        
-        [JsonPropertyName("type")]
-        [Display(Name = "Item Type"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternDescription)]
-        public string Type { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Item Type Name (Override)
+        /// Attribute Name
         /// </summary>
         [JsonPropertyName("name")]
         [Display(Name = "Name"), StringLength(50, MinimumLength = 1), Required]
         public string Name { get; set; } = string.Empty;
 
+
         #region --- Extended ---
 
-        public ItemTypeSchema? ItemType { get; set; }
+        public LibraryItemTypeAttributeDto? Attribute { get; set; }
 
         #endregion
 
@@ -42,21 +34,32 @@
         /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
-        public void Init(ItemTypeSchema parent)
+        public void Init(LibraryItemTypeAttributeDto parent)
         {
-            // fix all of the reference variables
-            this.ItemType = parent;
+            this.Attribute = parent;            
         }
 
         #endregion
 
+        
+
         /// <summary>
-        /// Item Type Attachment
+        /// Constructor
         /// </summary>
-        public ItemTypeAttachmentSchema()
+        public LibraryItemTypeAttributeValueDto()
         {
             //nothing
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="name">Name</param>
+        public LibraryItemTypeAttributeValueDto(string key, string name)
+        {
+            this.Key = key;
+            this.Name = name;
+        }
     }
 }
-

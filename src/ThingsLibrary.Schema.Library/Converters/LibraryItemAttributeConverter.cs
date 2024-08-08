@@ -3,14 +3,14 @@
     /// <summary>
     /// Converts List of item type attributes into a dictionary
     /// </summary>
-    public class ItemAttributeConverter : JsonConverter<Dictionary<string, ItemAttributeSchema>>
+    public class LibraryItemAttributeConverter : JsonConverter<Dictionary<string, LibraryItemAttributeDto>>
     {
-        public override Dictionary<string, ItemAttributeSchema> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override Dictionary<string, LibraryItemAttributeDto> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var list = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
             if (list == null) { return new(); }
 
-            var items = new Dictionary<string, ItemAttributeSchema>(list.Count);
+            var items = new Dictionary<string, LibraryItemAttributeDto>(list.Count);
             foreach (var item in list)
             {                
                 if (item.Value is JsonElement element)
@@ -18,12 +18,12 @@
                     if(element.ValueKind == JsonValueKind.String)
                     {
                         var value = element.Deserialize<string>() ?? string.Empty;
-                        items[item.Key] = new ItemAttributeSchema(item.Key, value);
+                        items[item.Key] = new LibraryItemAttributeDto(item.Key, value);
                     }
                     else if(element.ValueKind == JsonValueKind.Array)
                     {
                         var values = element.Deserialize<List<string>>() ?? new();
-                        items[item.Key] = new ItemAttributeSchema(item.Key, values);
+                        items[item.Key] = new LibraryItemAttributeDto(item.Key, values);
                     }
                     else
                     {
@@ -32,14 +32,14 @@
                 }
                 else
                 {
-                    items[item.Key] = new ItemAttributeSchema(item.Key, $"{item.Value}");
+                    items[item.Key] = new LibraryItemAttributeDto(item.Key, $"{item.Value}");
                 }
             }
 
             return items;
         }
 
-        public override void Write(Utf8JsonWriter writer, Dictionary<string, ItemAttributeSchema> values, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Dictionary<string, LibraryItemAttributeDto> values, JsonSerializerOptions options)
         {
             writer.WriteRawValue(JsonSerializer.Serialize(values.ToDictionary(x => x.Key, x => x.Value.Values)));
         }

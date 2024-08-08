@@ -4,7 +4,7 @@
     /// Attribute
     /// </summary>
     [DebuggerDisplay("{Name}, ({Key}, Type: {Type}, Units: {Units})")]
-    public class ItemTypeAttributeSchema : SchemaBase
+    public class LibraryItemTypeAttributeDto : SchemaBase
     {        
         /// <summary>
         /// Library Unique Key
@@ -68,13 +68,13 @@
         /// Attribute Values
         /// </summary>
         /// <remarks>Only used for enum (picklist) attributes</remarks>
-        [JsonPropertyName("values"), JsonConverter(typeof(ItemTypeAttributeValueConverter)), JsonIgnoreEmptyCollection]
+        [JsonPropertyName("values"), JsonConverter(typeof(LibraryItemTypeAttributeValueConverter)), JsonIgnoreEmptyCollection]
         [ValidateCollectionItems]
-        public Dictionary<string, ItemTypeAttributeValueSchema> Values { get; set; } = new();
+        public Dictionary<string, LibraryItemTypeAttributeValueDto> Values { get; set; } = new();
 
         #region --- Extended ---
 
-        public ItemTypeSchema? ItemType { get; set; }
+        public LibraryItemTypeDto? ItemType { get; set; }
 
         #endregion
 
@@ -84,7 +84,7 @@
         /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
-        public void Init(ItemTypeSchema parent)
+        public void Init(LibraryItemTypeDto parent)
         {
             this.ItemType = parent;
 

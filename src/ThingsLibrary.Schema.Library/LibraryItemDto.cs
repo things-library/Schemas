@@ -4,7 +4,7 @@
     /// Library Item
     /// </summary>
     [DebuggerDisplay("{Name} (Key: {Key}, Type: {Type})")]
-    public class ItemSchema : SchemaBase
+    public class LibraryItemDto : SchemaBase
     {        
         /// <summary>
         /// Resource Key
@@ -39,15 +39,15 @@
         /// <summary>
         /// Attributes
         /// </summary>         
-        [JsonPropertyName("attributes"), JsonConverter(typeof(ItemAttributeConverter)), JsonIgnoreEmptyCollection]
-        public Dictionary<string, ItemAttributeSchema> Attributes { get; set; } = new();
+        [JsonPropertyName("attributes"), JsonConverter(typeof(LibraryItemAttributeConverter)), JsonIgnoreEmptyCollection]
+        public Dictionary<string, LibraryItemAttributeDto> Attributes { get; set; } = new();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, ItemSchema> Attachments { get; set; } = new();
+        public Dictionary<string, LibraryItemDto> Attachments { get; set; } = new();
 
         #region --- Extended ---
 
@@ -55,19 +55,19 @@
         /// Library
         /// </summary>
         [JsonIgnore]
-        public LibrarySchema? Library { get; set; }
+        public LibraryDto? Library { get; set; }
 
         /// <summary>
         /// Item Type
         /// </summary>
         [JsonIgnore]
-        public ItemTypeSchema? ItemType { get; set; }
+        public LibraryItemTypeDto? ItemType { get; set; }
 
         /// <summary>
         /// Root Library Item
         /// </summary>
         [JsonIgnore]
-        public ItemSchema? RootItem { get; set; }
+        public LibraryItemDto? RootItem { get; set; }
 
         #endregion
 
@@ -77,7 +77,7 @@
         /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
-        public void Init(LibrarySchema parent)
+        public void Init(LibraryDto parent)
         {
             this.Library = parent;
             if (parent.ItemTypes.ContainsKey(this.Type)) { this.ItemType = parent.ItemTypes[this.Type]; }
@@ -103,7 +103,7 @@
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemSchema()
+        public LibraryItemDto()
         {
             //nothing
         }
@@ -112,7 +112,7 @@
         /// Adds the flat listing of attributes (replacing existing)
         /// </summary>
         /// <param name="attributes">Flat attribute listing</param>
-        public void Add(IEnumerable<ItemAttributeSchema> attributes)
+        public void Add(IEnumerable<LibraryItemAttributeDto> attributes)
         {
             ArgumentNullException.ThrowIfNull(attributes);
 

@@ -4,7 +4,7 @@
     /// Item Schema - Flexible
     /// </summary>
     [DebuggerDisplay("{Name} (Key: {Key}, Type: {Type})")]
-    public class ItemBasicSchema : SchemaBase
+    public class BasicItemDto : SchemaBase
     {
         /// <summary>
         /// Json Schema Definition
@@ -45,36 +45,40 @@
         /// Attributes
         /// </summary> 
         /// <remarks>Value must be a string or array of strings</remarks>
-        [JsonPropertyName("attributes"), JsonConverter(typeof(ItemBasicAttributeConverter)), JsonIgnoreEmptyCollection]
-        public Dictionary<string, ItemBasicAttributeSchema> Attributes { get; set; } = new();
+        [JsonPropertyName("attributes"), JsonConverter(typeof(BasicItemAttributesConverter)), JsonIgnoreEmptyCollection]
+        public BasicItemAttributesDto Attributes { get; set; } = new();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public List<ItemBasicSchema> Attachments { get; set; } = new();
+        public List<BasicItemDto> Attachments { get; set; } = new();
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemBasicSchema()
+        public BasicItemDto()
         {
             //nothing
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public BasicItemDto(string key, string type)
+        {
+            this.Key = key;
+            this.Type = type;
         }
 
         /// <summary>
         /// Add basic collection of attributes to the listing
         /// </summary>
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Add(IEnumerable<ItemBasicAttributeSchema> attributes)
+        public void Add(IEnumerable<BasicItemAttributeDto> attributes)
         {
-            ArgumentNullException.ThrowIfNull(attributes);
-
-            foreach (var attribute in attributes)
-            {
-                this.Attributes[attribute.Key] = attribute;
-            }
+            this.Attributes.Add(attributes);
         }
     }
 }
