@@ -12,7 +12,7 @@
 		"test_item": {			
 			"name": "Test Item",
 			"type": "test_type",
-			"version": 0			
+			"version": -1			
 		}
 	}
 }
