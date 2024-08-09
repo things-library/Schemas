@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection;
+
 namespace ThingsLibrary.Schema.Library.Base
 {
     /// <summary>
@@ -61,9 +63,25 @@ namespace ThingsLibrary.Schema.Library.Base
         public Dictionary<string, string> Metadata { get; set; } = [];
 
         /// <summary>
-        /// Revision Number (1 = first)
+        /// Revision Number (1 = first, 0 = unknown/unspecified)
         /// </summary>
-        [JsonPropertyName("version"), DefaultValue(1), Range(1, int.MaxValue)]
-        public int Version { get; set; } = 1;
+        [JsonPropertyName("version"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [DefaultValue(0), Range(0, int.MaxValue)]
+        public int Version { get; set; } = 0;   //0 = unknown/not specified
+
+
+        /// <summary>
+        /// Record ID
+        /// </summary>
+        /// <remarks>Not Serialized</remarks>
+        [JsonIgnore]
+        public Guid? Id { get; set; }
+
+        /// <summary>
+        /// Tag
+        /// </summary>
+        /// <remarks>Not Serialized</remarks>
+        [JsonIgnore]
+        public object? Tag { get; set; }
     }
 }

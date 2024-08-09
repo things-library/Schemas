@@ -55,6 +55,7 @@
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
         public List<BasicItemDto> Attachments { get; set; } = new();
 
+
         /// <summary>
         /// Constructor
         /// </summary>
