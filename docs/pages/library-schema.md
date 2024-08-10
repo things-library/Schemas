@@ -59,28 +59,3 @@ The item is the core building block of the library as it defines all the various
 ### Generic Rules
 
 * Every object in the data structure supports a metadata property which is additional key-value attributes that can be used for various system or user needs such as change history tracking.  These key-value pairs are not considered type attributes.
-
-
-# HTTP Headers
-
-Json Schema document should be sent with the right headers seen below.
-
-## Request Headers:
-
-| Key | Value | Description |
-| -- | -- | -- |
-| Accept | application/schema+json | Specifies what is the acceptable content-type for the requesting agent. |
-| Accept-Schema | {{URL}} | Specifies the acceptable json schema |
-
-## Response Headers:
-
-| Key | Value | Description |
-| -- | -- | -- |
-| Schema | {{Url}} | Specifies the schema which returned content follows |
-| Cache-Control | public, max-age=31536000 | Caching TTL / duration to use.  |
-| Last-Modified | {{date-time}} | Date and time the data was last changed. |
-| ETag | {{string}} | Unique tracking code that changes each time the underlying data changes. |
-| Content-Type | application/schema+json | |
-
-
-

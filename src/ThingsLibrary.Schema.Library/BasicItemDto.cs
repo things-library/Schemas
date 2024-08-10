@@ -67,10 +67,15 @@
         /// <summary>
         /// Constructor
         /// </summary>
+        /// <param name="key">Unique Key</param>
+        /// <param name="type">Item Type</param>
+        /// <remarks>Name is automatically set to key value</remarks>
         public BasicItemDto(string key, string type)
         {
-            this.Key = key;
             this.Type = type;
+
+            this.Key = key;
+            this.Name = key;
         }
 
         /// <summary>

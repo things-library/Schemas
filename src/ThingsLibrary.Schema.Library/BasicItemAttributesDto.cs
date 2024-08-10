@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace ThingsLibrary.Schema.Library
 {
@@ -130,8 +131,46 @@ namespace ThingsLibrary.Schema.Library
             this.Add(new BasicItemAttributeDto(key, values), append);
         }
 
+        /// <summary>
+        /// Get Attribute as T type
+        /// </summary>
+        /// <typeparam name="T">Type to return</typeparam>
+        /// <param name="key">Key</param>
+        /// <param name="defaultValue">Default Value</param>
+        /// <returns></returns>
+        public T Get<T>(string key, T defaultValue)
+        {
+            if (this.Items.TryGetValue(key, out BasicItemAttributeDto? existingAttribute))
+            {
+                try
+                {
+                    if(defaultValue is TimeSpan)
+                    {                        
+                        var converter = TypeDescriptor.GetConverter(typeof(T));
+                        if (converter != null)
+                        {
+                            return (T)converter.ConvertFrom(existingAttribute.Value);
+                        }                 
+                    }                    
+                    
+                    return JsonSerializer.Deserialize<T>(existingAttribute.Value) ?? defaultValue;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.ToString());
+
+                    return defaultValue;
+                }
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+
         #region --- IEnumerable ---
-        
+
         public IEnumerator<BasicItemAttributeDto> GetEnumerator()
         {
             // the items contain the 'key' field so we don't need to return keyvalue pairs
