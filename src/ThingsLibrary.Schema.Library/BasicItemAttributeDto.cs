@@ -46,6 +46,12 @@
 
 
         /// <summary>
+        /// Parent Item
+        /// </summary>
+        [JsonIgnore]        
+        public BasicItemDto? Parent { get; set; }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public BasicItemAttributeDto()

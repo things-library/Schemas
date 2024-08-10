@@ -149,7 +149,7 @@ namespace ThingsLibrary.Schema.Library
                         var converter = TypeDescriptor.GetConverter(typeof(T));
                         if (converter != null)
                         {
-                            return (T)converter.ConvertFrom(existingAttribute.Value);
+                            return (T)(converter.ConvertFromString(existingAttribute.Value) ?? defaultValue);
                         }                 
                     }                    
                     

@@ -192,5 +192,28 @@ namespace ThingsLibrary.Schema.Library.Tests
             Assert.AreEqual(TimeSpan.FromSeconds(0), attributes.Get<TimeSpan>("7.7", TimeSpan.FromSeconds(0)));
             Assert.AreEqual(TimeSpan.FromSeconds(0), attributes.Get<TimeSpan>("INVALID", TimeSpan.FromSeconds(0)));
         }
+
+        [TestMethod]
+        public void Tree()
+        {
+            var root = new BasicItemDto("root", "root");
+            var child = new BasicItemDto("child", "child");
+            var grandChild = new BasicItemDto("grand_child", "grand_child");
+
+            root.Attachments.Add(child);
+            child.Attachments.Add(grandChild);
+
+            // initialize links
+            root.Init(null);
+
+            Assert.AreSame(root, root.Root);
+            Assert.AreSame(null, root.Parent);
+
+            Assert.AreSame(root, child.Root);
+            Assert.AreSame(root, child.Parent);
+
+            Assert.AreSame(root, grandChild.Root);
+            Assert.AreSame(child, grandChild.Parent);
+        }
     }
 }
