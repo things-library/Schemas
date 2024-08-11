@@ -131,6 +131,8 @@ namespace ThingsLibrary.Schema.Library.Tests
             attributes.Add("bool_true", "true");
             attributes.Add("bool_true_false", new List<string> { "true", "false" });
 
+            Assert.AreEqual(3, attributes.Count);
+
             Assert.IsTrue(attributes.Get<bool>("bool_true", false));
             Assert.IsFalse(attributes.Get<bool>("bool_false", true));
             Assert.IsTrue(attributes.Get<bool>("bool_true_false", false));  //should return the first of the array
@@ -149,6 +151,8 @@ namespace ThingsLibrary.Schema.Library.Tests
             attributes.Add("int_77", "77");
             attributes.Add("int_-77", "-77");
 
+            Assert.AreEqual(2, attributes.Count);
+
             // INT TESTS
             Assert.AreEqual(77, attributes.Get<int>("int_77", 0));
             Assert.AreEqual((decimal)77, attributes.Get<decimal>("int_77", 0));
@@ -162,7 +166,9 @@ namespace ThingsLibrary.Schema.Library.Tests
             attributes.Add("77", "77");
             attributes.Add("7.7", "7.7");
             attributes.Add("-7.7", "-7.7");
-                        
+
+            Assert.AreEqual(3, attributes.Count);
+
             // DECIMAL TESTS
             Assert.AreEqual(77, attributes.Get<decimal>("77", 0));
             Assert.AreEqual((decimal)7.7, attributes.Get<decimal>("7.7", 0));
@@ -183,6 +189,8 @@ namespace ThingsLibrary.Schema.Library.Tests
             attributes.Add("7", "7");
             attributes.Add("7.7", "7.7");
 
+            Assert.AreEqual(4, attributes.Count);
+
             // TIMESPAN TESTS
             Assert.AreEqual(TimeSpan.FromMinutes(7), attributes.Get<TimeSpan>("070", TimeSpan.FromSeconds(0)));
             Assert.AreEqual(TimeSpan.FromSeconds(7 * 60 + 7), attributes.Get<TimeSpan>("077", TimeSpan.FromSeconds(0)));
@@ -194,7 +202,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         }
 
         [TestMethod]
-        public void Tree()
+        public void Parents()
         {
             var root = new BasicItemDto("root", "root");
             var child = new BasicItemDto("child", "child");

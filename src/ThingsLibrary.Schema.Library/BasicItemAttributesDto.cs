@@ -8,7 +8,7 @@ namespace ThingsLibrary.Schema.Library
     /// <summary>
     /// Basic Item Attributes
     /// </summary>
-    [DebuggerDisplay("(Qty: {Items.Count})")]
+    [DebuggerDisplay("({Items.Count} Attributes)")]
     public class BasicItemAttributesDto : IEnumerable<BasicItemAttributeDto>
     {
         private Dictionary<string, BasicItemAttributeDto> Items { get; set; } = [];
@@ -168,6 +168,11 @@ namespace ThingsLibrary.Schema.Library
                 return defaultValue;
             }
         }
+
+        /// <summary>
+        /// Item Count
+        /// </summary>
+        public int Count => this.Items.Count;
 
         #region --- IEnumerable ---
 
