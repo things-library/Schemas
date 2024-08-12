@@ -1,101 +1,40 @@
 namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
-    public class BasicItemTests : Base.TestBase
-    {
-        #region --- Setup/Cleanup ---
-
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
-        {
-            // static field initialization
-            LoadSchemas();
-        }
-
-        [TestInitialize]
-        public void TestInitialize()
-        {
-
-        }
-
-        //[TestCleanup]
-        //public void TestCleanup()
-        //{
-        //    //nothing
-        //}
-
-        //[ClassCleanup]
-        //public void ClassCleanup()
-        //{
-        //    //nothing
-        //}
-
-        #endregion
-
-
+    public class BasicItemTests
+    {        
         [TestMethod]
-        [DataRow("valid/attribute_value.json", true)]
-        [DataRow("valid/attribute_values.json", true)]
-        [DataRow("valid/children.json", true)]
-        [DataRow("valid/minimal.json", true)]
-        [DataRow("valid/name_max.json", true)]
-        [DataRow("valid/name_min.json", true)]
-        [DataRow("valid/simple.json", true)]
-        [DataRow("valid/type_max.json", true)]
-        [DataRow("valid/type_min.json", true)]
-        [DataRow("bad/attribute_value_1.json", false)]
-        [DataRow("bad/attribute_value_2.json", false)]
-        [DataRow("bad/missing_name.json", false)]
-        [DataRow("bad/missing_type.json", false)]
-        [DataRow("bad/name_max.json", false)]
-        [DataRow("bad/name_min.json", false)]
-        [DataRow("bad/type_max.json", false)]
-        [DataRow("bad/type_min.json", false)]
-        public void Validate(string fileName, bool isValid)
-        {            
-            var filePath = $"TestData/basic-items/{fileName}";
-            Assert.IsTrue(File.Exists(filePath));
-
-            var json = File.ReadAllText(filePath);
-            var doc = JsonDocument.Parse(json);
-
-            var results = Base.TestBase.ItemSchemaDoc.Evaluate(doc, Base.TestBase.EvaluationOptions);
-            if (Debugger.IsAttached && isValid && !results.IsValid) { this.DebugLogResults(results, fileName); }
-
-            Assert.AreEqual(isValid, results.IsValid);
-        }
-
-        [TestMethod]
-        [DataRow("valid/children.json", true)]
-        [DataRow("valid/minimal.json", true)]
-        [DataRow("valid/name_max.json", true)]
-        [DataRow("valid/name_min.json", true)]
-        [DataRow("valid/simple.json", true)]
-        [DataRow("valid/type_max.json", true)]
-        [DataRow("valid/type_min.json", true)]
-        [DataRow("bad/missing_name.json", false)]
-        [DataRow("bad/missing_type.json", false)]
-        [DataRow("bad/type_max.json", false)]
-        [DataRow("bad/type_min.json", false)]
-        public void ValidateObjects(string fileName, bool isValid)
+        public void Basic_Validation_Valid()
         {
-            var filePath = $"TestData/basic-items/{fileName}";
-            Assert.IsTrue(File.Exists(filePath));
+            var testFilePaths = Directory.GetFiles($"TestData/basic-items/valid", "*.json");
 
-            var json = File.ReadAllText(filePath);
-            var doc = JsonDocument.Parse(json);
-
-            var item = doc.Deserialize<BasicItemDto>(SchemaBase.JsonSerializerOptions);
-            Assert.IsNotNull(item);
-
-            var validationErrors = item.Validate();
-            if (isValid)
+            foreach (var testFilePath in testFilePaths)
             {
-                // if we expect valid then there would be not validation errors
+                var json = File.ReadAllText(testFilePath);
+                var doc = JsonDocument.Parse(json);
+
+                var item = doc.Deserialize<BasicItemDto>(SchemaBase.JsonSerializerOptions);
+                Assert.IsNotNull(item);
+
+                var validationErrors = item.Validate();
                 Assert.IsFalse(validationErrors.Any());
             }
-            else
+        }
+
+        [TestMethod]
+        public void Basic_Validation_Bad()
+        {
+            var testFilePaths = Directory.GetFiles($"TestData/basic-items/bad", "*.json");
+
+            foreach (var testFilePath in testFilePaths)
             {
+                var json = File.ReadAllText(testFilePath);
+                var doc = JsonDocument.Parse(json);
+
+                var item = doc.Deserialize<BasicItemDto>(SchemaBase.JsonSerializerOptions);
+                Assert.IsNotNull(item);
+
+                var validationErrors = item.Validate();
                 Assert.IsTrue(validationErrors.Any());
             }
         }
@@ -103,11 +42,11 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]        
         public void Constructor()
         {
-            var item = new BasicItemDto("test_key", "test_type");
+            var item = new BasicItemDto("test_key", "test_type", "test_name");
 
             Assert.AreEqual("test_key", item.Key);
             Assert.AreEqual("test_type", item.Type);
-            Assert.AreEqual("test_key", item.Name);
+            Assert.AreEqual("test_name", item.Name);
 
             var attributes = new BasicItemAttributesDto();
             attributes.Add("test_1", "test_1_value");
@@ -204,9 +143,9 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Parents()
         {
-            var root = new BasicItemDto("root", "root");
-            var child = new BasicItemDto("child", "child");
-            var grandChild = new BasicItemDto("grand_child", "grand_child");
+            var root = new BasicItemDto("root", "root", "Root");
+            var child = new BasicItemDto("child", "child", "Child");
+            var grandChild = new BasicItemDto("grand_child", "grand_child", "Grand Child");
 
             root.Attachments.Add(child);
             child.Attachments.Add(grandChild);

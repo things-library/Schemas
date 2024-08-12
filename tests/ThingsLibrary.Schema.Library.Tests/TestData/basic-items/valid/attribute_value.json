@@ -3,6 +3,10 @@
     "type": "test_type",
 
     "attributes": {
-        "Color": "Red"
+        "String": "Red",
+        "Visible": true,
+        "Invisible": false,
+        "Nothing": null,
+        "Number": 1234.56
     }
 }

@@ -53,8 +53,8 @@
                 new() { Key = AttributeDataTypes.TextArea,   Name = "Text (MultiLine)",  Type = "string",  InputType = "textarea",      Format = "textarea" },
                 new() { Key = AttributeDataTypes.Time,       Name = "Time Only",         Type = "string",  InputType = "time",          Format = "time"     },
                 new() { Key = AttributeDataTypes.Url,        Name = "Url",               Type = "string",  InputType = "url",           Format = "uri"      },
-                new() { Key = AttributeDataTypes.Decimal,      Name = "Number (Decimals)", Type = "number",  InputType = "number",        Format = ""         },
-                new() { Key = AttributeDataTypes.Integer,   Name = "Number (Whole)",    Type = "integer", InputType = "number",        Format = ""         },
+                new() { Key = AttributeDataTypes.Decimal,    Name = "Number (Decimals)", Type = "number",  InputType = "number",        Format = ""         },
+                new() { Key = AttributeDataTypes.Integer,    Name = "Number (Whole)",    Type = "integer", InputType = "number",        Format = ""         },
                 new() { Key = AttributeDataTypes.DecimalRange, Name = "Number Range (Decimals)", Type = "number", InputType = "number",    Format = ""},
                 new() { Key = AttributeDataTypes.IntegerRange,  Name = "Number Range (Whole)", Type = "integer", InputType = "number",   Format = "" },
                 new() { Key = AttributeDataTypes.CurrencyRange,  Name = "Currency Range", Type = "number", InputType = "number",   Format = "" }
@@ -110,7 +110,7 @@
         /// Unique Key
         /// </summary>
         [Key, Required, Display(Name = "Key"), StringLength(50, MinimumLength = 2)]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string Key { get; init; } = string.Empty;
 
         [Display(Name = "Name"), StringLength(50, MinimumLength = 2), Required]

@@ -4,20 +4,20 @@
     /// Item Schema - Flexible
     /// </summary>
     [DebuggerDisplay("Key: {Key} (Name: {Name}, Type: {Type})")]
-    public class BasicItemDto : Base.SchemaBase, IJsonOnDeserialized
+    public class BasicItemDto : Base.SchemaBase, IJsonOnDeserialized, IJsonOnSerializing
     {        
-        /// <summary>
+        //// <summary>
         /// Json Schema Definition
         /// </summary>
         [JsonPropertyName("$schema"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Uri? SchemaUrl { get; set; } = new Uri($"{Base.SchemaBase.SchemaBaseUrl}/item.json");
+        public Uri? SchemaUrl { get; set; }
 
         /// <summary>
         /// Resource Key
         /// </summary>  
         [JsonPropertyName("key")]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1)]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string? Key { get; set; }
 
         /// <summary>
@@ -82,21 +82,25 @@
             this.Root = this;   //default until we know otherwise
         }
 
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="key">Unique Key</param>
-        /// <param name="type">Item Type</param>
+        /// <param name="type">Type</param>
+        /// <param name="name">Name</param>
         /// <remarks>Name is automatically set to key value</remarks>
-        public BasicItemDto(string key, string type)
+        public BasicItemDto(string key, string type, string name)
         {
+            this.Root = this;
+
             this.Type = type;
 
             this.Key = key;
-            this.Name = key;
-
-            this.Root = this;
+            this.Name = name;            
         }
+
+        #region --- Attributes ---
 
         /// <summary>
         /// Get and set attribute values
@@ -119,36 +123,72 @@
         public T Get<T>(string key, T defaultValue) => this.Attributes.Get<T>(key, defaultValue);
 
         /// <summary>
+        /// Add attribute to listing
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="value">Value</param>
+        /// <param name="append">If value should be appended to existing</param>
+        public void Add(string key, string value, bool append)
+        {
+            var attribute = new BasicItemAttributeDto(key, value);
+            
+            this.Add(attribute, append);
+        }
+
+        /// <summary>
         /// Add basic collection of attributes to the listing
         /// </summary>
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Add(IEnumerable<BasicItemAttributeDto> attributes, bool append = false) => this.Attributes.Add(attributes, append);
+        /// <param name="append">If value(s) should be appended to existing</param>
+        public void Add(IEnumerable<BasicItemAttributeDto> attributes, bool append = false)
+        {            
+            foreach (var attribute in attributes)
+            {                
+                this.Add(attributes, append);
+            }
+        }
 
         /// <summary>
         /// Add attribute to the listing
         /// </summary>
         /// <param name="attribute">Attribute</param>
-        public void Add(BasicItemAttributeDto attribute, bool append = false) => this.Attributes.Add(attribute, append);
+        /// <param name="append">If value(s) should be appended to existing</param>
+        public void Add(BasicItemAttributeDto attribute, bool append = false)
+        {
+            attribute.Parent = this;    //clearly we are the parent
 
-        /// <summary>
-        /// Add attribute to listing
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <param name="append"></param>
-        public void Add(string key, string value, bool append) => this.Attributes.Add(key, value, append);
+            this.Attributes.Add(attribute, append);
+        }
 
-        /// <summary>
-        /// Add basic collection of attributes to the listing
-        /// </summary>
-        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Add(IEnumerable<BasicItemDto> childItems) => this.Attachments.AddRange(childItems);
+        #endregion
+
+        #region --- Attachments ---
 
         /// <summary>
         /// Add basic collection of attributes to the listing
         /// </summary>
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Add(BasicItemDto childItem) => this.Attachments.Add(childItem);
+        public void Add(IEnumerable<BasicItemDto> childItems)
+        {
+            foreach(var childItem in childItems)
+            {
+                this.Add(childItem);
+            }
+        }
+
+        /// <summary>
+        /// Add basic collection of attributes to the listing
+        /// </summary>
+        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
+        public void Add(BasicItemDto childItem) 
+        {
+            childItem.Parent = this;        // pretty obvious who the parent is
+            childItem.Root = this.Root;     // well the child clearly isn't the root so our root must be its root
+            
+            this.Attachments.Add(childItem); 
+        }
+
+        #endregion
 
         /// <summary>
         /// Establishes the child-parent linkage
@@ -158,7 +198,7 @@
             // must be at the top of the tree
             if(parent == null)
             {
-                this.Root = this;
+                this.Root = this;   // well we are the root if we have no parents
             }
             else
             { 
@@ -184,6 +224,18 @@
         public void OnDeserialized()
         {
             this.Init(null);
+        }
+
+        /// <summary>
+        /// Initialize the links
+        /// </summary>
+        public void OnSerializing()
+        {
+            // attempt to output the schema URL for root serializing
+            if(this.Root == this)
+            {
+                this.SchemaUrl = new Uri($"{Base.SchemaBase.SchemaBaseUrl}/item.json");
+            }            
         }
     }
 }

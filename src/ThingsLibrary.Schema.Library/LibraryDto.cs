@@ -1,4 +1,5 @@
 ﻿using ThingsLibrary.Schema;
+using ThingsLibrary.Schema.Library.Base;
 
 namespace ThingsLibrary.Schema.Library
 {
@@ -20,7 +21,7 @@ namespace ThingsLibrary.Schema.Library
         /// <remarks>This is used to align records to know if it is new or update to a existing library</remarks>
         [JsonPropertyName("key"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         [Key, Display(Name = "Key"), StringLength(50, MinimumLength = 1)]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string? Key { get; set; }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace ThingsLibrary.Schema.Library
         {
             this.Init();
         }
-
+        
         #endregion
 
         /// <summary>
@@ -80,6 +81,85 @@ namespace ThingsLibrary.Schema.Library
         public LibraryDto()
         {
             //nothing
-        }        
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public LibraryDto(string key, string name)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(key);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
+
+            if (!SchemaBase.IsKeyValid(key)) { throw new ArgumentException(SchemaBase.KeyPatternErrorMessage); }
+
+            this.Key = key;
+            this.Name = name;
+        }
+
+        public LibraryItemDto? this[string key]
+        {
+            get => (this.Items.ContainsKey(key) ? this.Items[key] : null);
+
+            set
+            {
+                // if setting the key to null.. then remove it (if exists)
+                if (value == null)
+                {
+                    this.Items.Remove(key);
+                }
+                else
+                {
+                    this.Items[key] = value;
+                }                
+            }
+
+        }
+
+        #region --- Add Item ---
+
+        public void Add(IEnumerable<BasicItemDto> basicItems)
+        {
+            foreach (var basicItem in basicItems)
+            {
+                this.Add(basicItem);
+            }
+        }
+
+        public void Add(BasicItemDto basicItem)
+        {
+            //convert basic item to valid library item
+
+            // if the key is missing then take it from the required name field
+            if (string.IsNullOrWhiteSpace(basicItem.Key)) { basicItem.Key = basicItem.Name; }
+
+            if (!SchemaBase.IsKeyValid(basicItem.Key))
+            {
+                basicItem.Key = basicItem.Key.ToKey();
+            }
+
+            if (string.IsNullOrWhiteSpace(basicItem.Name))
+            {
+                //convert key to some sort of display name
+            }
+
+            throw new NotImplementedException();
+        }
+
+
+        public void Add(IEnumerable<LibraryItemDto> items)
+        {
+            foreach (var item in items)
+            {
+                this.Add(item);
+            }
+        }
+
+        public void Add(LibraryItemDto item)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
