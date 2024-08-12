@@ -144,16 +144,16 @@ namespace ThingsLibrary.Schema.Library
             {
                 try
                 {
-                    if(defaultValue is TimeSpan)
+                    if(defaultValue is TimeSpan || defaultValue is bool)
                     {                        
                         var converter = TypeDescriptor.GetConverter(typeof(T));
                         if (converter != null)
                         {
                             return (T)(converter.ConvertFromString(existingAttribute.Value) ?? defaultValue);
                         }                 
-                    }                    
-                    
-                    return JsonSerializer.Deserialize<T>(existingAttribute.Value) ?? defaultValue;
+                    }
+                                       
+                    return JsonSerializer.Deserialize<T>(existingAttribute.Value.ToLower()) ?? defaultValue;
                 }
                 catch (Exception ex)
                 {

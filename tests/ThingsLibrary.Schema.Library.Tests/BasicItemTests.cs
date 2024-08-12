@@ -76,12 +76,18 @@ namespace ThingsLibrary.Schema.Library.Tests
             attributes.Add("bool_false", "false");
             attributes.Add("bool_true", "true");
             attributes.Add("bool_true_false", new List<string> { "true", "false" });
+            
+            attributes.Add("bool_False", "False");
+            attributes.Add("bool_True", "True");
 
-            Assert.AreEqual(3, attributes.Count);
+            Assert.AreEqual(5, attributes.Count);
 
             Assert.IsTrue(attributes.Get<bool>("bool_true", false));
             Assert.IsFalse(attributes.Get<bool>("bool_false", true));
             Assert.IsTrue(attributes.Get<bool>("bool_true_false", false));  //should return the first of the array
+            
+            Assert.IsTrue(attributes.Get<bool>("bool_True", false));
+            Assert.IsFalse(attributes.Get<bool>("bool_False", true));
 
             Assert.IsFalse(attributes.Get<bool>("bool_INVALID", false));
             Assert.IsTrue(attributes.Get<bool>("bool_INVALID", true));
