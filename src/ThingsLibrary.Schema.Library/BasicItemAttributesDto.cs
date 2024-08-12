@@ -21,7 +21,7 @@ namespace ThingsLibrary.Schema.Library
         public string this[string key]
         {
             get => (this.Items.ContainsKey(key) ? this.Items[key].Value : string.Empty);
-            
+
             set
             {
                 if (this.Items.ContainsKey(key))

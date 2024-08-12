@@ -11,7 +11,7 @@
         /// </summary>        
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>

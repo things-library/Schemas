@@ -1,4 +1,6 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿using ThingsLibrary.Schema.Library.Base;
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Library Item
@@ -11,7 +13,7 @@
         /// </summary>  
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
@@ -33,7 +35,7 @@
         /// </summary>
         [JsonPropertyName("type")]
         [Display(Name = "Item Type"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternDescription)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string Type { get; set; } = string.Empty;
 
         /// <summary>
@@ -106,6 +108,23 @@
         public LibraryItemDto()
         {
             //nothing
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public LibraryItemDto(string type, string key, string name)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(type);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(key);            
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
+
+            if (!SchemaBase.IsKeyValid(type)) { throw new ArgumentException(SchemaBase.KeyPatternErrorMessage); }
+            if (!SchemaBase.IsKeyValid(key)) { throw new ArgumentException(SchemaBase.KeyPatternErrorMessage); }
+
+            this.Type = type;
+            this.Key = key;
+            this.Name = name;            
         }
 
         /// <summary>

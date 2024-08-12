@@ -1,5 +1,6 @@
 ﻿
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ThingsLibrary.Schema.Library.Base
 {
@@ -35,9 +36,20 @@ namespace ThingsLibrary.Schema.Library.Base
         /// <summary>
         /// Key pattern description
         /// </summary>
-        public const string KeyPatternDescription = "Invalid Characters.  Please only use lowercase letters, numeric, underscores and hyphens.";
-                
- 
+        public const string KeyPatternErrorMessage = "Invalid Characters.  Please only use lowercase letters, numeric, underscores and hyphens.";
+
+
+
+        public static bool IsKeyValid(string key)
+        {
+            return IsKeyValid(key, SchemaBase.KeyPattern);
+        }
+
+        public static bool IsKeyValid(string key, string keyPattern)
+        {
+            return Regex.IsMatch(key, keyPattern);
+        }
+
         /// <summary>
         /// Standard json serialization settings for our libraray objects
         /// </summary>        
