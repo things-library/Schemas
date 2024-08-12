@@ -1,4 +1,6 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿using ThingsLibrary.Schema.Library.Base;
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Item type
@@ -83,6 +85,11 @@
         /// <param name="name">Name</param>
         public LibraryItemTypeDto(string key, string name)
         {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(key);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
+
+            if (SchemaBase.IsKeyValid(key)) { throw new ArgumentException(SchemaBase.KeyPatternErrorMessage); }
+
             this.Key = key;
             this.Name = name;
         }

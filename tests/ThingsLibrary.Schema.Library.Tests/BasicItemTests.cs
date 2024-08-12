@@ -42,11 +42,18 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]        
         public void Constructor()
         {
-            var item = new BasicItemDto("test_key", "test_type", "test_name");
-
-            Assert.AreEqual("test_key", item.Key);
+            var item = new BasicItemDto("test_type", "test_name");
+                        
             Assert.AreEqual("test_type", item.Type);
             Assert.AreEqual("test_name", item.Name);
+            Assert.AreEqual("test_name", item.Key);
+
+
+            item = new BasicItemDto("test_type", "test_name", "test_key");
+
+            Assert.AreEqual("test_type", item.Type);
+            Assert.AreEqual("test_name", item.Name);
+            Assert.AreEqual("test_key", item.Key);
 
             var attributes = new BasicItemAttributesDto();
             attributes.Add("test_1", "test_1_value");

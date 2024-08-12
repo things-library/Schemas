@@ -1,6 +1,3 @@
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
-using System.ComponentModel.DataAnnotations;
-
 namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
@@ -91,10 +88,14 @@ namespace ThingsLibrary.Schema.Library.Tests
         {
             Assert.ThrowsException<ArgumentException>(() => new LibraryDto("BADKEY", "test"));
             Assert.ThrowsException<ArgumentException>(() => new LibraryDto("", "test"));
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.ThrowsException<ArgumentNullException>(() => new LibraryDto(null, "test"));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
             Assert.ThrowsException<ArgumentException>(() => new LibraryDto("test", ""));
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.ThrowsException<ArgumentNullException>(() => new LibraryDto("test", null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [TestMethod]
@@ -142,6 +143,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             item.Name = "";
             Assert.AreEqual(3, item.Validate().Count);
 
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.ThrowsException<ArgumentException>(() => new LibraryItemDto("BAD", "key", "Name"));
             Assert.ThrowsException<ArgumentNullException>(() => new LibraryItemDto(null, "key", "Name"));
             Assert.ThrowsException<ArgumentException>(() => new LibraryItemDto("", "key", "Name"));
@@ -152,7 +154,7 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             Assert.ThrowsException<ArgumentNullException>(() => new LibraryItemDto("type", "key", null));
             Assert.ThrowsException<ArgumentException>(() => new LibraryItemDto("type", "key", ""));
-
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         //[TestMethod]

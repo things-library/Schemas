@@ -86,18 +86,39 @@
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="key">Unique Key</param>
+
         /// <param name="type">Type</param>
+        /// <param name="key">Unique Key</param>
         /// <param name="name">Name</param>
         /// <remarks>Name is automatically set to key value</remarks>
-        public BasicItemDto(string key, string type, string name)
+        public BasicItemDto(string type, string name, string key)
         {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(type);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
+
             this.Root = this;
 
             this.Type = type;
+            this.Name = name;
+            this.Key = key;           
+        }
 
-            this.Key = key;
-            this.Name = name;            
+        /// <summary>
+        /// Constructor
+        /// </summary>        
+        /// <param name="type">Type</param>
+        /// <param name="name">Name</param>
+        /// <remarks>Name is automatically set to key value</remarks>
+        public BasicItemDto(string type, string name)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(type);            
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
+
+            this.Root = this;
+
+            this.Type = type;
+            this.Name = name;
+            this.Key = name;            
         }
 
         #region --- Attributes ---
