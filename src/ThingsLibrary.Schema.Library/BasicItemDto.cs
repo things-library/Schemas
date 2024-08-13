@@ -181,14 +181,26 @@
             this.Attributes.Add(attribute, append);
         }
 
+        /// <summary>
+        /// Remove attribute(s) with the key
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <returns>True if item was found in collection, Fals if not found</returns>
+        public bool Remove(string key) => this.Attributes.Remove(key);
+
+        /// <summary>
+        /// Remove all attributes
+        /// </summary>
+        public void RemoveAll() => this.Attributes.Clear();
+
         #endregion
 
         #region --- Attachments ---
 
         /// <summary>
-        /// Add basic collection of attributes to the listing
+        /// Attach items to parent item
         /// </summary>
-        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
+        /// <param name="childItems">Items to attach</param>
         public void Attach(IEnumerable<BasicItemDto> childItems)
         {
             foreach(var childItem in childItems)
@@ -198,16 +210,34 @@
         }
 
         /// <summary>
-        /// Add basic collection of attributes to the listing
+        /// Attach item to parent item
         /// </summary>
-        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Attach(BasicItemDto childItem) 
+        /// <param name="childItem">Items to attach</param>
+        public void Attach(BasicItemDto childItem)
         {
             childItem.Parent = this;        // pretty obvious who the parent is
             childItem.Root = this.Root;     // well the child clearly isn't the root so our root must be its root
-            
-            this.Attachments.Add(childItem); 
+
+            this.Attachments.Add(childItem);
         }
+
+        /// <summary>
+        /// Detatch 
+        /// </summary>
+        /// <param name="key">Key</param>
+        public bool Detatch(string key)
+        {
+            var childItem = this.Attachments.FirstOrDefault(x => x.Key == key);
+            if(childItem == null) { return false; }
+
+            return this.Attachments.Remove(childItem);
+        }
+
+        /// <summary>
+        /// Detatch All Attachments
+        /// </summary>        
+        public void DetatchAll() => this.Attachments.Clear();
+        
 
         #endregion
 

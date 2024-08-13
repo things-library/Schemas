@@ -170,6 +170,18 @@ namespace ThingsLibrary.Schema.Library
         }
 
         /// <summary>
+        /// Remove item (if exists) from collection
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <returns>True if item was found in collection, Fals if not found</returns>
+        public bool Remove(string key) => this.Items.Remove(key);
+
+        /// <summary>
+        /// Clear Listing
+        /// </summary>
+        public void Clear() => this.Items.Clear();
+
+        /// <summary>
         /// Item Count
         /// </summary>
         public int Count => this.Items.Count;

@@ -179,7 +179,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Clone()
         {
-            var root = new BasicItemDto("root", "root", "Root") { Id = Guid.NewGuid() }; 
+            var root = new BasicItemDto("root", "root", "Root") { Id = Guid.NewGuid() };
             var child = new BasicItemDto("child", "child", "Child") { Id = Guid.NewGuid() };
             var grandChild = new BasicItemDto("grand_child", "grand_child", "Grand Child") { Id = Guid.NewGuid() };
 
@@ -195,7 +195,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             child.Attachments.Add(grandChild);
 
             root.Init(null);
-            
+
             //CLONE TESTS
             var clone = child.Clone();
 
@@ -209,6 +209,52 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             Assert.AreNotSame(child.Attachments[0], clone.Attachments[0]);
             Assert.AreEqual(child.Attachments[0].Key, clone.Attachments[0].Key);
+        }
+
+        [TestMethod]
+        public void Remove()
+        {
+            var item = new BasicItemDto("item_type", "Item Name", "item_key") { Id = Guid.NewGuid() };
+
+            item["status_1"] = "Test Status 1";
+            item["status_2"] = "Test Status 2";
+            
+            Assert.AreEqual(2, item.Attributes.Count);
+
+            var result = item.Remove("INVALID");
+            Assert.IsFalse(result);
+
+            result = item.Remove("status_2");
+            Assert.IsTrue(result);
+            Assert.AreEqual(1, item.Attributes.Count);
+
+            item.RemoveAll();
+            Assert.AreEqual(0, item.Attributes.Count);
+        }
+
+        [TestMethod]
+        public void Detatch()
+        {
+            var child = new BasicItemDto("child", "Child", "child_key") { Id = Guid.NewGuid() };
+            var grandChild_1 = new BasicItemDto("grand_child", "Grand Child 1", "grand_child_1_key") { Id = Guid.NewGuid() };
+            var grandChild_2 = new BasicItemDto("grand_child", "Grand Child 2", "grand_child_2_key") { Id = Guid.NewGuid() };
+
+            child.Attach(grandChild_1);
+            child.Attach(grandChild_2);
+            child.Init(null);
+
+            Assert.AreEqual(2, child.Attachments.Count);
+
+            var result = child.Detatch("INVALID_KEY");
+            Assert.IsFalse(result);
+
+            result = child.Detatch("grand_child_1_key");
+            Assert.IsTrue(result);
+            Assert.AreEqual(1, child.Attachments.Count);
+            Assert.AreEqual("grand_child_2_key", child.Attachments[0].Key);
+
+            child.DetatchAll();
+            Assert.AreEqual(0, child.Attachments.Count);
         }
     }
 }
