@@ -5,7 +5,8 @@ namespace ThingsLibrary.Schema.Library.Extensions
 {
     public static class LibraryExtensions
     {
-        public static char[] SeperatorCharacters = " \\/-_[]{}.".ToCharArray();
+        public readonly static char[] SeperatorCharacters = " \\/-_[]{}.".ToCharArray();
+
         /// <summary>
         /// Converts text to snake_case key
         /// </summary>
@@ -70,6 +71,18 @@ namespace ThingsLibrary.Schema.Library.Extensions
             // replace the _ with space so that title case finds all the words
 
             return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(key.ToLower().Replace('_', ' '));
+        }
+
+        /// <summary>
+        /// Clone the object using serialization and deserialization
+        /// </summary>
+        /// <typeparam name="T">Object Type</typeparam>
+        /// <param name="obj">Object to clone</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static T Clone<T>(this T obj) where T : class
+        {
+            return JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(obj)) ?? throw new ArgumentException("Unable to clone item.");
         }
     }
 }

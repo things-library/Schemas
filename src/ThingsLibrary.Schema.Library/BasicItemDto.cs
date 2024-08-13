@@ -189,11 +189,11 @@
         /// Add basic collection of attributes to the listing
         /// </summary>
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Add(IEnumerable<BasicItemDto> childItems)
+        public void Attach(IEnumerable<BasicItemDto> childItems)
         {
             foreach(var childItem in childItems)
             {
-                this.Add(childItem);
+                this.Attach(childItem);
             }
         }
 
@@ -201,7 +201,7 @@
         /// Add basic collection of attributes to the listing
         /// </summary>
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Add(BasicItemDto childItem) 
+        public void Attach(BasicItemDto childItem) 
         {
             childItem.Parent = this;        // pretty obvious who the parent is
             childItem.Root = this.Root;     // well the child clearly isn't the root so our root must be its root
@@ -235,7 +235,7 @@
 
             foreach (var attribute in this.Attributes)
             {
-                attribute.Parent = this;
+                attribute.Parent = this;                
             }
         }
 
@@ -257,6 +257,21 @@
             {
                 this.SchemaUrl = new Uri($"{Base.SchemaBase.SchemaBaseUrl}/item.json");
             }            
+        }
+
+        /// <summary>
+        /// Clone the current item
+        /// </summary>
+        /// <returns></returns>
+        public BasicItemDto Clone()
+        {
+            // best way to detatch the hierarchy structure
+            var clone = this.Clone<BasicItemDto>();
+
+            // restore fields that aren't serialized
+            clone.Id = this.Id;
+            
+            return clone;
         }
     }
 }

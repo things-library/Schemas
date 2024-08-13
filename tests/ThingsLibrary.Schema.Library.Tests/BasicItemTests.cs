@@ -2,7 +2,7 @@ namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class BasicItemTests
-    {        
+    {
         [TestMethod]
         public void Basic_Validation_Valid()
         {
@@ -39,11 +39,11 @@ namespace ThingsLibrary.Schema.Library.Tests
             }
         }
 
-        [TestMethod]        
+        [TestMethod]
         public void Constructor()
         {
             var item = new BasicItemDto("test_type", "test_name");
-                        
+
             Assert.AreEqual("test_type", item.Type);
             Assert.AreEqual("test_name", item.Name);
             Assert.AreEqual("test_name", item.Key);
@@ -76,7 +76,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             attributes.Add("bool_false", "false");
             attributes.Add("bool_true", "true");
             attributes.Add("bool_true_false", new List<string> { "true", "false" });
-            
+
             attributes.Add("bool_False", "False");
             attributes.Add("bool_True", "True");
 
@@ -85,7 +85,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             Assert.IsTrue(attributes.Get<bool>("bool_true", false));
             Assert.IsFalse(attributes.Get<bool>("bool_false", true));
             Assert.IsTrue(attributes.Get<bool>("bool_true_false", false));  //should return the first of the array
-            
+
             Assert.IsTrue(attributes.Get<bool>("bool_True", false));
             Assert.IsFalse(attributes.Get<bool>("bool_False", true));
 
@@ -135,7 +135,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         public void GetAttribute_TimeSpan()
         {
             var attributes = new BasicItemAttributesDto();
-    
+
             attributes.Add("070", "00:07:00");
             attributes.Add("077", "00:07:07");
             attributes.Add("7", "7");
@@ -174,6 +174,41 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             Assert.AreSame(root, grandChild.Root);
             Assert.AreSame(child, grandChild.Parent);
+        }
+
+        [TestMethod]
+        public void Clone()
+        {
+            var root = new BasicItemDto("root", "root", "Root") { Id = Guid.NewGuid() }; 
+            var child = new BasicItemDto("child", "child", "Child") { Id = Guid.NewGuid() };
+            var grandChild = new BasicItemDto("grand_child", "grand_child", "Grand Child") { Id = Guid.NewGuid() };
+
+            root["status"] = "Test Status 1";
+            child["status"] = "Test Status 2";
+            grandChild["status"] = "Test Status 3";
+
+            root.Metadata["version"] = "1";
+            child.Metadata["version"] = "2";
+            grandChild.Metadata["version"] = "3";
+
+            root.Attachments.Add(child);
+            child.Attachments.Add(grandChild);
+
+            root.Init(null);
+            
+            //CLONE TESTS
+            var clone = child.Clone();
+
+            Assert.AreNotSame(child, clone);
+            Assert.AreNotSame(child.Root, clone.Root);
+            Assert.IsNull(clone.Parent);
+
+            Assert.AreEqual(child.Id, clone.Id);
+            Assert.AreEqual(child["status"], clone["status"]);
+            Assert.AreEqual(child.Metadata["version"], clone.Metadata["version"]);
+
+            Assert.AreNotSame(child.Attachments[0], clone.Attachments[0]);
+            Assert.AreEqual(child.Attachments[0].Key, clone.Attachments[0].Key);
         }
     }
 }
