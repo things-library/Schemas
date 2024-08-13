@@ -1,7 +1,4 @@
-﻿using ThingsLibrary.Schema;
-using ThingsLibrary.Schema.Library.Base;
-
-namespace ThingsLibrary.Schema.Library
+﻿namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Library
