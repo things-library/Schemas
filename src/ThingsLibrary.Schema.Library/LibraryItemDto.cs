@@ -28,7 +28,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         /// <remarks>Designed for maintaining chronological listing</remarks>
         [JsonPropertyName("date")]
-        public DateTime? Date { get; set; }
+        public DateTimeOffset? Date { get; set; }
                 
         /// <summary>
         /// Item Type 

@@ -218,7 +218,7 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             item["status_1"] = "Test Status 1";
             item["status_2"] = "Test Status 2";
-            
+
             Assert.AreEqual(2, item.Attributes.Count);
 
             var result = item.Remove("INVALID");
@@ -255,6 +255,27 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             child.DetatchAll();
             Assert.AreEqual(0, child.Attachments.Count);
+        }
+
+        [TestMethod]
+        public void Add_Dictionary()
+        {
+            var item = new BasicItemDto("type", "name");
+
+            var attributes = new Dictionary<string, string>()
+            {
+                { "pin", "1777" },
+                { "name", "Test Name" },
+                { "location", "Basement" },
+                { "finish", "Chrome" }
+            };
+
+            item.Add(attributes);
+
+            foreach(var attribute in attributes)
+            {
+                Assert.AreEqual(attribute.Value, item[attribute.Key]);
+            }
         }
     }
 }

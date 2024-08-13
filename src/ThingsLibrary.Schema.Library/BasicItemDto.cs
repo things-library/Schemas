@@ -162,10 +162,23 @@
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
         /// <param name="append">If value(s) should be appended to existing</param>
         public void Add(IEnumerable<BasicItemAttributeDto> attributes, bool append = false)
-        {            
+        {
             foreach (var attribute in attributes)
-            {                
-                this.Add(attributes, append);
+            {
+                this.Add(attribute, append);
+            }
+        }
+
+        /// <summary>
+        /// Add basic collection of attributes to the listing
+        /// </summary>
+        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
+        /// <param name="append">If value(s) should be appended to existing</param>
+        public void Add(IEnumerable<KeyValuePair<string, string>> attributes, bool append = false)
+        {
+            foreach (var attribute in attributes)
+            {
+                this.Add(attribute.Key, attribute.Value, append);
             }
         }
 
