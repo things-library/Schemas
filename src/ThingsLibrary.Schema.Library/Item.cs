@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace ThingsLibrary.Schema.Library
+﻿namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Item Schema - Flexible

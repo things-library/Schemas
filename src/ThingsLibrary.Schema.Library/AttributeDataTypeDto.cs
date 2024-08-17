@@ -49,7 +49,7 @@
                 new() { Key = AttributeDataTypes.Html,       Name = "HTML",              Type = "string",  InputType = "text",          Format = ""         },
                 new() { Key = AttributeDataTypes.Password,   Name = "Password",          Type = "string",  InputType = "text",          Format = ""         },
                 new() { Key = AttributeDataTypes.Phone,      Name = "Phone Number",      Type = "string",  InputType = "tel",           Format = ""         },
-                new() { Key = AttributeDataTypes.String,     Name = "String",            Type = "string",  InputType = "text",          Format = ""       },   //DEFAULT ASSUMED
+                new() { Key = AttributeDataTypes.String,     Name = "String",            Type = "string",  InputType = "text",          Format = ""       },   //DEFAULT ASSUMED (Safe)
                 new() { Key = AttributeDataTypes.TextArea,   Name = "Text (MultiLine)",  Type = "string",  InputType = "textarea",      Format = "textarea" },
                 new() { Key = AttributeDataTypes.Time,       Name = "Time Only",         Type = "string",  InputType = "time",          Format = "time"     },
                 new() { Key = AttributeDataTypes.Url,        Name = "Url",               Type = "string",  InputType = "url",           Format = "uri"      },
