@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://schema.thingslibrary.io/1.0/schema.json",
+    "$id": "https://schema.thingslibrary.io/1.0/canvas.json",
     "$comment": "Service Canvas is created by Starlight Software Co to strongly type service related settings.",
     "title": "Service Canvas",
     "description": "Microservice canvas definition document",

@@ -1,10 +1,12 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿using System.Globalization;
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Item Schema - Flexible
     /// </summary>
     [DebuggerDisplay("Key: {Key} (Name: {Name}, Type: {Type})")]
-    public class BasicItemDto : Base.SchemaBase, IJsonOnDeserialized, IJsonOnSerializing
+    public class ItemDto : Base.SchemaBase, IJsonOnDeserialized, IJsonOnSerializing
     {        
         //// <summary>
         /// Json Schema Definition
@@ -32,7 +34,7 @@
         /// </summary>
         /// <remarks>Designed for maintaining chronological listing</remarks>
         [JsonPropertyName("date")]
-        public DateTime? Date { get; set; }
+        public DateTimeOffset? Date { get; set; }
                 
         /// <summary>
         /// Item Type 
@@ -45,15 +47,15 @@
         /// Attributes
         /// </summary> 
         /// <remarks>Value must be a string or array of strings</remarks>
-        [JsonPropertyName("attributes"), JsonConverter(typeof(BasicItemAttributesConverter)), JsonIgnoreEmptyCollection]
-        public BasicItemAttributesDto Attributes { get; set; } = new();
+        [JsonPropertyName("attributes"), JsonConverter(typeof(ItemAttributesConverter)), JsonIgnoreEmptyCollection]
+        public ItemAttributesDto Attributes { get; set; } = new();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public List<BasicItemDto> Attachments { get; set; } = new();
+        public Dictionary<string, ItemDto> Attachments { get; set; } = new();
 
 
         #region --- Extended ---
@@ -62,14 +64,14 @@
         /// Parent Item Pointer
         /// </summary>
         [JsonIgnore]
-        public BasicItemDto? Parent { get; set; }
+        public ItemDto? Parent { get; set; }
 
 
         /// <summary>
         /// Root Item Pointer
         /// </summary>
         [JsonIgnore]
-        public BasicItemDto Root { get; set; }
+        public ItemDto Root { get; set; }
 
         #endregion
 
@@ -77,7 +79,7 @@
         /// <summary>
         /// Constructor
         /// </summary>
-        public BasicItemDto()
+        public ItemDto()
         {
             this.Root = this;   //default until we know otherwise
         }
@@ -91,7 +93,7 @@
         /// <param name="key">Unique Key</param>
         /// <param name="name">Name</param>
         /// <remarks>Name is automatically set to key value</remarks>
-        public BasicItemDto(string type, string name, string key)
+        public ItemDto(string type, string name, string key)
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(type);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
@@ -109,7 +111,7 @@
         /// <param name="type">Type</param>
         /// <param name="name">Name</param>
         /// <remarks>Name is automatically set to key value</remarks>
-        public BasicItemDto(string type, string name)
+        public ItemDto(string type, string name)
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(type);            
             ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
@@ -151,7 +153,7 @@
         /// <param name="append">If value should be appended to existing</param>
         public void Add(string key, string value, bool append)
         {
-            var attribute = new BasicItemAttributeDto(key, value);
+            var attribute = new ItemAttributeDto(key, value);
             
             this.Add(attribute, append);
         }
@@ -161,7 +163,7 @@
         /// </summary>
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
         /// <param name="append">If value(s) should be appended to existing</param>
-        public void Add(IEnumerable<BasicItemAttributeDto> attributes, bool append = false)
+        public void Add(IEnumerable<ItemAttributeDto> attributes, bool append = false)
         {
             foreach (var attribute in attributes)
             {
@@ -187,7 +189,7 @@
         /// </summary>
         /// <param name="attribute">Attribute</param>
         /// <param name="append">If value(s) should be appended to existing</param>
-        public void Add(BasicItemAttributeDto attribute, bool append = false)
+        public void Add(ItemAttributeDto attribute, bool append = false)
         {
             attribute.Parent = this;    //clearly we are the parent
 
@@ -214,7 +216,7 @@
         /// Attach items to parent item
         /// </summary>
         /// <param name="childItems">Items to attach</param>
-        public void Attach(IEnumerable<BasicItemDto> childItems)
+        public void Attach(IEnumerable<ItemDto> childItems)
         {
             foreach(var childItem in childItems)
             {
@@ -226,38 +228,37 @@
         /// Attach item to parent item
         /// </summary>
         /// <param name="childItem">Items to attach</param>
-        public void Attach(BasicItemDto childItem)
+        public void Attach(ItemDto childItem)
         {
+            ArgumentNullException.ThrowIfNull(childItem);
+            ArgumentException.ThrowIfNullOrWhiteSpace(childItem.Key);
+
             childItem.Parent = this;        // pretty obvious who the parent is
             childItem.Root = this.Root;     // well the child clearly isn't the root so our root must be its root
-
-            this.Attachments.Add(childItem);
+            
+            this.Attachments.Add(childItem.Key, childItem);
         }
 
         /// <summary>
         /// Detatch 
         /// </summary>
         /// <param name="key">Key</param>
-        public bool Detatch(string key)
-        {
-            var childItem = this.Attachments.FirstOrDefault(x => x.Key == key);
-            if(childItem == null) { return false; }
-
-            return this.Attachments.Remove(childItem);
-        }
+        public bool Detatch(string key) => this.Attachments.Remove(key);        
 
         /// <summary>
         /// Detatch All Attachments
         /// </summary>        
         public void DetatchAll() => this.Attachments.Clear();
-        
+
 
         #endregion
+
+        
 
         /// <summary>
         /// Establishes the child-parent linkage
         /// </summary>
-        public void Init(BasicItemDto? parent)
+        public void Init(ItemDto? parent)
         {
             // must be at the top of the tree
             if(parent == null)
@@ -272,15 +273,20 @@
 
             foreach(var item in this.Attachments)
             {
+                // no idea how we got a item in the attachments dictionary that doesn't have a key.. lets fix it.
+                if(item.Value.Key == null) { item.Value.Key = item.Key; }
+
                 // recurse
-                item.Init(this);                
+                item.Value.Init(this);                
             }
 
             foreach (var attribute in this.Attributes)
-            {
+            {                
                 attribute.Parent = this;                
             }
         }
+
+        #region --- Serialization / Deserialization ---
 
         /// <summary>
         /// Initialize the links
@@ -288,6 +294,26 @@
         public void OnDeserialized()
         {
             this.Init(null);
+
+            // recurse
+            foreach (var item in this.Attachments)
+            {
+                item.Value.OnDeserialized(item);
+            }
+        }
+
+        /// <summary>
+        /// Fix missing redundant stuff
+        /// </summary>
+        public void OnDeserialized(KeyValuePair<string, ItemDto> childItemPair)
+        {
+            childItemPair.Value.Key = childItemPair.Key;
+
+            // recurse
+            foreach (var item in this.Attachments)
+            {
+                item.Value.OnDeserialized(item);
+            }
         }
 
         /// <summary>
@@ -299,17 +325,36 @@
             if(this.Root == this)
             {
                 this.SchemaUrl = new Uri($"{Base.SchemaBase.SchemaBaseUrl}/item.json");
-            }            
+            }
+
+            // recurse
+            foreach (var item in this.Attachments)
+            {
+                item.Value.OnDeserialized(item);
+            }
         }
+
+        public void OnSerializing(ItemDto childItem)
+        {
+            //because we are serilizing and children area already in a dictionary (so key is redundant to export)
+            childItem.Key = null;
+
+            foreach (var item in this.Attachments.Values)
+            {
+                item.OnSerializing(item);
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Clone the current item
         /// </summary>
         /// <returns></returns>
-        public BasicItemDto Clone()
+        public ItemDto Clone()
         {
             // best way to detatch the hierarchy structure
-            var clone = this.Clone<BasicItemDto>();
+            var clone = this.Clone<ItemDto>();
 
             // restore fields that aren't serialized
             clone.Id = this.Id;

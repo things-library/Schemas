@@ -1,13 +1,13 @@
 ﻿namespace ThingsLibrary.Schema.Library.Converters
 {
-    public class BasicItemAttributesConverter : JsonConverter<BasicItemAttributesDto>
+    public class ItemAttributesConverter : JsonConverter<ItemAttributesDto>
     {
-        public override BasicItemAttributesDto Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override ItemAttributesDto Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var list = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
             if (list == null) { return new(); }
 
-            var attributes = new BasicItemAttributesDto();
+            var attributes = new ItemAttributesDto();
                         
             foreach (var item in list)
             {
@@ -67,7 +67,7 @@
             }
         }
 
-        public override void Write(Utf8JsonWriter writer, BasicItemAttributesDto attributes, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, ItemAttributesDto attributes, JsonSerializerOptions options)
         {
             writer.WriteRawValue(JsonSerializer.Serialize(attributes.ToDictionary()));
         }

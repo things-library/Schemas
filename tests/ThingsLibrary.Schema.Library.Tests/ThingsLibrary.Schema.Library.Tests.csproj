@@ -29,49 +29,49 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="TestData\basic-items\bad\missing_name.json">
+		<None Update="TestData\items\bad\missing_name.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\bad\missing_type.json">
+		<None Update="TestData\items\bad\missing_type.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\bad\name_max.json">
+		<None Update="TestData\items\bad\name_max.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\bad\name_min.json">
+		<None Update="TestData\items\bad\name_min.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\bad\type_max.json">
+		<None Update="TestData\items\bad\type_max.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\bad\type_min.json">
+		<None Update="TestData\items\bad\type_min.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\attribute_value.json">
+		<None Update="TestData\items\valid\attribute_value.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\attribute_values.json">
+		<None Update="TestData\items\valid\attribute_values.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\children.json">
+		<None Update="TestData\items\valid\children.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\minimal.json">
+		<None Update="TestData\items\valid\minimal.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\name_max.json">
+		<None Update="TestData\items\valid\name_max.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\name_min.json">
+		<None Update="TestData\items\valid\name_min.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\simple.json">
+		<None Update="TestData\items\valid\simple.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\type_max.json">
+		<None Update="TestData\items\valid\type_max.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\basic-items\valid\type_min.json">
+		<None Update="TestData\items\valid\type_min.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestData\library-items\bad\attribute_value_1.json">

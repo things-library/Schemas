@@ -4,7 +4,7 @@
     /// Attribute
     /// </summary>
     [DebuggerDisplay("{Key}: {Value}")]
-    public class BasicItemAttributeDto : Base.SchemaBase
+    public class ItemAttributeDto : Base.SchemaBase
     {
         /// <summary>
         /// Library Unique Key
@@ -49,12 +49,12 @@
         /// Parent Item
         /// </summary>
         [JsonIgnore]        
-        public BasicItemDto? Parent { get; set; }
+        public ItemDto? Parent { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public BasicItemAttributeDto()
+        public ItemAttributeDto()
         {
             //nothing
         }
@@ -64,7 +64,7 @@
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="value">Value (or Value Key)</param>
-        public BasicItemAttributeDto(string key, string value)
+        public ItemAttributeDto(string key, string value)
         {
             this.Key = key;
             this.Value = value;            
@@ -75,7 +75,7 @@
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="values">Values</param>
-        public BasicItemAttributeDto(string key, List<string> values)
+        public ItemAttributeDto(string key, List<string> values)
         {
             this.Key = key;            
             this.Values = values;

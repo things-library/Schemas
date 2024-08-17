@@ -85,7 +85,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             var json = File.ReadAllText(filePath);
             var doc = JsonDocument.Parse(json);
 
-            var item = doc.Deserialize<BasicItemDto>(SchemaBase.JsonSerializerOptions);
+            var item = doc.Deserialize<ItemDto>(SchemaBase.JsonSerializerOptions);
             Assert.IsNotNull(item);
 
             var validationErrors = item.Validate();

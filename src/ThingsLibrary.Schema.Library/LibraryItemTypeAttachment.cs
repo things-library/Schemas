@@ -3,7 +3,7 @@
     /// <summary>
     /// Item type attachment
     /// </summary>    
-    [DebuggerDisplay("{Type} ({Name})")]
+    [DebuggerDisplay("{Type} ({Name}, {Type})")]
     public class LibraryItemTypeAttachment : Base.SchemaBase
     {
         /// <summary>

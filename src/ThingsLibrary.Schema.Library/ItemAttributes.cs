@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Reflection.Metadata.Ecma335;
 
 namespace ThingsLibrary.Schema.Library
@@ -9,10 +7,10 @@ namespace ThingsLibrary.Schema.Library
     /// Basic Item Attributes
     /// </summary>
     [DebuggerDisplay("({Items.Count} Attributes)")]
-    public class BasicItemAttributesDto : IEnumerable<BasicItemAttributeDto>
+    public class ItemAttributesDto : IEnumerable<ItemAttributeDto>
     {
-        private Dictionary<string, BasicItemAttributeDto> Items { get; set; } = [];
-
+        private Dictionary<string, ItemAttributeDto> Items { get; set; } = [];
+        
         /// <summary>
         /// Accessor for the items
         /// </summary>
@@ -30,7 +28,7 @@ namespace ThingsLibrary.Schema.Library
                 }
                 else
                 {
-                    this.Items[key] = new BasicItemAttributeDto(key, value);
+                    this.Items[key] = new ItemAttributeDto(key, value);
                 }
             }
         }
@@ -48,7 +46,7 @@ namespace ThingsLibrary.Schema.Library
         /// Add basic collection of attributes to the listing
         /// </summary>
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Add(BasicItemAttributesDto attributes, bool append = false)
+        public void Add(ItemAttributesDto attributes, bool append = false)
         {
             // nothing to do?
             if (attributes == null) { return; }
@@ -63,7 +61,7 @@ namespace ThingsLibrary.Schema.Library
         /// Add basic collection of attributes to the listing
         /// </summary>
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        public void Add(IEnumerable<BasicItemAttributeDto> attributes, bool append = false)
+        public void Add(IEnumerable<ItemAttributeDto> attributes, bool append = false)
         {
             // nothing to do?
             if (attributes == null) { return; }
@@ -78,13 +76,13 @@ namespace ThingsLibrary.Schema.Library
         /// Add basic attribute to the listing
         /// </summary>
         /// <param name="attribute">Flat listing of Item Basic Attributes</param>
-        public void Add(BasicItemAttributeDto attribute, bool append = false)
+        public void Add(ItemAttributeDto attribute, bool append = false)
         {
             // nothing to add
             if(attribute == null) { return; }
 
             // see if it already exists
-            if (this.Items.TryGetValue(attribute.Key, out BasicItemAttributeDto? existingAttribute))
+            if (this.Items.TryGetValue(attribute.Key, out ItemAttributeDto? existingAttribute))
             {
                 foreach (var value in attribute.Values)
                 {
@@ -117,7 +115,7 @@ namespace ThingsLibrary.Schema.Library
         /// <param name="append">If value should be appended if not in the list</param>
         public void Add(string key, string value, bool append = false)
         {
-            this.Add(new BasicItemAttributeDto(key, value), append);
+            this.Add(new ItemAttributeDto(key, value), append);
         }
 
         /// <summary>
@@ -128,7 +126,7 @@ namespace ThingsLibrary.Schema.Library
         /// <param name="append">If value should be appended if not in the list</param>
         public void Add(string key, List<string> values, bool append = false)
         {
-            this.Add(new BasicItemAttributeDto(key, values), append);
+            this.Add(new ItemAttributeDto(key, values), append);
         }
 
         /// <summary>
@@ -140,7 +138,7 @@ namespace ThingsLibrary.Schema.Library
         /// <returns></returns>
         public T Get<T>(string key, T defaultValue)
         {
-            if (this.Items.TryGetValue(key, out BasicItemAttributeDto? existingAttribute))
+            if (this.Items.TryGetValue(key, out ItemAttributeDto? existingAttribute))
             {
                 try
                 {
@@ -188,7 +186,7 @@ namespace ThingsLibrary.Schema.Library
 
         #region --- IEnumerable ---
 
-        public IEnumerator<BasicItemAttributeDto> GetEnumerator()
+        public IEnumerator<ItemAttributeDto> GetEnumerator()
         {
             // the items contain the 'key' field so we don't need to return keyvalue pairs
             return this.Items.Values.ToList().GetEnumerator();

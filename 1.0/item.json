@@ -57,11 +57,14 @@
                 },
 
                 "attachments": {
-                    "type": "array",
+                    "type": "object",
                     "title": "Attachments",
-                    "items": {
-                        "$ref": "#/$defs/item"
-                    }
+                    "patternProperties": {
+                        "^[a-z0-9_-]{1,50}$": {
+                            "$ref": "#/$defs/item"
+                        }
+                    },
+                    "additionalProperties": false
                 },
 
                 "metadata": {

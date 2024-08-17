@@ -1,19 +1,19 @@
 namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
-    public class BasicItemTests
+    public class ItemTests
     {
         [TestMethod]
         public void Basic_Validation_Valid()
         {
-            var testFilePaths = Directory.GetFiles($"TestData/basic-items/valid", "*.json");
+            var testFilePaths = Directory.GetFiles($"TestData/items/valid", "*.json");
 
             foreach (var testFilePath in testFilePaths)
             {
                 var json = File.ReadAllText(testFilePath);
                 var doc = JsonDocument.Parse(json);
 
-                var item = doc.Deserialize<BasicItemDto>(SchemaBase.JsonSerializerOptions);
+                var item = doc.Deserialize<ItemDto>(SchemaBase.JsonSerializerOptions);
                 Assert.IsNotNull(item);
 
                 var validationErrors = item.Validate();
@@ -24,14 +24,14 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Basic_Validation_Bad()
         {
-            var testFilePaths = Directory.GetFiles($"TestData/basic-items/bad", "*.json");
+            var testFilePaths = Directory.GetFiles($"TestData/items/bad", "*.json");
 
             foreach (var testFilePath in testFilePaths)
             {
                 var json = File.ReadAllText(testFilePath);
                 var doc = JsonDocument.Parse(json);
 
-                var item = doc.Deserialize<BasicItemDto>(SchemaBase.JsonSerializerOptions);
+                var item = doc.Deserialize<ItemDto>(SchemaBase.JsonSerializerOptions);
                 Assert.IsNotNull(item);
 
                 var validationErrors = item.Validate();
@@ -42,20 +42,20 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Constructor()
         {
-            var item = new BasicItemDto("test_type", "test_name");
+            var item = new ItemDto("test_type", "test_name");
 
             Assert.AreEqual("test_type", item.Type);
             Assert.AreEqual("test_name", item.Name);
             Assert.AreEqual("test_name", item.Key);
 
 
-            item = new BasicItemDto("test_type", "test_name", "test_key");
+            item = new ItemDto("test_type", "test_name", "test_key");
 
             Assert.AreEqual("test_type", item.Type);
             Assert.AreEqual("test_name", item.Name);
             Assert.AreEqual("test_key", item.Key);
 
-            var attributes = new BasicItemAttributesDto();
+            var attributes = new ItemAttributesDto();
             attributes.Add("test_1", "test_1_value");
             attributes.Add("test_2", new List<string> { "test_2_value_1", "test_2_value_2" });
 
@@ -70,7 +70,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAttribute_Bool()
         {
-            var attributes = new BasicItemAttributesDto();
+            var attributes = new ItemAttributesDto();
 
             // BOOL Tests
             attributes.Add("bool_false", "false");
@@ -98,7 +98,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAttribute_Int()
         {
-            var attributes = new BasicItemAttributesDto();
+            var attributes = new ItemAttributesDto();
 
             attributes.Add("int_77", "77");
             attributes.Add("int_-77", "-77");
@@ -113,7 +113,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAttribute_Decimal()
         {
-            var attributes = new BasicItemAttributesDto();
+            var attributes = new ItemAttributesDto();
 
             attributes.Add("77", "77");
             attributes.Add("7.7", "7.7");
@@ -134,7 +134,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAttribute_TimeSpan()
         {
-            var attributes = new BasicItemAttributesDto();
+            var attributes = new ItemAttributesDto();
 
             attributes.Add("070", "00:07:00");
             attributes.Add("077", "00:07:07");
@@ -156,12 +156,12 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Parents()
         {
-            var root = new BasicItemDto("root", "root", "Root");
-            var child = new BasicItemDto("child", "child", "Child");
-            var grandChild = new BasicItemDto("grand_child", "grand_child", "Grand Child");
+            var root = new ItemDto("root", "Root", "root");
+            var child = new ItemDto("child", "Child", "child");
+            var grandChild = new ItemDto("grand_child", "Grand Child", "grand_child");
 
-            root.Attachments.Add(child);
-            child.Attachments.Add(grandChild);
+            root.Attach(child);
+            child.Attach(grandChild);
 
             // initialize links
             root.Init(null);
@@ -179,9 +179,9 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Clone()
         {
-            var root = new BasicItemDto("root", "root", "Root") { Id = Guid.NewGuid() };
-            var child = new BasicItemDto("child", "child", "Child") { Id = Guid.NewGuid() };
-            var grandChild = new BasicItemDto("grand_child", "grand_child", "Grand Child") { Id = Guid.NewGuid() };
+            var root = new ItemDto("root", "Root", "root") { Id = Guid.NewGuid() };
+            var child = new ItemDto("child", "Child", "child") { Id = Guid.NewGuid() };
+            var grandChild = new ItemDto("grand_child", "Grand Child", "grand_child") { Id = Guid.NewGuid() };
 
             root["status"] = "Test Status 1";
             child["status"] = "Test Status 2";
@@ -191,8 +191,8 @@ namespace ThingsLibrary.Schema.Library.Tests
             child.Metadata["version"] = "2";
             grandChild.Metadata["version"] = "3";
 
-            root.Attachments.Add(child);
-            child.Attachments.Add(grandChild);
+            root.Attach(child);
+            child.Attach(grandChild);
 
             root.Init(null);
 
@@ -207,14 +207,13 @@ namespace ThingsLibrary.Schema.Library.Tests
             Assert.AreEqual(child["status"], clone["status"]);
             Assert.AreEqual(child.Metadata["version"], clone.Metadata["version"]);
 
-            Assert.AreNotSame(child.Attachments[0], clone.Attachments[0]);
-            Assert.AreEqual(child.Attachments[0].Key, clone.Attachments[0].Key);
+            Assert.AreNotSame(child.Attachments["grand_child"], clone.Attachments["grand_child"]);            
         }
 
         [TestMethod]
         public void Remove()
         {
-            var item = new BasicItemDto("item_type", "Item Name", "item_key") { Id = Guid.NewGuid() };
+            var item = new ItemDto("item_type", "Item Name", "item_key") { Id = Guid.NewGuid() };
 
             item["status_1"] = "Test Status 1";
             item["status_2"] = "Test Status 2";
@@ -235,9 +234,9 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Detatch()
         {
-            var child = new BasicItemDto("child", "Child", "child_key") { Id = Guid.NewGuid() };
-            var grandChild_1 = new BasicItemDto("grand_child", "Grand Child 1", "grand_child_1_key") { Id = Guid.NewGuid() };
-            var grandChild_2 = new BasicItemDto("grand_child", "Grand Child 2", "grand_child_2_key") { Id = Guid.NewGuid() };
+            var child = new ItemDto("child", "Child", "child_key") { Id = Guid.NewGuid() };
+            var grandChild_1 = new ItemDto("grand_child", "Grand Child 1", "grand_child_1_key") { Id = Guid.NewGuid() };
+            var grandChild_2 = new ItemDto("grand_child", "Grand Child 2", "grand_child_2_key") { Id = Guid.NewGuid() };
 
             child.Attach(grandChild_1);
             child.Attach(grandChild_2);
@@ -251,7 +250,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             result = child.Detatch("grand_child_1_key");
             Assert.IsTrue(result);
             Assert.AreEqual(1, child.Attachments.Count);
-            Assert.AreEqual("grand_child_2_key", child.Attachments[0].Key);
+            Assert.AreEqual("grand_child_2_key", child.Attachments.First().Key);
 
             child.DetatchAll();
             Assert.AreEqual(0, child.Attachments.Count);
@@ -260,7 +259,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Add_Dictionary()
         {
-            var item = new BasicItemDto("type", "name");
+            var item = new ItemDto("type", "name");
 
             var attributes = new Dictionary<string, string>()
             {

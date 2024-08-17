@@ -115,7 +115,7 @@
 
         #region --- Add Item ---
 
-        public void Add(IEnumerable<BasicItemDto> basicItems)
+        public void Add(IEnumerable<ItemDto> basicItems)
         {
             foreach (var basicItem in basicItems)
             {
@@ -123,7 +123,7 @@
             }
         }
 
-        public void Add(BasicItemDto basicItem)
+        public void Add(ItemDto basicItem)
         {
             //convert basic item to valid library item
 

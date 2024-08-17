@@ -1,70 +1,70 @@
 {
-	"name": "Root",
-	"type": "Tree Node",
-	"attachments": [
-		{
-			"name": "1/1",
-			"type": "Tree Node",
-			"attachments": [
-				{
-					"name": "1/1/1",
-					"type": "Tree Node",
-					"attachments": [
-						{
-							"name": "1/1/1/1",
-							"type": "Tree Node",
-							"attachments": [
-								{
-									"name": "1/1/1/1/1",
-									"type": "Tree Node"
-								}
-							]
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "1/2",
-			"type": "Tree Node",
-			"attachments": [
-				{
-					"name": "1/2/1",
-					"type": "Tree Node",
-					"attachments": [
-						{
-							"name": "1/2/1",
-							"type": "Tree Node",
-							"attachments": [
-								{
-									"name": "1/2/1/1",
-									"type": "Tree Node"
-								}
-							]
-						},
-						{
-							"name": "1/2/2",
-							"type": "Tree Node",
-							"attachments": [
-								{
-									"name": "1/2/2/1",
-									"type": "Tree Node"
-								}
-							]
-						},
-						{
-							"name": "1/2/3",
-							"type": "Tree Node",
-							"attachments": [
-								{
-									"name": "1/2/3/1",
-									"type": "Tree Node"
-								}
-							]
-						}
-					]
-				}
-			]
-		}
-	]
+    "name": "Root",
+    "type": "Tree Node",
+    "attachments": {
+        "1_1": {
+            "name": "1/1",
+            "type": "Tree Node",
+            "attachments": {
+                "1_1_1": {
+                    "name": "1/1/1",
+                    "type": "Tree Node",
+                    "attachments": {
+                        "1_1_1": {
+                            "name": "1/1/1/1",
+                            "type": "Tree Node",
+                            "attachments": {
+                                "1_1_1_1_1": {
+                                    "name": "1/1/1/1/1",
+                                    "type": "Tree Node"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "1_2": {
+            "name": "1/2",
+            "type": "Tree Node",
+            "attachments": {
+                "1_2_1": {
+                    "name": "1/2/1",
+                    "type": "Tree Node",
+                    "attachments": {
+                        "1_2_1": {
+                            "name": "1/2/1",
+                            "type": "Tree Node",
+                            "attachments": {
+                                "1_2_1_1": {
+                                    "name": "1/2/1/1",
+                                    "type": "Tree Node"
+                                }
+                            }
+                        },
+                        "1_2_2": {
+                            "name": "1/2/2",
+                            "type": "Tree Node",
+                            "attachments": {
+                                "1_2_2_1": {
+                                    "name": "1/2/2/1",
+                                    "type": "Tree Node"
+                                }
+                            }
+                        },
+                        "1_2_3": {
+                            "name": "1/2/3",
+                            "type": "Tree Node",
+                            "attachments": {
+                                "1_2_3_1": {
+                                    "name": "1/2/3/1",
+                                    "type": "Tree Node"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -21,7 +21,14 @@ namespace ThingsLibrary.Schema.Library.Base
         /// <summary>
         /// Current Version
         /// </summary>
-        public static Version SchemaVersion { get; } = new Version(CurrentVersion);
+        /// <remarks>
+        /// Semantic Versioning (https://semver.org/)
+        /// MAJOR.MINOR.PATCH.BUILD
+        /// - MAJOR is incremented when you make incompatible API changes
+        /// - MINOR is incremented when you add functionality in a backwards-compatible manner
+        /// - PATCH is incremented when you make backwards-compatible bug fixes
+        /// </remarks> 
+        public static Version SchemaVersion { get; } = new Version(CurrentVersion);     //typeof(SchemaBase).Assembly.GetName().Version;
 
         /// <summary>
         /// Json Schema Definition

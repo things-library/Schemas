@@ -1,0 +1,214 @@
+{
+    "$schema": "https://schema.thingslibrary.io/1.0/item.json",
+
+    "type": "service_canvas",
+    "key": "ThingsLibrary.Services.Identity.Development",
+    "name": "Identity Service (Development)",
+
+    "attributes": {
+        "namespace": "ThingsLibrary.Services.Identity",
+        "description": "This is the main API service for Data Locker",
+        "group": "ThingsLibrary",
+
+        "host": "https://devaccount.thingslibrary.io",
+        "environment": "Development",
+        "project_url": null,
+
+        "type": "canvas_auth",
+        "name": "Microsoft EntraID",
+    },
+
+    "attachments": {
+        "capabilities": {
+            "type": "canvas_capabilities",
+            "name": "Service Capabilities",
+
+            "attributes": {
+                "health_checks": true,
+                "swagger": false,
+                "controllers": true,
+                "http_redirect": true,
+                "compression": true,
+
+                "razor": true,
+                "blazor_server": false,
+                "static_files": true
+            }
+        },
+
+        "api": {
+            "type": "canvas_api",
+            "name": "API Integrations",
+
+            "attachments": {
+                "keycloak_admin": {
+                    "type": "canvas_api_endpoint",
+                    "name": "Keycload Admin Service",
+
+                    "attributes": {
+                        "base_url": "https://account.thingslibrary.io/admin/realms/library"
+                    }
+                },
+                "product_service": {
+                    "type": "canvas_api_endpoint",
+                    "name": "Product Service",
+
+                    "attributes": {
+                        "base_url": "https://products.thingslibrary.io"
+                    }
+                }
+            }
+        },
+        "auth": {
+            "type": "canvas_auth",
+            "name": "Microsoft EntraID",
+
+            "attributes": {
+                "logout_url": "/account/logout",
+                "login_url": "/account/login",
+                "access_denied_url": "/error/401",
+
+                "roles": [
+                    "Developer",
+                    "SystemManager",
+                    "ServiceManager",
+                    "UserManager",
+                    "User"
+                ]
+            },
+
+            "attachments": {
+                "openid": {
+                    "type": "canvas_auth_openid",
+                    "name": "OpenID",
+
+                    "attributes": {
+                        "authority": "https://account.thingslibrary.io/realms/library",
+                        "clientId": "portal",
+                        "client_secret_variable": "ClientSecret",
+                        "scope": [ "openid", "offline_access" ]
+                    }
+                },
+
+                "jwt": {
+                    "type": "canvas_auth_jwt",
+                    "name": "JWT",
+
+                    "attributes": {
+                        "authority": "https://account.thingslibrary.io/realms/library",
+                        "issuer": "https://account.thingslibrary.io/realms/library",
+                        "audience": "portal",
+
+                        "claim_name": "name",
+                        "claim_role": "roles",
+
+                        "validation_disabled": true,
+                        "validation_show_errors": true
+                    }
+                },
+
+                "cookie": {
+                    "type": "canvas_auth_cookie",
+                    "name": "Cookies",
+
+                    "attributes": {
+                        "name": "CookieAuth",
+                        "path": "/",
+                        "domain": null,
+                        "ttl": 480
+                    }
+                },
+
+                "policies": {
+                    "type": "canvas_auth_policies",
+                    "name": "Auth Policies",
+                    "attachments": {
+                        "user_manager": {
+                            "type": "canvas_auth_policy",
+                            "name": "User Manager Policy",
+                            "attributes": {
+                                "roles": [ "UserManager", "Developer" ]
+                            }
+                        },
+                        "user": {
+                            "type": "canvas_auth_policy",
+                            "name": "User Policy",
+                            "attributes": {
+                                "roles": [ "Developer", "SystemManager", "UserManager", "User" ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "cache": {
+            "key": "cache",
+            "type": "canvas_cache",
+            "name": "Cache",
+
+            "attributes": {
+                "connection_key": "ServiceCache",
+                "default_ttl": "00:03:00"
+            },
+
+            "attachments": {
+                "audit_user": {
+                    "type": "canvas_cache_policy",
+                    "name": "Audit User Polcy",
+
+                    "attributes": {
+                        "ttl": "00:10:00"
+                    }
+                },
+
+                "library": {
+                    "type": "canvas_cache_policy",
+                    "name": "Library Cache",
+
+                    "attributes": {
+                        "ttl": "00:10:00"
+                    }
+                },
+
+                "oidc_config": {
+                    "type": "canvas_cache_policy",
+                    "name": "OIDC Config Cache",
+
+                    "attributes": {
+                        "ttl": "03:00:00"
+                    }
+                }
+            }
+        },
+        "contact": {
+            "attributes": {
+                "company": "Starlight Software Co.",
+                "department": "",
+                "email": "mark@lannings.org"
+            },
+            "name": "Mark Lanning",
+            "type": "canvas_contact"
+        },
+        "database": {
+            "type": "canvas_database",
+            "name": "Cache",
+
+            "attributes": {
+                "connection_key": "ServiceDatabase",
+                "connection_type": "Postgres"
+            }
+        },
+
+        "keyvault": {
+            "type": "canvas_keyvault",
+            "name": "Azure Key Vault",
+
+            "attributes": {
+                "base_url": "https://iqt-production.vault.azure.net",
+                "connection": "ServiceDatabase",
+                "connection_type": "AzureKeyVault",
+                "key_prefix": "dev"
+            }
+        }
+    }
+}
