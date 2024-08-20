@@ -19,6 +19,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="ItemAttributeGeneric.cs" />
+	  <Compile Remove="Library.cs" />
+	  <Compile Remove="LibraryItem.cs" />
+	  <Compile Remove="LibraryItemAttributeDto.cs" />
+	  <Compile Remove="LibraryItemType.cs" />
+	  <Compile Remove="LibraryItemTypeAttachment.cs" />
+	  <Compile Remove="LibraryItemTypeAttribute.cs" />
+	  <Compile Remove="LibraryItemTypeAttributeValue.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Update="Schemas\1.0\item.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

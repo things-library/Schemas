@@ -4,7 +4,7 @@
     /// Item type attachment
     /// </summary>    
     [DebuggerDisplay("{Type} ({Name}, {Type})")]
-    public class LibraryItemTypeAttachment : Base.SchemaBase
+    public class LibraryItemTypeAttachmentDto : Base.SchemaBase
     {
         /// <summary>
         /// Attachment Key
@@ -53,7 +53,7 @@
         /// <summary>
         /// Item Type Attachment
         /// </summary>
-        public LibraryItemTypeAttachment()
+        public LibraryItemTypeAttachmentDto()
         {
             //nothing
         }

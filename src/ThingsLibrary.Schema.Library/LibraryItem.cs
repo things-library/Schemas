@@ -40,14 +40,14 @@
         /// Attributes
         /// </summary>         
         [JsonPropertyName("attributes"), JsonConverter(typeof(LibraryItemAttributeConverter)), JsonIgnoreEmptyCollection]
-        public Dictionary<string, LibraryItemAttributeDto> Attributes { get; set; } = new();
+        public IDictionary<string, LibraryItemAttributeDto> Attributes { get; set; } = new Dictionary<string, LibraryItemAttributeDto>();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, LibraryItemDto> Attachments { get; set; } = new();
+        public IDictionary<string, LibraryItemDto> Attachments { get; set; } = new Dictionary<string, LibraryItemDto>();
 
         #region --- Extended ---
 
@@ -137,6 +137,34 @@
             {
                 this.Attributes[attribute.Key] = attribute;
             }
+        }
+
+
+        /// <summary>
+        /// Gets a item based on the provided resource key 
+        /// </summary>
+        /// <param name="resourceKey">Resource Path</param>
+        /// <returns></returns>
+        /// <example>Key: child/grand_child/great_grand_child</example>
+        public LibraryItemDto? GetItem(string resourceKey)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(resourceKey);
+
+            var item = this;
+
+            var pathSegments = resourceKey.Split('/');
+            foreach (var pathSegment in pathSegments)
+            {
+                if (string.IsNullOrWhiteSpace(pathSegment)) { return null; }
+
+                // try to get the item, if failure then exit, otherwise we have it assignd to our item
+                if (!item.Attachments.TryGetValue(pathSegment, out item))
+                {
+                    return null; 
+                }                
+            }
+
+            return item;
         }
     }
 }

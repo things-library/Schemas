@@ -26,14 +26,14 @@
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attributes"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, LibraryItemTypeAttributeDto> Attributes { get; set; } = new();
+        public IDictionary<string, LibraryItemTypeAttributeDto> Attributes { get; set; } = new Dictionary<string, LibraryItemTypeAttributeDto>();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, LibraryItemTypeAttachment> Attachments { get; set; } = new();
+        public IDictionary<string, LibraryItemTypeAttachmentDto> Attachments { get; set; } = new Dictionary<string, LibraryItemTypeAttachmentDto>();
 
 
         #region --- Extended ---

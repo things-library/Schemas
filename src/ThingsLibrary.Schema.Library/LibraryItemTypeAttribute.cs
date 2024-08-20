@@ -70,7 +70,7 @@
         /// <remarks>Only used for enum (picklist) attributes</remarks>
         [JsonPropertyName("values"), JsonConverter(typeof(LibraryItemTypeAttributeValueConverter)), JsonIgnoreEmptyCollection]
         [ValidateCollectionItems]
-        public Dictionary<string, LibraryItemTypeAttributeValueDto> Values { get; set; } = new();
+        public IDictionary<string, LibraryItemTypeAttributeValueDto> Values { get; set; } = new Dictionary<string, LibraryItemTypeAttributeValueDto>();
 
         #region --- Extended ---
 

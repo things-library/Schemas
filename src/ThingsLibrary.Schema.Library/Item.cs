@@ -53,7 +53,7 @@
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, ItemDto> Attachments { get; set; } = new();
+        public IDictionary<string, ItemDto> Attachments { get; set; } = new Dictionary<string, ItemDto>();
 
 
         #region --- Extended ---
@@ -144,6 +144,33 @@
         public T Get<T>(string key, T defaultValue) => this.Attributes.Get<T>(key, defaultValue);
 
         /// <summary>
+        /// Gets a item based on the provided resource key 
+        /// </summary>
+        /// <param name="resourceKey">Resource Path</param>
+        /// <returns></returns>
+        /// <example>Key: child/grand_child/great_grand_child</example>
+        public ItemDto? GetItem(string resourceKey)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(resourceKey);
+
+            ItemDto item = this;
+
+            var pathSegments = resourceKey.Split('/');
+            foreach(var pathSegment in pathSegments)
+            {
+                if (string.IsNullOrWhiteSpace(pathSegment)) { return null; }
+
+                // try to get the item, if failure then exit, otherwise we have it assignd to our item
+                if (!item.Attachments.TryGetValue(pathSegment, out item))
+                {
+                    return null;
+                }
+            }
+
+            return item;
+        }
+
+        /// <summary>
         /// Add attribute to listing
         /// </summary>
         /// <param name="key">Key</param>
@@ -152,10 +179,10 @@
         public void Add(string key, string value, bool append)
         {
             var attribute = new ItemAttributeDto(key, value);
-            
+
             this.Add(attribute, append);
         }
-
+        
         /// <summary>
         /// Add basic collection of attributes to the listing
         /// </summary>

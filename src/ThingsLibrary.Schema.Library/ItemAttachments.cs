@@ -8,7 +8,7 @@ namespace ThingsLibrary.Schema.Library
     [DebuggerDisplay("({Items.Count} Attachments)")]
     public class ItemAttachmentsDto : IEnumerable<ItemDto>
     {
-        public Dictionary<string, ItemDto> Items { get; set; } = [];
+        public IDictionary<string, ItemDto> Items { get; set; } = new Dictionary<string, ItemDto>();
 
         /// <summary>
         /// Accessor for the items

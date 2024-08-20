@@ -96,7 +96,34 @@
             return AttributeDataTypes.String;
         }
 
+        /// <summary>
+        /// Get Attribute data type based on generic object
+        /// </summary>
+        /// <param name="value">Object</param>
+        /// <returns>AttributeDataType object based on type</returns>
+        public static AttributeDataTypeDto GetType(Type type)
+        {
+            switch (type)
+            {
+                case Type t when t == typeof(string): { return AttributeDataTypes.Items[AttributeDataTypes.String]; }
+                
+                case Type t when t == typeof(int): { return AttributeDataTypes.Items[AttributeDataTypes.Integer]; }
+                case Type t when t == typeof(decimal): { return AttributeDataTypes.Items[AttributeDataTypes.Decimal]; }
+                case Type t when t == typeof(DateTime): { return AttributeDataTypes.Items[AttributeDataTypes.DateTime]; }
+                case Type t when t == typeof(DateTimeOffset): { return AttributeDataTypes.Items[AttributeDataTypes.Date]; }
+                case Type t when t == typeof(DateOnly): { return AttributeDataTypes.Items[AttributeDataTypes.Date]; }
+                case Type t when t == typeof(TimeOnly): { return AttributeDataTypes.Items[AttributeDataTypes.Time]; }
+                case Type t when t == typeof(Uri): { return AttributeDataTypes.Items[AttributeDataTypes.Url]; }
+                case Type t when t == typeof(bool): { return AttributeDataTypes.Items[AttributeDataTypes.Boolean]; }
+                case Type t when t == typeof(TimeSpan): { return AttributeDataTypes.Items[AttributeDataTypes.Duration]; }
 
+                // Add more cases as needed
+                default:
+                    { 
+                        return AttributeDataTypes.Items[AttributeDataTypes.String]; 
+                    }
+            }
+        }
     }
     
 

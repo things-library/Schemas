@@ -1,6 +1,4 @@
-﻿
-using System.Reflection;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace ThingsLibrary.Schema.Library.Base
 {
@@ -79,7 +77,7 @@ namespace ThingsLibrary.Schema.Library.Base
         /// Generic metadata which is a simple key-value dictionary
         /// </summary>
         [JsonPropertyName("metadata"), JsonIgnoreEmptyCollection]
-        public Dictionary<string, string> Metadata { get; set; } = [];
+        public IDictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Revision Number (1 = first, 0 = unknown/unspecified)

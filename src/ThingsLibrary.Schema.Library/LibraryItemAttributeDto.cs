@@ -27,7 +27,7 @@
         /// </summary>
         [JsonPropertyName("values"), JsonIgnoreEmptyCollection]
         [Display(Name = "Values"), StringLength(50, MinimumLength = 1)]
-        public List<string> Values { get; set; } = new();
+        public List<string> Values { get; set; } = [];
 
         #region --- Extended ---
 
@@ -53,7 +53,7 @@
         /// Attribute Values (if pick list)
         /// </summary>
         [JsonIgnore]
-        public Dictionary<string, LibraryItemTypeAttributeValueDto> ItemTypeAttributeValues { get; set; } = new();
+        public IDictionary<string, LibraryItemTypeAttributeValueDto> ItemTypeAttributeValues { get; set; } = new Dictionary<string, LibraryItemTypeAttributeValueDto>();
 
         #endregion
 

@@ -1,10 +1,12 @@
+using Newtonsoft.Json.Linq;
+
 namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class ItemTests
     {
         [TestMethod]
-        public void Basic_Validation_Valid()
+        public void Validation_Valid()
         {
             var testFilePaths = Directory.GetFiles($"TestData/items/valid", "*.json");
 
@@ -22,7 +24,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         }
 
         [TestMethod]
-        public void Basic_Validation_Bad()
+        public void Validation_Bad()
         {
             var testFilePaths = Directory.GetFiles($"TestData/items/bad", "*.json");
 
@@ -177,6 +179,22 @@ namespace ThingsLibrary.Schema.Library.Tests
         }
 
         [TestMethod]
+        public void GetItem()
+        {
+            var root = new ItemDto("root", "Root", "root");
+            var child = new ItemDto("child", "Child", "child");
+            var grandChild = new ItemDto("grand_child", "Grand Child", "grand_child");
+
+            root.Attach(child);
+            child.Attach(grandChild);
+
+            // initialize links
+            root.Init(null);
+
+
+        }
+
+            [TestMethod]
         public void Clone()
         {
             var root = new ItemDto("root", "Root", "root") { Id = Guid.NewGuid() };
@@ -257,7 +275,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         }
 
         [TestMethod]
-        public void Add_Dictionary()
+        public void Add_ByDictionary()
         {
             var item = new ItemDto("type", "name");
 
@@ -271,10 +289,51 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             item.Add(attributes);
 
-            foreach(var attribute in attributes)
+            foreach (var attribute in attributes)
             {
                 Assert.AreEqual(attribute.Value, item[attribute.Key]);
             }
         }
+
+        //[TestMethod]        
+        //public void Add_ByObjectDictionary()
+        //{
+        //    var item = new ItemDto("type", "name");
+
+        //    var testAttributes = new List<KeyValuePair<string, object>>()
+        //    {
+        //        new (AttributeDataTypes.String, "String Value"),
+        //        new (AttributeDataTypes.Date, new DateOnly(2024, 1, 2)),
+        //        new (AttributeDataTypes.Time, new TimeOnly(1, 2, 3, 4, 5)),
+        //        new (AttributeDataTypes.DateTime, new DateTime(2024, 1, 2, 3, 4, 5, 6, 7)),
+        //        new (AttributeDataTypes.DateTime, new DateTimeOffset(2024, 1, 2, 3, 4, 5, TimeSpan.FromHours(-5))),
+        //        new (AttributeDataTypes.Decimal, new Decimal(1.23456)),
+        //        new (AttributeDataTypes.Integer, 123456789),
+        //        new (AttributeDataTypes.Url, new Uri("https://thingslibrary.io")),
+        //        new (AttributeDataTypes.Boolean, true)
+        //    };
+
+        //    // check individual items
+        //    foreach (var testAttribute in testAttributes)
+        //    {
+        //        var attributeDataType = AttributeDataTypes.Items[testAttribute.Key];
+
+        //        var attribute = new ItemAttributeDto(testAttribute.Key, testAttribute.Value);
+
+        //        Assert.AreEqual(attributeDataType.Key, attribute.Key);
+        //    }
+
+        //    // group add
+        //    item.Add(testAttributes);
+
+        //    foreach(var testAttribute in item.Attributes)
+        //    {
+        //        var attributeDataType = AttributeDataTypes.Items[testAttribute.Key];
+
+        //        var attribute = new ItemAttributeDto(testAttribute.Key, testAttribute.Value);
+
+        //        Assert.AreEqual(attributeDataType.Key, attribute.Key);
+        //    }            
+        //}
     }
 }

@@ -20,14 +20,14 @@
         /// <remarks>This always return the first even if there are more than one.  Setting the value when more then one existing will remote the other items.</remarks>
         [JsonPropertyName("value")]
         [Display(Name = "Value"), StringLength(50, MinimumLength = 1)]
-        public string Value
+        public virtual string Value
         {
-            get => this.Values[0];  
-            set 
+            get => this.Values[0];
+            set
             {
                 // simple replace?
                 if (this.Values.Count == 1) { this.Values[0] = value; }
-                else 
+                else
                 {
                     // clear the listing and add one (this works for all != 1 cases)
                     this.Values.Clear();
@@ -42,13 +42,13 @@
         /// <remarks>Collection should always have at least 1 cell</remarks>
         [JsonPropertyName("values")]
         [Display(Name = "Values"), StringLength(50, MinimumLength = 1)]
-        public List<string> Values { get; set; } = new() { string.Empty };  // array should always have at least one cell
+        public List<string> Values { get; set; } = new List<string>() { string.Empty };
 
 
         /// <summary>
         /// Parent Item
         /// </summary>
-        [JsonIgnore]        
+        [JsonIgnore]
         public ItemDto? Parent { get; set; }
 
         /// <summary>
@@ -67,7 +67,7 @@
         public ItemAttributeDto(string key, string value)
         {
             this.Key = key;
-            this.Value = value;            
+            this.Value = value;
         }
 
         /// <summary>
@@ -77,8 +77,82 @@
         /// <param name="values">Values</param>
         public ItemAttributeDto(string key, List<string> values)
         {
-            this.Key = key;            
+            this.Key = key;
             this.Values = values;
         }
+
+        ///// <summary>
+        ///// Set value / data type based on object value
+        ///// </summary>
+        ///// <param name="value"></param>
+        //public void SetValue(object value)
+        //{
+        //    if (value is string valueStr)
+        //    {
+        //        this.Value = valueStr;
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.String];
+        //    }
+        //    else if (value is DateOnly valueDate)
+        //    {
+        //        this.Value = valueDate.ToString("yyyy-MM-dd");
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Date];
+        //    }
+        //    else if (value is TimeOnly valueTime)
+        //    {
+        //        this.Value = valueTime.ToString("HH:mm:ss");
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Time];
+        //    }
+        //    else if (value is DateTime valueDateTime)
+        //    {
+        //        this.Value = valueDateTime.ToString("O");
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.DateTime];
+        //    }
+        //    else if (value is DateTimeOffset valueDateTimeOffset)
+        //    {
+        //        this.Value = valueDateTimeOffset.ToString("O");
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Date];
+        //    }
+        //    else if (value is decimal valueDecimal)
+        //    {
+        //        this.Value = $"{valueDecimal}";
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Decimal];
+        //    }
+        //    else if (value is int valueInt)
+        //    {
+        //        this.Value = $"{valueInt}";
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Integer];
+        //    }
+        //    else if (value is Uri valueUrl)
+        //    {
+        //        this.Value = $"{valueUrl}";
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Url];
+        //    }
+        //    else if (value is bool valueBool)
+        //    {
+        //        this.Value = $"{valueBool}".ToLower();
+        //        this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Boolean];
+        //    }
+        //    else
+        //    {
+        //        //DEFAULT VALUE / DATA TYPE
+        //        this.Value = $"{value}";     //no need to set the data type as it is defaulted to 'string'            
+        //    }
+        //}
+
+        //public object GetValue()
+        //{
+        //    switch (this.DataType.Key)
+        //    {
+        //        case AttributeDataTypes.String: { return this.Value; }
+        //        case AttributeDataTypes.Date: { return DateOnly.ParseExact(this.Value, "yyyy-MM-dd"); }
+        //        case AttributeDataTypes.Time: { return TimeOnly.ParseExact(this.Value, "HH:mm:ss"); }
+        //        case AttributeDataTypes.DateTime: { return DateTime.Parse(this.Value); }
+
+        //        default:
+        //            {
+        //                return this.Value;
+        //            }
+        //    }
+        //}
     }
 }

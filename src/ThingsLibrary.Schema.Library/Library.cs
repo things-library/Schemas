@@ -1,4 +1,6 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿using System.IO;
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Library
@@ -33,7 +35,7 @@
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("types"), Required]
-        public Dictionary<string, LibraryItemTypeDto> ItemTypes { get; set; } = new();
+        public IDictionary<string, LibraryItemTypeDto> ItemTypes { get; set; } = new Dictionary<string, LibraryItemTypeDto>();
 
         /// <summary>
         /// Items
@@ -41,7 +43,7 @@
         /// <remarks>This is required as a empty isn't a library of anything and this helps verify schema types if $schema is missing</remarks>
         [ValidateCollectionItems, Required]
         [JsonPropertyName("items")]
-        public Dictionary<string, LibraryItemDto> Items { get; set; } = new();
+        public IDictionary<string, LibraryItemDto> Items { get; set; } = new Dictionary<string, LibraryItemDto>();
 
         #region --- Initialization ---
 
@@ -158,5 +160,35 @@
         }
 
         #endregion
+
+        /// <summary>
+        /// Gets a item based on the provided resource key 
+        /// </summary>
+        /// <param name="resourceKey">Resource Path</param>
+        /// <returns></returns>
+        /// <example>Key: child/grand_child/great_grand_child</example>
+        public LibraryItemDto? GetItem(string resourceKey)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(resourceKey);
+
+            var pathSegments = resourceKey.Split('/');
+
+            // Skip the first item and join the rest back into a string
+            var itemKey = pathSegments[0];
+
+            if (!this.Items.ContainsKey(itemKey)) { return null; }
+
+            var item = this.Items[itemKey];
+
+            // only one path segment?  then we just want the root item
+            if (pathSegments.Length == 1)
+            {
+                return item;
+            }
+                        
+            var subItemResourceKey = string.Join('/', pathSegments.Skip(1));
+
+            return item.GetItem(subItemResourceKey);
+        }
     }
 }
