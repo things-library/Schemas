@@ -144,33 +144,6 @@
         public T Get<T>(string key, T defaultValue) => this.Attributes.Get<T>(key, defaultValue);
 
         /// <summary>
-        /// Gets a item based on the provided resource key 
-        /// </summary>
-        /// <param name="resourceKey">Resource Path</param>
-        /// <returns></returns>
-        /// <example>Key: child/grand_child/great_grand_child</example>
-        public ItemDto? GetItem(string resourceKey)
-        {
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(resourceKey);
-
-            ItemDto item = this;
-
-            var pathSegments = resourceKey.Split('/');
-            foreach(var pathSegment in pathSegments)
-            {
-                if (string.IsNullOrWhiteSpace(pathSegment)) { return null; }
-
-                // try to get the item, if failure then exit, otherwise we have it assignd to our item
-                if (!item.Attachments.TryGetValue(pathSegment, out item))
-                {
-                    return null;
-                }
-            }
-
-            return item;
-        }
-
-        /// <summary>
         /// Add attribute to listing
         /// </summary>
         /// <param name="key">Key</param>
@@ -182,7 +155,20 @@
 
             this.Add(attribute, append);
         }
-        
+
+        /// <summary>
+        /// Add attribute to listing
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="value">Value</param>
+        /// <param name="append">If value should be appended to existing</param>
+        public void Add(string key, object value, bool append)
+        {
+            var attribute = new ItemAttributeDto(key, value);
+
+            this.Add(attribute, append);
+        }
+
         /// <summary>
         /// Add basic collection of attributes to the listing
         /// </summary>
@@ -202,6 +188,19 @@
         /// <param name="attributes">Flat listing of Item Basic Attributes</param>
         /// <param name="append">If value(s) should be appended to existing</param>
         public void Add(IEnumerable<KeyValuePair<string, string>> attributes, bool append = false)
+        {
+            foreach (var attribute in attributes)
+            {
+                this.Add(attribute.Key, attribute.Value, append);
+            }
+        }
+
+        /// <summary>
+        /// Add basic collection of attributes to the listing
+        /// </summary>
+        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
+        /// <param name="append">If value(s) should be appended to existing</param>
+        public void Add(IEnumerable<KeyValuePair<string, object>> attributes, bool append = false)
         {
             foreach (var attribute in attributes)
             {
@@ -236,6 +235,33 @@
         #endregion
 
         #region --- Attachments ---
+
+        /// <summary>
+        /// Gets a item based on the provided resource key 
+        /// </summary>
+        /// <param name="resourceKey">Resource Path</param>
+        /// <returns></returns>
+        /// <example>Key: child/grand_child/great_grand_child</example>
+        public ItemDto? GetItem(string resourceKey)
+        {
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(resourceKey);
+
+            ItemDto item = this;
+
+            var pathSegments = resourceKey.Split('/');
+            foreach (var pathSegment in pathSegments)
+            {
+                if (string.IsNullOrWhiteSpace(pathSegment)) { return null; }
+
+                // try to get the item, if failure then exit, otherwise we have it assignd to our item
+                if (!item.Attachments.TryGetValue(pathSegment, out item))
+                {
+                    return null;
+                }
+            }
+
+            return item;
+        }
 
         /// <summary>
         /// Attach items to parent item

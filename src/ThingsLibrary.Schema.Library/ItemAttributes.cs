@@ -95,7 +95,7 @@ namespace ThingsLibrary.Schema.Library
                     }
                     else
                     {
-                        existingAttribute.Value = attribute.Values[0];
+                        // replace all values
                         existingAttribute.Values = attribute.Values;
                     }
                 }
@@ -106,6 +106,7 @@ namespace ThingsLibrary.Schema.Library
             }            
         }
 
+
         /// <summary>
         /// Add attribute value to listing
         /// </summary>
@@ -113,6 +114,17 @@ namespace ThingsLibrary.Schema.Library
         /// <param name="value">Value</param>
         /// <param name="append">If value should be appended if not in the list</param>
         public void Add(string key, string value, bool append = false)
+        {
+            this.Add(new ItemAttributeDto(key, value), append);
+        }
+
+        /// <summary>
+        /// Add attribute value to listing
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="value">Value</param>
+        /// <param name="append">If value should be appended if not in the list</param>
+        public void Add(string key, object value, bool append = false)
         {
             this.Add(new ItemAttributeDto(key, value), append);
         }
