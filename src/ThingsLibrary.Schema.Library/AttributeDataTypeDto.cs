@@ -160,5 +160,11 @@
         /// </summary>
         [Display(Name = "Format"), StringLength(50)]
         public string Format { get; init; } = string.Empty;
+
+
+        public AttributeDataTypeDto()
+        {
+            //nothing
+        }
     }
 }

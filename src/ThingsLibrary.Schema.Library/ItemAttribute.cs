@@ -45,13 +45,33 @@
         public List<string> Values { get; set; } = new List<string>() { string.Empty };
 
         /// <summary>
-        /// Value
+        /// Data Type
         /// </summary>
-        /// <remarks>This always return the first even if there are more than one.  Setting the value when more then one existing will remote the other items.</remarks>
-        [JsonPropertyName("type"), JsonConverter(typeof(AttributeDataTypeDto))]
-        [Display(Name = "Value"), StringLength(50, MinimumLength = 1)]
-        public AttributeDataTypeDto DataType { get; set; } = AttributeDataTypes.Items[AttributeDataTypes.String];  //default to safe values
-       
+        /// <remarks>This always return the first even if there are more than one.  Setting the value when more then one existing will remote the other items.</remarks>       
+        [JsonPropertyName("type")]
+        [Display(Name = "Data Type"), DefaultValue(AttributeDataTypes.String), Required]
+        [AllowedValues(
+            AttributeDataTypes.Boolean,
+            AttributeDataTypes.Currency,
+            AttributeDataTypes.CurrencyRange,
+            AttributeDataTypes.Date,
+            AttributeDataTypes.DateTime,
+            AttributeDataTypes.Duration,
+            AttributeDataTypes.Email,
+            AttributeDataTypes.Enum,
+            AttributeDataTypes.Html,
+            AttributeDataTypes.Password,
+            AttributeDataTypes.Phone,
+            AttributeDataTypes.String,
+            AttributeDataTypes.TextArea,
+            AttributeDataTypes.Time,
+            AttributeDataTypes.Url,
+            AttributeDataTypes.Decimal,
+            AttributeDataTypes.Integer,
+            AttributeDataTypes.IntegerRange,
+            AttributeDataTypes.DecimalRange
+        )]
+        public string DataType { get; set; } = AttributeDataTypes.String;
 
         /// <summary>
         /// Parent Item
@@ -115,48 +135,47 @@
         {
             if (value is string valueStr)
             {
-                this.Value = valueStr;
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.String];
+                this.Value = valueStr;     //no need to set the data type as it is defaulted to 'string'                       
             }
             else if (value is DateOnly valueDate)
             {
                 this.Value = valueDate.ToString("yyyy-MM-dd");
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Date];
+                this.DataType = AttributeDataTypes.Date;
             }
             else if (value is TimeOnly valueTime)
             {
                 this.Value = valueTime.ToString("HH:mm:ss");
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Time];
+                this.DataType = AttributeDataTypes.Time;
             }
             else if (value is DateTime valueDateTime)
             {
                 this.Value = valueDateTime.ToString("O");
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.DateTime];
+                this.DataType = AttributeDataTypes.DateTime;
             }
             else if (value is DateTimeOffset valueDateTimeOffset)
             {
                 this.Value = valueDateTimeOffset.ToString("O");
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Date];
+                this.DataType = AttributeDataTypes.Date;
             }
             else if (value is decimal valueDecimal)
             {
                 this.Value = $"{valueDecimal}";
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Decimal];
+                this.DataType = AttributeDataTypes.Decimal;
             }
             else if (value is int valueInt)
             {
                 this.Value = $"{valueInt}";
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Integer];
+                this.DataType = AttributeDataTypes.Integer;
             }
             else if (value is Uri valueUrl)
             {
                 this.Value = $"{valueUrl}";
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Url];
+                this.DataType = AttributeDataTypes.Url;
             }
             else if (value is bool valueBool)
             {
                 this.Value = $"{valueBool}".ToLower();
-                this.DataType = AttributeDataTypes.Items[AttributeDataTypes.Boolean];
+                this.DataType = AttributeDataTypes.Boolean;
             }
             else
             {
