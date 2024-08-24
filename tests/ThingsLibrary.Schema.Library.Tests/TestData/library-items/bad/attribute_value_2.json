@@ -2,7 +2,7 @@
     "name": "TEST 2024",
     "type": "test_type",
 
-    "attributes": {
+    "tags": {
         "Brand": 1
     }
 }

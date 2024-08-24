@@ -1,3 +1,4 @@
+using System.Text;
 using ThingsLibrary.Schema.Library.Extensions;
 
 namespace ThingsLibrary.Schema.Library.Tests
@@ -26,6 +27,37 @@ namespace ThingsLibrary.Schema.Library.Tests
             var result = input.ToKey();
 
             Assert.AreEqual(expected, result);            
-        }        
+        }
+
+        [TestMethod]
+        public void Telemetry()
+        {
+            var sentence = "$1724380000000|PA|r:1|s:143|p:PPE Mask|q:1|pr:414*44";
+
+            var item = sentence.ToItem();
+
+            // TIMESTAMP
+            //1724380000000 = Friday, August 23, 2024 2:26:40 AM
+            Assert.AreEqual(new DateTime(2024, 8, 23, 2, 26, 40, DateTimeKind.Utc), item.Date);
+
+            // Sentence ID
+            Assert.AreEqual("PA", item.Type);
+
+            // Attribute Tags
+            Assert.AreEqual(5, item.Attributes.Count);
+            Assert.AreEqual("1", item["r"]);
+            Assert.AreEqual("143", item["s"]);
+            Assert.AreEqual("PPE Mask", item["p"]);
+            Assert.AreEqual("1", item["q"]);
+            Assert.AreEqual("414", item["pr"]);
+            
+            // test without * char
+            var sb = new StringBuilder();
+            sb.Append("$1724380000000|PA|r:1|s:143|p:PPE Mask|q:1|pr:414");
+            sb.AppensChecksum();
+
+            var sentence2 = sb.ToString();
+            Assert.AreEqual(sentence, sentence2);
+        }
     }
 }

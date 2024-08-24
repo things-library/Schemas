@@ -42,7 +42,6 @@
 		<Message Text="Copying Schema Documents..." Importance="High" />
 
 		<Copy SourceFiles="$(TargetDir)Schemas\1.0\item.json;$(TargetDir)Schemas\1.0\library.json" DestinationFolder="$(SolutionDir)1.0" />
-
 		<Copy SourceFiles="$(TargetDir)Schemas\1.0\item.json;$(TargetDir)Schemas\1.0\library.json" DestinationFolder="$(SolutionDir)latest" />
 
 		<Message Text="Schemas Copied" Importance="High" />

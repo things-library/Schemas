@@ -225,7 +225,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             Assert.AreEqual(child["status"], clone["status"]);
             Assert.AreEqual(child.Metadata["version"], clone.Metadata["version"]);
 
-            Assert.AreNotSame(child.Attachments["grand_child"], clone.Attachments["grand_child"]);            
+            Assert.AreNotSame(child.Items["grand_child"], clone.Items["grand_child"]);            
         }
 
         [TestMethod]
@@ -260,18 +260,18 @@ namespace ThingsLibrary.Schema.Library.Tests
             child.Attach(grandChild_2);
             child.Init(null);
 
-            Assert.AreEqual(2, child.Attachments.Count);
+            Assert.AreEqual(2, child.Items.Count);
 
             var result = child.Detatch("INVALID_KEY");
             Assert.IsFalse(result);
 
             result = child.Detatch("grand_child_1_key");
             Assert.IsTrue(result);
-            Assert.AreEqual(1, child.Attachments.Count);
-            Assert.AreEqual("grand_child_2_key", child.Attachments.First().Key);
+            Assert.AreEqual(1, child.Items.Count);
+            Assert.AreEqual("grand_child_2_key", child.Items.First().Key);
 
             child.DetatchAll();
-            Assert.AreEqual(0, child.Attachments.Count);
+            Assert.AreEqual(0, child.Items.Count);
         }
 
         [TestMethod]

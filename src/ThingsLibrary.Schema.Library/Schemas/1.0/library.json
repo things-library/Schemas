@@ -21,7 +21,7 @@
                     "default": 1
                 },
 
-                "attributes": {
+                "tags": {
                     "type": "object",
                     "title": "Attributes",
                     "patternProperties": {
@@ -32,7 +32,7 @@
                     "additionalProperties": false
                 },
 
-                "attachments": {
+                "items": {
                     "type": "object",
                     "title": "Attachments",
                     "patternProperties": {
@@ -43,7 +43,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -80,7 +80,7 @@
                     "default": 1
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -139,7 +139,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -182,9 +182,9 @@
                     "default": 1
                 },
 
-                "attributes": {
+                "tags": {
                     "type": "object",
-                    "title": "Attributes",
+                    "title": "Attributes Tags",
                     "patternProperties": {
                         "^[a-z0-9_-]{1,50}$": {
                             "anyOf": [
@@ -204,7 +204,7 @@
                     "additionalProperties": false
                 },
 
-                "attachments": {
+                "items": {
                     "type": "object",
                     "title": "Attachments",
                     "patternProperties": {
@@ -215,7 +215,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -274,7 +274,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {

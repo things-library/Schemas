@@ -16,7 +16,7 @@
         /// Resource Key
         /// </summary>  
         [JsonPropertyName("key")]
-        [Display(Name = "Key"), StringLength(50, MinimumLength = 1)]
+        [Display(Name = "Key"), StringLength(50)]
         [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string? Key { get; set; }
 
@@ -24,7 +24,7 @@
         /// Name
         /// </summary>
         [JsonPropertyName("name")]
-        [Display(Name = "Name"), StringLength(50, MinimumLength = 1), Required]
+        [Display(Name = "Name"), StringLength(50)]
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
@@ -35,7 +35,7 @@
         public DateTimeOffset? Date { get; set; }
                 
         /// <summary>
-        /// Item Type 
+        /// Item Type - describes what type of item we are talking about.
         /// </summary>
         [JsonPropertyName("type")]
         [Display(Name = "Item Type"), StringLength(50, MinimumLength = 1), Required]        
@@ -45,15 +45,17 @@
         /// Attributes
         /// </summary> 
         /// <remarks>Value must be a string or array of strings</remarks>
-        [JsonPropertyName("attributes"), JsonConverter(typeof(ItemAttributesConverter)), JsonIgnoreEmptyCollection]
+        [JsonPropertyName("tags"), JsonConverter(typeof(ItemAttributesConverter)), JsonIgnoreEmptyCollection]
+        [Display(Name = "Attribute Tags")]
         public ItemAttributesDto Attributes { get; set; } = new();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
-        [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public IDictionary<string, ItemDto> Attachments { get; set; } = new Dictionary<string, ItemDto>();
+        [JsonPropertyName("items"), JsonIgnoreEmptyCollection]
+        [Display(Name = "Attachments")]
+        public IDictionary<string, ItemDto> Items { get; set; } = new Dictionary<string, ItemDto>();
 
 
         #region --- Extended ---
@@ -81,11 +83,6 @@
         {
             this.Root = this;   //default until we know otherwise
         }
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
 
         /// <param name="type">Type</param>
         /// <param name="key">Unique Key</param>
@@ -254,7 +251,7 @@
                 if (string.IsNullOrWhiteSpace(pathSegment)) { return null; }
 
                 // try to get the item, if failure then exit, otherwise we have it assignd to our item
-                if (!item.Attachments.TryGetValue(pathSegment, out item))
+                if (!item.Items.TryGetValue(pathSegment, out item))
                 {
                     return null;
                 }
@@ -287,19 +284,19 @@
             childItem.Parent = this;        // pretty obvious who the parent is
             childItem.Root = this.Root;     // well the child clearly isn't the root so our root must be its root
             
-            this.Attachments.Add(childItem.Key, childItem);
+            this.Items.Add(childItem.Key, childItem);
         }
 
         /// <summary>
         /// Detatch 
         /// </summary>
         /// <param name="key">Key</param>
-        public bool Detatch(string key) => this.Attachments.Remove(key);        
+        public bool Detatch(string key) => this.Items.Remove(key);        
 
         /// <summary>
         /// Detatch All Attachments
         /// </summary>        
-        public void DetatchAll() => this.Attachments.Clear();
+        public void DetatchAll() => this.Items.Clear();
 
 
         #endregion
@@ -322,7 +319,7 @@
                 this.Root = parent.Root;
             }
 
-            foreach(var item in this.Attachments)
+            foreach(var item in this.Items)
             {
                 // no idea how we got a item in the attachments dictionary that doesn't have a key.. lets fix it.
                 if(item.Value.Key == null) { item.Value.Key = item.Key; }
@@ -347,7 +344,7 @@
             this.Init(null);
 
             // recurse
-            foreach (var item in this.Attachments)
+            foreach (var item in this.Items)
             {
                 item.Value.OnDeserialized(item);
             }
@@ -361,7 +358,7 @@
             childItemPair.Value.Key = childItemPair.Key;
 
             // recurse
-            foreach (var item in this.Attachments)
+            foreach (var item in this.Items)
             {
                 item.Value.OnDeserialized(item);
             }
@@ -379,7 +376,7 @@
             }
 
             // recurse
-            foreach (var item in this.Attachments)
+            foreach (var item in this.Items)
             {
                 item.Value.OnDeserialized(item);
             }
@@ -390,7 +387,7 @@
             //because we are serilizing and children area already in a dictionary (so key is redundant to export)
             childItem.Key = null;
 
-            foreach (var item in this.Attachments.Values)
+            foreach (var item in this.Items.Values)
             {
                 item.OnSerializing(item);
             }

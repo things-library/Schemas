@@ -4,6 +4,38 @@
     "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.",
 
     "$defs": {
+        "item-attribute": {
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "object",
+                    "title": "Values",
+                    "additionalProperties": {
+                        "anyOf": [
+                            { "type": "string" },
+                            {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
+                        ]
+                    }
+                },
+
+                "type": {
+                    "type": "string",
+                    "title": "Data Type",
+                    "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
+                },
+
+                "units": {
+                    "type": "string",
+                    "title": "Unit Symbol",
+                    "maxLength": 20
+                }
+
+            },
+            "required": [ "type", "values" ]
+        },
         "item": {
             "type": "object",
             "properties": {
@@ -42,21 +74,24 @@
                     "default": 1
                 },
 
-                "attributes": {
+                "tags": {
                     "type": "object",
-                    "title": "Attributes",
+                    "title": "Attribute Tags",
                     "additionalProperties": {
                         "anyOf": [
                             { "type": "string" },
                             {
                                 "type": "array",
                                 "items": { "type": "string" }
+                            },
+                            {
+                                "$ref": "#/$defs/item-attribute"
                             }
                         ]
                     }
                 },
 
-                "attachments": {
+                "items": {
                     "type": "object",
                     "title": "Attachments",
                     "patternProperties": {
@@ -67,7 +102,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -75,7 +110,7 @@
                     }
                 }
             },
-            "required": [ "name", "type" ]
+            "required": [ "type" ]
         }
     },
 

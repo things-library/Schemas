@@ -29,16 +29,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="TestData\items\bad\missing_name.json">
+		<None Update="TestData\items\valid\missing_name.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestData\items\bad\missing_type.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestData\items\bad\name_max.json">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="TestData\items\bad\name_min.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestData\items\bad\type_max.json">

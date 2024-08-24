@@ -5,7 +5,7 @@
 	"types": {
 		"test_type": {
 			"name": "Test Type",
-			"attributes": {
+			"tags": {
 				"brand": {
 					"name": "Brand",
 					"type": "string"
@@ -32,7 +32,7 @@
 			"name": "Test Item",
 			"type": "test_type",
 			"version": 1,
-			"attributes": {
+			"tags": {
 				"brand": "Test",
 				"color": [ "red", "blue" ],
 				"model": ""

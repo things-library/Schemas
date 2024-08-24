@@ -2,7 +2,7 @@
     "name": "TEST 2024",
     "type": "Vehicle",
 
-    "attributes": {
+    "tags": {
         "Brand": "Test Brand",
         "Model": "",
         "Color": [ "Red", "Black" ]

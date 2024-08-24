@@ -12,19 +12,19 @@
 		"root": {
 			"name": "Root",
 			"type": "node",
-			"attachments": {
+			"items": {
 				"1_1": {
 					"name": "1/1",
 					"type": "node",
-					"attachments": {
+					"items": {
 						"1_1_1": {
 							"name": "1/1/1",
 							"type": "node",
-							"attachments": {
+							"items": {
 								"1_1_1_1": {
 									"name": "1/1/1/1",
 									"type": "node",
-									"attachments": {
+									"items": {
 										"1_1_1_1_1": {
 											"name": "",
 											"type": "node"
