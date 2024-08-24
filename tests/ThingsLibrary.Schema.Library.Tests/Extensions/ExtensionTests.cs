@@ -1,7 +1,7 @@
 using System.Text;
 using ThingsLibrary.Schema.Library.Extensions;
 
-namespace ThingsLibrary.Schema.Library.Tests
+namespace ThingsLibrary.Schema.Library.Tests.Extensions
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class ExtensionTests
@@ -26,7 +26,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         {
             var result = input.ToKey();
 
-            Assert.AreEqual(expected, result);            
+            Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
@@ -50,14 +50,37 @@ namespace ThingsLibrary.Schema.Library.Tests
             Assert.AreEqual("PPE Mask", item["p"]);
             Assert.AreEqual("1", item["q"]);
             Assert.AreEqual("414", item["pr"]);
-            
+
             // test without * char
             var sb = new StringBuilder();
             sb.Append("$1724380000000|PA|r:1|s:143|p:PPE Mask|q:1|pr:414");
-            sb.AppensChecksum();
+            sb.AppendChecksum();
 
             var sentence2 = sb.ToString();
             Assert.AreEqual(sentence, sentence2);
+        }
+
+        [TestMethod]
+        public void ToTelemetrySentence()
+        {
+            var item = new ItemDto()
+            {
+                Type = "rmc",
+                Date = new DateTime(2024, 8, 21, 8, 15, 30, DateTimeKind.Utc)
+            };
+
+            item.Attributes.Add("r", "1");
+            item.Attributes.Add("gn", "Mark");
+            item.Attributes.Add("cp", "Starlight");
+
+            var expectedSentence = $"${item.Date.Value.ToUnixTimeMilliseconds()}|rmc|";
+
+            var sentence = item.ToTelemetrySentence();
+
+            Assert.IsTrue(sentence.StartsWith(expectedSentence));
+            Assert.IsTrue(sentence.Contains("|r:1"));
+            Assert.IsTrue(sentence.Contains("|gn:Mark"));
+            Assert.IsTrue(sentence.Contains("|cp:Starlight"));
         }
     }
 }

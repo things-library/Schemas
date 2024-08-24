@@ -1,17 +1,15 @@
-﻿using System.Data;
-using System.Net.NetworkInformation;
-using System.Text;
+﻿using System.Text;
 
 namespace ThingsLibrary.Schema.Library.Extensions
 { 
-    public static class ChecksumExtensions
+    public static class TelemetryExtensions
     {
         /// <summary>
         /// Append the checksum
         /// </summary>
-        /// <param name="sentence"></param>
+        /// <param name="sentence">Partial Telemetry Sentence</param>
         /// <remarks>Checksum based on the NMEA0183 checksum which is just a simple byte-by-byte XOR of all the bytes between $ and * signs exclusively.</remarks>
-        public static void AppensChecksum(this StringBuilder sentence)
+        public static void AppendChecksum(this StringBuilder sentence)
         {
             // not the beginning of a sentence
             if (sentence.Length == 0) { return; }            
@@ -33,7 +31,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
             // no astrisk to mark the CRC check
             if (i == sentence.Length)
             {
-                sentence.Append("*"); 
+                sentence.Append('*'); 
             }
 
             // Return the checksum formatted as a two-character hexadecimal
@@ -140,28 +138,16 @@ namespace ThingsLibrary.Schema.Library.Extensions
             //  $1724387849602|PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
             //  $1724387850520|ET|r:1|q:2*33
 
-            var sentence = new StringBuilder();
-
-            // start 
-            sentence.Append('$');
-
-            // date (Epoch MS)
-            sentence.Append(telemetryItem.Date.Value.ToUnixTimeMilliseconds());
-
-            // sentence ID
-            sentence.Append('|');
-            sentence.Append(telemetryItem.Type);
-            
-            foreach (var attribute in telemetryItem.Attributes)
-            {
-                sentence.Append("|");
-                sentence.Append(attribute.Key);
-                sentence.Append(":");
-                sentence.Append(attribute.Value);
-            }
+            var sentence = new StringBuilder($"${telemetryItem.Date.Value.ToUnixTimeMilliseconds()}|");
                         
+            // SENTENCE ID
+            sentence.Append(telemetryItem.Type);
+
+            // ATTRIBUTES            
+            sentence.Append(string.Join(string.Empty, telemetryItem.Attributes.Select(x => $"|{x.Key}:{x.Value}")));
+                                    
             //Add checksum
-            sentence.AppensChecksum();
+            sentence.AppendChecksum();
 
             return sentence.ToString();
         }
