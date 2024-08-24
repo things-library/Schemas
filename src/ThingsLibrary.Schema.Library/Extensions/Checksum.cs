@@ -10,6 +10,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         /// Append the checksum
         /// </summary>
         /// <param name="sentence"></param>
+        /// <remarks>Checksum based on the NMEA0183 checksum which is just a simple byte-by-byte XOR of all the bytes between $ and * signs exclusively.</remarks>
         public static void AppensChecksum(this StringBuilder sentence)
         {
             // not the beginning of a sentence
@@ -40,10 +41,10 @@ namespace ThingsLibrary.Schema.Library.Extensions
         }
 
         /// <summary>
-        /// Calculate a checksum value based on the NMEA style calculation
+        /// Calculate a checksum value based on the NMEA0183 style calculation
         /// </summary>
         /// <param name="sentence">Sentence</param>
-        /// <remarks>Sentences must have a $ start character and * end character</remarks>
+        /// <remarks>Checksum based on the NMEA0183 checksum which is just a simple byte-by-byte XOR of all the bytes between $ and * signs exclusively.</remarks>
         /// <returns>Two character hexadecimal checksum value</returns>
         public static string ToChecksum(this string sentence)
         {
