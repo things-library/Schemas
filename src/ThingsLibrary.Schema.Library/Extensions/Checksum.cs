@@ -92,6 +92,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         {
             //  $1724387849602|PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
             //  $1724387850520|ET|r:1|q:2*33
+            //  $PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
 
             ArgumentNullException.ThrowIfNullOrEmpty(telemetrySentence);
             if (!telemetrySentence.ValidateChecksum()) { throw new ArgumentException("Invalid checksum"); }
@@ -103,18 +104,25 @@ namespace ThingsLibrary.Schema.Library.Extensions
             if(pos < 0) { throw new ArgumentException("Unable to find end of telemetry sentence"); }
 
             var parts = telemetrySentence.Substring(1, pos - 1).Split('|');
-            
+
+            int i = 0;
+
             // TIMESTAMP
-            if (parts[0].Length != 13) { throw new ArgumentException("Unable to find timestamp."); }
+            DateTimeOffset? timestamp = null;
+            if (parts[i].Length == 13) 
+            {
+                timestamp = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(parts[i]));
+                i++;    //move to next field
+            }
 
             var item = new ItemDto()
             {
-                Date = DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(parts[0])),
-                Type = parts[1]     // SENTENCE ID
+                Date = timestamp,
+                Type = parts[i]     // SENTENCE ID
             };
 
             // ATTRIBUTE TAGS
-            for(int i = 2; i < parts.Length; i++)
+            for(i = i + 1; i < parts.Length; i++)
             {
                 pos = parts[i].IndexOf(':');
                 if(pos < 0) { continue; }   // BAD PAIRING?
@@ -139,6 +147,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
             //EXAMPLES:
             //  $1724387849602|PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
             //  $1724387850520|ET|r:1|q:2*33
+            //  $PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
 
             var sentence = new StringBuilder();
 
@@ -154,9 +163,9 @@ namespace ThingsLibrary.Schema.Library.Extensions
             
             foreach (var attribute in telemetryItem.Attributes)
             {
-                sentence.Append("|");
+                sentence.Append('|');
                 sentence.Append(attribute.Key);
-                sentence.Append(":");
+                sentence.Append(':');
                 sentence.Append(attribute.Value);
             }
                         
