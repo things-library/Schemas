@@ -14,14 +14,14 @@
                     "maxLength": 50
                 },
 
-                "version": {
+                "rev": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
-                "attributes": {
+                "tags": {
                     "type": "object",
                     "title": "Attributes",
                     "patternProperties": {
@@ -32,7 +32,7 @@
                     "additionalProperties": false
                 },
 
-                "attachments": {
+                "items": {
                     "type": "object",
                     "title": "Attachments",
                     "patternProperties": {
@@ -43,7 +43,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -73,14 +73,14 @@
                     "maxLength": 50
                 },
 
-                "version": {
+                "revision": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -108,11 +108,11 @@
                     "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
                 },
 
-                "version": {
+                "revision": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "units": {
@@ -139,7 +139,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -175,16 +175,16 @@
                     "pattern": "^[a-z0-9_-]{1,50}$"
                 },
 
-                "version": {
+                "revision": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
-                "attributes": {
+                "tags": {
                     "type": "object",
-                    "title": "Attributes",
+                    "title": "Attributes Tags",
                     "patternProperties": {
                         "^[a-z0-9_-]{1,50}$": {
                             "anyOf": [
@@ -204,7 +204,7 @@
                     "additionalProperties": false
                 },
 
-                "attachments": {
+                "items": {
                     "type": "object",
                     "title": "Attachments",
                     "patternProperties": {
@@ -215,7 +215,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -245,11 +245,11 @@
                     "maxLength": 50
                 },
 
-                "version": {
+                "revision": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "types": {
@@ -274,7 +274,7 @@
                     "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {

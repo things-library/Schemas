@@ -2,8 +2,40 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://schema.thingslibrary.io/1.0/item.json",
     "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.",
-    
+
     "$defs": {
+        "item-attribute": {
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "object",
+                    "title": "Values",
+                    "additionalProperties": {
+                        "anyOf": [
+                            { "type": "string" },
+                            {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            }
+                        ]
+                    }
+                },
+
+                "type": {
+                    "type": "string",
+                    "title": "Data Type",
+                    "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
+                },
+
+                "units": {
+                    "type": "string",
+                    "title": "Unit Symbol",
+                    "maxLength": 20
+                }
+
+            },
+            "required": [ "type", "values" ]
+        },
         "item": {
             "type": "object",
             "properties": {
@@ -35,36 +67,42 @@
                     "maxLength": 50
                 },
 
-                "version": {
+                "rev": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
-                "attributes": {
+                "tags": {
                     "type": "object",
-                    "title": "Attributes",
+                    "title": "Attribute Tags",
                     "additionalProperties": {
                         "anyOf": [
                             { "type": "string" },
                             {
                                 "type": "array",
                                 "items": { "type": "string" }
+                            },
+                            {
+                                "$ref": "#/$defs/item-attribute"
                             }
                         ]
                     }
                 },
 
-                "attachments": {
-                    "type": "array",
+                "items": {
+                    "type": "object",
                     "title": "Attachments",
-                    "items": {
-                        "$ref": "#/$defs/item"
-                    }
+                    "patternProperties": {
+                        "^[a-z0-9_-]{1,50}$": {
+                            "$ref": "#/$defs/item"
+                        }
+                    },
+                    "additionalProperties": false
                 },
 
-                "metadata": {
+                "meta": {
                     "type": "object",
                     "title": "Metadata",
                     "additionalProperties": {
@@ -72,7 +110,7 @@
                     }
                 }
             },
-            "required": [ "name", "type" ]
+            "required": [ "type" ]
         }
     },
 
