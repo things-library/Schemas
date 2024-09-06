@@ -15,8 +15,8 @@ The latest schema document can be found here:
 
 * Items must have a 'name' property.
 * Items must have a 'type' property that differenciates it from other types of items.
-* Items can have 'attributes' that are key/value pairs which describe the item.
-* Items can have 'attachments' which are dependencies to the item.  Attachments are also items that have a key, name, type and can have attributes and also have attachments.
+* Items can have 'tags' (attriutes) that are key/value pairs which describe the item.
+* Items can have 'items' (attachments) which are dependencies to the item.  Attachments are also items that have a key, name, type and can have attributes and also have attachments.
 * Items must have a 'key' property which are either a system or user defined key that is unique at the level to which it appears.  Keys can not be changed once set and must be snake case.  
 
 ## Examples
@@ -34,7 +34,7 @@ A more typical item structure would look like this:
 {   
 	"name": "Example Movie (2024)",
 	"type": "movie",
-	"attributes": {
+	"tags": {
 		"Release Date": "2024-02-21",
 		"Release Year": "2024",
 		"Studio": "BigPac Entertainment",
@@ -50,11 +50,11 @@ A more typical item structure would look like this:
 			"Bill Smith"
 		]
 	},
-	"attachments": {
+	"items": {
 		"box_office": {
 			"name": "2024 Box Office",
 			"type": "boxoffice",
-			"attributes": {
+			"tags": {
 				"Budget": "$92,000,000",
 				"Gross US & Canada": "$241,830,615",
 				"Opening Weekend US & Canada": "$41,059,405",

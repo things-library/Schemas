@@ -76,15 +76,15 @@ namespace ThingsLibrary.Schema.Library.Base
         /// <summary>
         /// Generic metadata which is a simple key-value dictionary
         /// </summary>
-        [JsonPropertyName("metadata"), JsonIgnoreEmptyCollection]
+        [JsonPropertyName("meta"), JsonIgnoreEmptyCollection]
         public IDictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Revision Number (1 = first, 0 = unknown/unspecified)
         /// </summary>
-        [JsonPropertyName("version"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonPropertyName("rev"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
         [DefaultValue(0), Range(0, int.MaxValue)]
-        public int Version { get; set; } = 0;   //0 = unknown/not specified
+        public int Revision { get; set; } = 0; 
 
 
         /// <summary>

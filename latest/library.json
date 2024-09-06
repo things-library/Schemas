@@ -14,11 +14,11 @@
                     "maxLength": 50
                 },
 
-                "version": {
+                "rev": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "tags": {
@@ -73,11 +73,11 @@
                     "maxLength": 50
                 },
 
-                "version": {
+                "revision": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "meta": {
@@ -108,11 +108,11 @@
                     "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
                 },
 
-                "version": {
+                "revision": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "units": {
@@ -175,11 +175,11 @@
                     "pattern": "^[a-z0-9_-]{1,50}$"
                 },
 
-                "version": {
+                "revision": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "tags": {
@@ -245,11 +245,11 @@
                     "maxLength": 50
                 },
 
-                "version": {
+                "revision": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "types": {
