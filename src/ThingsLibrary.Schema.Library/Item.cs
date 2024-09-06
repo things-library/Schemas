@@ -243,7 +243,7 @@
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(resourceKey);
 
-            ItemDto item = this;
+            ItemDto? item = this;
 
             var pathSegments = resourceKey.Split('/');
             foreach (var pathSegment in pathSegments)
