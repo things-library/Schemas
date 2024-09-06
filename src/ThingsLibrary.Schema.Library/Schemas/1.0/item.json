@@ -67,11 +67,11 @@
                     "maxLength": 50
                 },
 
-                "version": {
+                "rev": {
                     "type": "integer",
-                    "title": "Version",
-                    "minimum": 1,
-                    "default": 1
+                    "title": "Revision",
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "tags": {
