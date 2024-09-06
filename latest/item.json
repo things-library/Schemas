@@ -70,8 +70,8 @@
                 "rev": {
                     "type": "integer",
                     "title": "Revision",
-                    "minimum": 1,
-                    "default": 1
+                    "minimum": 0,
+                    "default": 0
                 },
 
                 "tags": {
