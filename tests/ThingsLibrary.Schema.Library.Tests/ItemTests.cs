@@ -44,7 +44,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Constructor()
         {
-            var item = new ItemDto("test_type", "test_name");
+            var item = new ItemDto("test_type", "test_name", "test_name");
 
             Assert.AreEqual("test_type", item.Type);
             Assert.AreEqual("test_name", item.Name);
@@ -277,7 +277,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void Add_ByDictionary()
         {
-            var item = new ItemDto("type", "name");
+            var item = new ItemDto("type", "name", "key");
 
             var attributes = new Dictionary<string, string>()
             {

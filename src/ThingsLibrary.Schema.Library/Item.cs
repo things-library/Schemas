@@ -18,7 +18,7 @@
         [JsonPropertyName("key")]
         [Display(Name = "Key"), StringLength(50)]
         [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
-        public string? Key { get; set; }
+        public string Key { get; set; } = string.Empty;
 
         /// <summary>
         /// Name
@@ -92,6 +92,7 @@
         {
             ArgumentNullException.ThrowIfNullOrWhiteSpace(type);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
+            if (!ItemDto.IsKeyValid(key)) { throw new ArgumentException("Invalid key."); }
 
             this.Root = this;
 
@@ -100,23 +101,23 @@
             this.Key = key;           
         }
 
-        /// <summary>
-        /// Constructor
-        /// </summary>        
-        /// <param name="type">Type</param>
-        /// <param name="name">Name</param>
-        /// <remarks>Name is automatically set to key value</remarks>
-        public ItemDto(string type, string name)
-        {
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(type);            
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
+        ///// <summary>
+        ///// Constructor
+        ///// </summary>        
+        ///// <param name="type">Type</param>
+        ///// <param name="name">Name</param>
+        ///// <remarks>Name is automatically set to key value</remarks>
+        //public ItemDto(string type, string name)
+        //{
+        //    ArgumentNullException.ThrowIfNullOrWhiteSpace(type);            
+        //    ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
 
-            this.Root = this;
+        //    this.Root = this;
 
-            this.Type = type;
-            this.Name = name;
-            this.Key = name;            
-        }
+        //    this.Type = type;
+        //    this.Name = name;
+        //    this.Key = name;            
+        //}
 
         #region --- Attributes ---
 
@@ -308,6 +309,12 @@
         /// </summary>
         public void Init(ItemDto? parent)
         {
+            // lets always have some kind of key
+            if (string.IsNullOrEmpty(this.Key))
+            {
+                this.Key = this.Name.ToKey();
+            }
+
             // must be at the top of the tree
             if(parent == null)
             {
@@ -385,7 +392,7 @@
         public void OnSerializing(ItemDto childItem)
         {
             //because we are serilizing and children area already in a dictionary (so key is redundant to export)
-            childItem.Key = null;
+            childItem.Key = string.Empty; 
 
             foreach (var item in this.Items.Values)
             {
