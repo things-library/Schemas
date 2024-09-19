@@ -20,9 +20,20 @@ namespace ThingsLibrary.Schema.Library.Extensions
             //  "Test Key"
             //  "test key"
             //  "test.Key"
+            //  "TESTKEY"
+            //  "TEST KEY"
+            //  "testKey"
 
             //nothing to do?
             if (string.IsNullOrEmpty(text)) { return string.Empty; }
+
+            // Check for a case of 'mixed' case indicating possible seperation of words using pascalCase or SententCase 
+            if (!(text.Any(x => char.IsLower(x)) && text.Any(x => char.IsUpper(x))))
+            {
+                text = text.ToLower();
+            }
+
+            //nothing to do?            
             if (Base.SchemaBase.IsKeyValid(text)) { return text; }
 
             var sb = new StringBuilder();

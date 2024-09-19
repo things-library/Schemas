@@ -20,8 +20,9 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
         [DataRow("Test.Key", "test_key")]
         [DataRow("Test.key", "test_key")]
         [DataRow(".test.key", "test_key")]
-        [DataRow(".test././\\key", "test_key")]
-
+        [DataRow(".test././\\key", "test_key")]        
+        [DataRow("TESTKEY", "testkey")]        
+        [DataRow("TEST KEY", "test_key")]
         public void ToKey(string input, string expected)
         {
             var result = input.ToKey();

@@ -1,5 +1,3 @@
-using Newtonsoft.Json.Linq;
-
 namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
@@ -67,6 +65,8 @@ namespace ThingsLibrary.Schema.Library.Tests
             Assert.AreEqual("test_1_value", item.Attributes["test_1"]);
 
             Assert.AreEqual("", item.Attributes["INVALID_KEY"]);
+
+            Assert.ThrowsException<ArgumentException>(() => new ItemDto("test", "Test", "INVALID!KEY!"));
         }
 
         [TestMethod]
@@ -179,7 +179,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         }
 
         [TestMethod]
-        public void GetItem()
+        public void Attach_GetItem()
         {
             var root = new ItemDto("root", "Root", "root");
             var child = new ItemDto("child", "Child", "child");
@@ -191,10 +191,42 @@ namespace ThingsLibrary.Schema.Library.Tests
             // initialize links
             root.Init(null);
 
+            var testItem = root.Items[child.Key];
+            Assert.AreSame(testItem, child);
+            Assert.AreSame(testItem.Parent, root);
 
+            testItem = root.GetItem($"{child.Key}/{grandChild.Key}");
+            Assert.IsNotNull(testItem);
+            Assert.AreSame(testItem, grandChild);
+            Assert.AreSame(testItem.Parent, child);
+
+            testItem = root.GetItem($"{child.Key}/invalid_path");
+            Assert.IsNull(testItem);
+
+            testItem = root.GetItem($"{child.Key}//");
+            Assert.IsNull(testItem);
         }
 
-            [TestMethod]
+        [TestMethod]
+        public void AttachItems_GetItem()
+        {
+            var root = new ItemDto("root", "Root", "root");
+            
+            var child1 = new ItemDto("child", "Child 1", "child_1");
+            var child2 = new ItemDto("child", "Child 2", "child_2");
+            var child3 = new ItemDto("child", "Child 3", "child_3");
+            
+            var children = new List<ItemDto> { child1, child2, child3 };
+            root.Attach(children);
+
+            Assert.AreEqual(3, root.Items.Count);
+            
+            var testItem = root.Items[child2.Key];
+            Assert.AreSame(testItem, child2);
+            Assert.AreSame(testItem.Parent, root);
+        }
+
+        [TestMethod]
         public void Clone()
         {
             var root = new ItemDto("root", "Root", "root") { Id = Guid.NewGuid() };
