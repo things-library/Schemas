@@ -23,6 +23,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
             //  "TESTKEY"
             //  "TEST KEY"
             //  "testKey"
+            //  "TestKeY"
 
             //nothing to do?
             if (string.IsNullOrEmpty(text)) { return string.Empty; }
@@ -81,7 +82,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         {
             // replace the _ with space so that title case finds all the words
 
-            return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(key.ToLower().Replace('_', ' '));
+            return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(key.ToLower().Replace('_', ' ').Replace('-', ' '));
         }
 
         /// <summary>

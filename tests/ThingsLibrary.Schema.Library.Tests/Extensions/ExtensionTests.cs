@@ -21,8 +21,9 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
         [DataRow("Test.key", "test_key")]
         [DataRow(".test.key", "test_key")]
         [DataRow(".test././\\key", "test_key")]        
-        [DataRow("TESTKEY", "testkey")]        
+        [DataRow("TESTKEY", "testkey")]
         [DataRow("TEST KEY", "test_key")]
+        [DataRow("tEsT_kEy", "t_es_t_k_ey")]
         public void ToKey(string input, string expected)
         {
             var result = input.ToKey();

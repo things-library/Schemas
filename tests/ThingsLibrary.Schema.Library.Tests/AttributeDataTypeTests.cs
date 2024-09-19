@@ -1,6 +1,4 @@
-﻿using ThingsLibrary.Schema.Library;
-
-namespace ThingsLibrary.Schema.Library.Tests
+﻿namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class AttributeDataTypesTests
