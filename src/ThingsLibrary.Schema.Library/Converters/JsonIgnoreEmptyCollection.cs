@@ -1,4 +1,11 @@
-﻿namespace ThingsLibrary.Schema.Library.Converters
+﻿// ================================================================================
+// <copyright file="JsonIgnoreEmptyCollection.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Schema.Library.Converters
 {
     /// <summary>
     /// Json Ignore Attribute that when added to collections will JsonIgnore the collection when empty.

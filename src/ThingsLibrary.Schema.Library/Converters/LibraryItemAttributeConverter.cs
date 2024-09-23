@@ -1,14 +1,9 @@
-﻿//namespace ThingsLibrary.Schema.Library.Converters
-//{
-//    /// <summary>
-//    /// Converts List of item type attributes into a dictionary
-//    /// </summary>
-//    public class LibraryItemAttributeConverter : JsonConverter<IDictionary<string, LibraryItemAttributeDto>>
-//    {
-//        public override Dictionary<string, LibraryItemAttributeDto> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-//        {
-//            var list = JsonSerializer.Deserialize<Dictionary<string, object>>(ref reader, options);
-//            if (list == null) { return new(); }
+﻿// ================================================================================
+// <copyright file="LibraryItemAttributeConverter.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
 
 //            var items = new Dictionary<string, LibraryItemAttributeDto>(list.Count);
 //            foreach (var item in list)
