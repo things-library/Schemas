@@ -31,6 +31,9 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
         [DataRow("TESTKEY", "testkey")]
         [DataRow("TEST KEY", "test_key")]
         [DataRow("tEsT_kEy", "t_es_t_k_ey")]
+        [DataRow("Test52", "test52")]
+        [DataRow("Test52Sen", "test52_sen")]
+        [DataRow("Test52sen", "test52sen")]
         public void ToKey(string input, string expected)
         {
             var result = input.ToKey();

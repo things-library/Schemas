@@ -31,6 +31,8 @@ namespace ThingsLibrary.Schema.Library.Extensions
             //  "TEST KEY"
             //  "testKey"
             //  "TestKeY"
+            //  "Test52"
+            //  "Test52Something"
 
             //nothing to do?
             if (string.IsNullOrEmpty(text)) { return string.Empty; }
@@ -46,9 +48,9 @@ namespace ThingsLibrary.Schema.Library.Extensions
 
             var sb = new StringBuilder();
 
-            // only append the first character if it matches our regex
+            // only append the first character if it matches our regex  (keys can't start with a number)
             char c = char.ToLowerInvariant(text[0]);
-            if (!SeperatorCharacters.Contains(c))
+            if (!SeperatorCharacters.Contains(c) && !char.IsNumber(c))
             {
                 sb.Append(c);
             }
@@ -71,9 +73,13 @@ namespace ThingsLibrary.Schema.Library.Extensions
                     if (sb.Length > 0 && sb[sb.Length - 1] != '_') { sb.Append('_'); }
                     sb.Append(char.ToLowerInvariant(c));
                 }
-                else if (Char.IsAsciiLetter(c))
+                else if (char.IsAsciiLetter(c))
                 {
                     sb.Append(char.ToLowerInvariant(c));
+                }
+                else if (char.IsNumber(c))
+                {
+                    sb.Append(c);
                 }
             }
 
