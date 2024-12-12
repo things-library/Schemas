@@ -24,7 +24,7 @@ jobs:
     
     env:
       # We are going to build just the deploy projects and push those nuget packages
-      SOLUTION_PATH: './ThingsLibrary.Schema.Deploy.sln'
+      SOLUTION_PATH: './ThingsLibrary.Schema.sln'
 
     steps:    
     - name: Checkout
