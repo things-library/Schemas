@@ -20,3 +20,4 @@ The latest schema documents are always found in the **/latest** folder but withi
 
 * [Item Schema](item-schema.md)
 * [Library Schema](library-schema.md)
+* [Telemetry / Logging](telemetry.md)

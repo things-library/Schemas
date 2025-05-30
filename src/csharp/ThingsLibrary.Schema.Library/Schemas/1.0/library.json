@@ -34,7 +34,7 @@
 
                 "items": {
                     "type": "object",
-                    "title": "Attachments",
+                    "title": "Children",
                     "patternProperties": {
                         "^[a-z0-9_-]{1,50}$": {
                             "$ref": "#/$defs/item-type-attachment"
