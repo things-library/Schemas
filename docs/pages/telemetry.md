@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Library Schema
-permalink: /library-schema
+title: Telemetry
+permalink: /telemetry
 ---
 
 # Telemetry
