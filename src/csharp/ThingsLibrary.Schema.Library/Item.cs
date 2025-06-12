@@ -38,7 +38,7 @@ namespace ThingsLibrary.Schema.Library
         /// Date (If item is an 'event')
         /// </summary>
         /// <remarks>Designed for maintaining chronological listing</remarks>
-        [JsonPropertyName("date")]
+        [JsonPropertyName("date"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DateTimeOffset? Date { get; set; }
                 
         /// <summary>
