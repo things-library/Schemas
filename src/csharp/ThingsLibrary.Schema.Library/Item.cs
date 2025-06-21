@@ -23,16 +23,16 @@ namespace ThingsLibrary.Schema.Library
         /// Resource Key
         /// </summary>  
         [JsonPropertyName("key")]
-        [Display(Name = "Key"), StringLength(50)]
+        [Display(Name = "Key"), StringLength(50, MinimumLength = 1), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
-        public string Key { get; set; } = string.Empty;
+        public string? Key { get; set; }
 
         /// <summary>
         /// Name
         /// </summary>
         [JsonPropertyName("name")]
-        [Display(Name = "Name"), StringLength(50)]
-        public string Name { get; set; } = string.Empty;
+        [Display(Name = "Name"), StringLength(50, MinimumLength = 1), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? Name { get; set; }
 
         /// <summary>
         /// Date (If item is an 'event')
@@ -49,30 +49,23 @@ namespace ThingsLibrary.Schema.Library
         public string Type { get; set; } = string.Empty;
 
         /// <summary>
-        /// Attributes
+        /// Tags
         /// </summary> 
         /// <remarks>Value must be a string or array of strings</remarks>
-        [JsonPropertyName("tags"), JsonConverter(typeof(ItemAttributesConverter)), JsonIgnoreEmptyCollection]
-        [Display(Name = "Attribute Tags")]
-        public ItemAttributesDto Attributes { get; set; } = new();
+        [JsonPropertyName("tags"), JsonConverter(typeof(ItemTagsConverter)), JsonIgnoreEmptyCollection]
+        [Display(Name = "Tags")]
+        public ItemTagsDto Tags { get; set; } = new();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("items"), JsonIgnoreEmptyCollection]
-        [Display(Name = "Attachments")]
+        [Display(Name = "Attachment Items")]
         public IDictionary<string, ItemDto> Items { get; set; } = new Dictionary<string, ItemDto>();
 
 
         #region --- Extended ---
-
-        /// <summary>
-        /// Parent Item Pointer
-        /// </summary>
-        [JsonIgnore]
-        public ItemDto? Parent { get; set; }
-
 
         /// <summary>
         /// Root Item Pointer
@@ -80,6 +73,12 @@ namespace ThingsLibrary.Schema.Library
         [JsonIgnore]
         public ItemDto Root { get; set; }
 
+        /// <summary>
+        /// Parent Item Pointer
+        /// </summary>
+        [JsonIgnore]
+        public ItemDto? Parent { get; set; }
+                
         #endregion
 
 
@@ -126,116 +125,118 @@ namespace ThingsLibrary.Schema.Library
         //    this.Key = name;            
         //}
 
-        #region --- Attributes ---
+        #region --- Tags ---
 
         /// <summary>
-        /// Get and set attribute values
+        /// Get and set tag values
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
         public string this[string key]
         {
-            get => this.Attributes[key];
-            set => this.Attributes[key] = value;            
+            get => this.Tags[key];
+            set => this.Tags[key] = value;            
         }
 
         /// <summary>
-        /// Get attribute value or default
+        /// Get tag value or default
         /// </summary>
         /// <typeparam name="T">Data Type</typeparam>
         /// <param name="key">Key</param>
         /// <param name="defaultValue">Default Value</param>
-        /// <returns>Attribute value or default value</returns>
-        public T Get<T>(string key, T defaultValue) => this.Attributes.Get<T>(key, defaultValue);
+        /// <returns>Tag value or default value</returns>
+        public T Get<T>(string key, T defaultValue) => this.Tags.Get<T>(key, defaultValue);
 
         /// <summary>
-        /// Add attribute to listing
+        /// Get tag value or default
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="defaultValue">Default Value</param>
+        /// <returns>Tag value or default value</returns>
+        public string Get(string key, string defaultValue) => this.Tags.Get<string>(key, defaultValue);
+
+        /// <summary>
+        /// Add tag to listing
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
-        /// <param name="append">If value should be appended to existing</param>
-        public void Add(string key, string value, bool append)
+        public void Add(string key, string value)
         {
-            var attribute = new ItemAttributeDto(key, value);
+            var tag = new ItemTagDto(key, value);
 
-            this.Add(attribute, append);
+            this.Add(tag);
         }
 
         /// <summary>
-        /// Add attribute to listing
+        /// Add tag to listing
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
-        /// <param name="append">If value should be appended to existing</param>
-        public void Add(string key, object value, bool append)
+        public void Add(string key, object value)
         {
-            var attribute = new ItemAttributeDto(key, value);
+            var tag = new ItemTagDto(key, value);
 
-            this.Add(attribute, append);
+            this.Add(tag);
         }
 
         /// <summary>
-        /// Add basic collection of attributes to the listing
+        /// Add basic collection of tags to the listing
         /// </summary>
-        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        /// <param name="append">If value(s) should be appended to existing</param>
-        public void Add(IEnumerable<ItemAttributeDto> attributes, bool append = false)
+        /// <param name="tags">Flat listing of Item Basic Tags</param>
+        public void Add(IEnumerable<ItemTagDto> tags)
         {
-            foreach (var attribute in attributes)
+            foreach (var tag in tags)
             {
-                this.Add(attribute, append);
+                this.Add(tag);
             }
         }
 
         /// <summary>
-        /// Add basic collection of attributes to the listing
+        /// Add basic collection of tags to the listing
         /// </summary>
-        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        /// <param name="append">If value(s) should be appended to existing</param>
-        public void Add(IEnumerable<KeyValuePair<string, string>> attributes, bool append = false)
+        /// <param name="tags">Flat listing of Item Basic tags</param>
+        public void Add(IEnumerable<KeyValuePair<string, string>> tags)
         {
-            foreach (var attribute in attributes)
+            foreach (var tag in tags)
             {
-                this.Add(attribute.Key, attribute.Value, append);
+                this.Add(tag.Key, tag.Value);
             }
         }
 
         /// <summary>
-        /// Add basic collection of attributes to the listing
+        /// Add basic collection of tags to the listing
         /// </summary>
-        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
-        /// <param name="append">If value(s) should be appended to existing</param>
-        public void Add(IEnumerable<KeyValuePair<string, object>> attributes, bool append = false)
+        /// <param name="tags">Flat listing of Item Basic tags</param>
+        public void Add(IEnumerable<KeyValuePair<string, object>> tags)
         {
-            foreach (var attribute in attributes)
+            foreach (var tag in tags)
             {
-                this.Add(attribute.Key, attribute.Value, append);
+                this.Add(tag.Key, tag.Value);
             }
         }
 
         /// <summary>
-        /// Add attribute to the listing
+        /// Add tag to the listing
         /// </summary>
-        /// <param name="attribute">Attribute</param>
-        /// <param name="append">If value(s) should be appended to existing</param>
-        public void Add(ItemAttributeDto attribute, bool append = false)
+        /// <param name="tag">tag</param>
+        public void Add(ItemTagDto tag)
         {
-            attribute.Parent = this;    //clearly we are the parent
+            tag.Parent = this;    //clearly we are the parent
 
-            this.Attributes.Add(attribute, append);
+            this.Tags.Add(tag);
         }
 
         /// <summary>
-        /// Remove attribute(s) with the key
+        /// Remove tag(s) with the key
         /// </summary>
         /// <param name="key">Key</param>
         /// <returns>True if item was found in collection, Fals if not found</returns>
-        public bool Remove(string key) => this.Attributes.Remove(key);
+        public bool Remove(string key) => this.Tags.Remove(key);
 
         /// <summary>
-        /// Remove all attributes
+        /// Remove all tags
         /// </summary>
-        public void RemoveAll() => this.Attributes.Clear();
+        public void RemoveAll() => this.Tags.Clear();
 
         #endregion
 
@@ -316,11 +317,11 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         public void Init(ItemDto? parent)
         {
-            // lets always have some kind of key
-            if (string.IsNullOrEmpty(this.Key))
-            {
-                this.Key = this.Name.ToKey();
-            }
+            //// lets always have some kind of key
+            //if (string.IsNullOrEmpty(this.Key))
+            //{
+            //    this.Key = this.Name.ToKey();
+            //}
 
             // must be at the top of the tree
             if(parent == null)
@@ -342,9 +343,9 @@ namespace ThingsLibrary.Schema.Library
                 item.Value.Init(this);                
             }
 
-            foreach (var attribute in this.Attributes)
+            foreach (var tag in this.Tags)
             {                
-                attribute.Parent = this;                
+                tag.Parent = this;                
             }
         }
 

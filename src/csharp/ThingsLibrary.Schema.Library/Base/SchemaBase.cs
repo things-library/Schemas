@@ -43,7 +43,7 @@ namespace ThingsLibrary.Schema.Library.Base
         /// <summary>
         /// Pattern to use for all non-root library keys
         /// </summary>
-        public const string KeyPattern = "^[a-z0-9_-]{1,50}$";
+        public const string KeyPattern = "^[a-z0-9_]{1,50}$";
 
         /// <summary>
         /// Key pattern description
@@ -77,6 +77,16 @@ namespace ThingsLibrary.Schema.Library.Base
                 Modifiers = { JsonIgnoreEmptyCollection.IgnoreEmptyCollections }
             }
         };
+
+        public static void ConfigureJsonSerializerOptions(JsonSerializerOptions options)
+        {
+            options.AllowTrailingCommas = JsonSerializerOptions.AllowTrailingCommas;
+            options.WriteIndented = JsonSerializerOptions.WriteIndented;
+            options.DefaultIgnoreCondition = JsonSerializerOptions.DefaultIgnoreCondition;
+            options.PropertyNamingPolicy = JsonSerializerOptions.PropertyNamingPolicy;
+            options.PropertyNameCaseInsensitive = JsonSerializerOptions.PropertyNameCaseInsensitive;
+            options.TypeInfoResolver = JsonSerializerOptions.TypeInfoResolver;
+        }
 
         #endregion
 

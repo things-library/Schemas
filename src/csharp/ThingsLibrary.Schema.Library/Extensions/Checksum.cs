@@ -132,7 +132,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 pos = parts[i].IndexOf(':');
                 if (pos < 0) { continue; }   // BAD PAIRING?
 
-                item.Add(parts[i].Substring(0, pos), parts[i].Substring(pos + 1), false);
+                item.Add(parts[i].Substring(0, pos), parts[i].Substring(pos + 1));
             }
 
             return item;
@@ -166,7 +166,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
             sentence.Append('|');
             sentence.Append(telemetryItem.Type);
 
-            foreach (var attribute in telemetryItem.Attributes)
+            foreach (var attribute in telemetryItem.Tags)
             {
                 sentence.Append('|');
                 sentence.Append(attribute.Key);

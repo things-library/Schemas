@@ -1,118 +1,87 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://schema.thingslibrary.io/1.0/item.json",
-    "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.thingslibrary.io/1.0/item.json",
+  "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.  A item can contain key/value pairs of tags as well as other child items.",
 
-    "$defs": {
-        "item-attribute": {
-            "type": "object",
-            "properties": {
-                "values": {
-                    "type": "object",
-                    "title": "Values",
-                    "additionalProperties": {
-                        "anyOf": [
-                            { "type": "string" },
-                            {
-                                "type": "array",
-                                "items": { "type": "string" }
-                            }
-                        ]
-                    }
-                },
-
-                "type": {
-                    "type": "string",
-                    "title": "Data Type",
-                    "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
-                },
-
-                "units": {
-                    "type": "string",
-                    "title": "Unit Symbol",
-                    "maxLength": 20
-                }
-
-            },
-            "required": [ "type", "values" ]
+  "$defs": {
+    "item": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "title": "Key",
+          "minLength": 1,
+          "maxLength": 50
         },
-        "item": {
-            "type": "object",
-            "properties": {
-                "key": {
-                    "type": "string",
-                    "title": "Key",
-                    "minLength": 1,
-                    "maxLength": 50,
-                    "pattern": "^[a-z0-9_-]{1,50}$"
-                },
 
-                "date": {
-                    "type": "string",
-                    "title": "Date",
-                    "format": "date-time"
-                },
+        "date": {
+          "type": "string",
+          "title": "Date",
+          "format": "date-time"
+        },
 
-                "name": {
-                    "type": "string",
-                    "title": "Name",
-                    "minLength": 1,
-                    "maxLength": 50
-                },
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
 
-                "type": {
-                    "type": "string",
-                    "title": "Type",
-                    "minLength": 1,
-                    "maxLength": 50
-                },
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "minLength": 1,
+          "maxLength": 50
+        },
 
-                "rev": {
-                    "type": "integer",
-                    "title": "Revision",
-                    "minimum": 0,
-                    "default": 0
-                },
+        "tags": {
+          "type": "object",
+          "title": "Attribute Tags",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "title": "string",
+                "type": "string"
+              },
+              {
+                "title": "integer",
+                "type": "integer"
+              },
+              {
+                "title": "number",
+                "type": "number"
+              },
+              {
+                "title": "boolean",
+                "type": "boolean"
+              },
+              {
+                "title": "null",
+                "type": "null"
+              }
+            ]
+          }
+        },
 
-                "tags": {
-                    "type": "object",
-                    "title": "Attribute Tags",
-                    "additionalProperties": {
-                        "anyOf": [
-                            { "type": "string" },
-                            {
-                                "type": "array",
-                                "items": { "type": "string" }
-                            },
-                            {
-                                "$ref": "#/$defs/item-attribute"
-                            }
-                        ]
-                    }
-                },
+        "items": {
+          "type": "object",
+          "title": "Attachments",
+          "additionalProperties": {
+            "$ref": "#/$defs/item"
+          }
+        },
 
-                "items": {
-                    "type": "object",
-                    "title": "Attachments",
-                    "patternProperties": {
-                        "^[a-z0-9_-]{1,50}$": {
-                            "$ref": "#/$defs/item"
-                        }
-                    },
-                    "additionalProperties": false
-                },
-
-                "meta": {
-                    "type": "object",
-                    "title": "Metadata",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [ "type" ]
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
-    },
+      },
+      "required": [ "type" ]
+    }
+  },
 
-    "$ref": "#/$defs/item"
+  "$ref": "#/$defs/item"
 }

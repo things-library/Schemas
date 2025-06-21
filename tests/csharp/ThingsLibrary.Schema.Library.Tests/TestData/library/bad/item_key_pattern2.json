@@ -1,5 +1,6 @@
 {
-	"types": [],
+	"name":  "Something",
+	"types": {},
 	"items": {
 		"test key": {
 			"name": "Test Type"

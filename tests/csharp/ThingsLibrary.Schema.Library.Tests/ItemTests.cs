@@ -5,45 +5,88 @@
 // </copyright>
 // ================================================================================
 
+using ThingsLibrary.Schema.Library.Tests.Base;
+
 namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
-    public class ItemTests
+    public class ItemTests : TestBase
     {
-        [TestMethod]
-        public void Validation_Valid()
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
         {
-            var testFilePaths = Directory.GetFiles($"TestData/items/valid", "*.json");
-
-            foreach (var testFilePath in testFilePaths)
-            {
-                var json = File.ReadAllText(testFilePath);
-                var doc = JsonDocument.Parse(json);
-
-                var item = doc.Deserialize<ItemDto>(SchemaBase.JsonSerializerOptions);
-                Assert.IsNotNull(item);
-
-                var validationErrors = item.Validate();
-                Assert.IsFalse(validationErrors.Any());
-            }
+            // static field initialization
+            LoadSchemas();
         }
 
         [TestMethod]
-        public void Validation_Bad()
+        [DataRow("bad/key_max.json", false)]
+        [DataRow("bad/key_min.json", false)]
+        [DataRow("bad/name_max.json", false)]
+        [DataRow("bad/name_min.json", false)]
+        [DataRow("bad/type_max.json", false)]
+        [DataRow("bad/type_min.json", false)]
+        [DataRow("bad/type_missing.json", false)]
+
+        [DataRow("valid/attribute_value.json", true)]
+        [DataRow("valid/date.json", true)]
+        [DataRow("valid/item_children.json", true)]
+        [DataRow("valid/minimal.json", true)]
+        [DataRow("valid/name_max.json", true)]
+        [DataRow("valid/name_min.json", true)]
+        [DataRow("valid/simple.json", true)]
+        [DataRow("valid/type_max.json", true)]
+        [DataRow("valid/type_min.json", true)]
+        public void SchemaValidation(string fileName, bool isValid)
         {
-            var testFilePaths = Directory.GetFiles($"TestData/items/bad", "*.json");
+            // LOAD TEST JSON DATA
+            var filePath = $"TestData/items/{fileName}";
+            Assert.IsTrue(File.Exists(filePath));
 
-            foreach (var testFilePath in testFilePaths)
-            {
-                var json = File.ReadAllText(testFilePath);
-                var doc = JsonDocument.Parse(json);
+            var json = File.ReadAllText(filePath);
+            var doc = JsonDocument.Parse(json);
 
-                var item = doc.Deserialize<ItemDto>(SchemaBase.JsonSerializerOptions);
-                Assert.IsNotNull(item);
+            // EVALUATE USING JSON SCHEMA
+            var results = Base.TestBase.ItemSchemaDoc.Evaluate(doc, Base.TestBase.EvaluationOptions);
+            if (Debugger.IsAttached && isValid && !results.IsValid) { this.DebugLogResults(results, fileName); }
 
-                var validationErrors = item.Validate();
-                Assert.IsTrue(validationErrors.Any());
-            }
+            Assert.AreEqual(isValid, results.IsValid);
+        }
+
+        [TestMethod]
+        [DataRow("bad/key_max.json", false)]
+        [DataRow("bad/key_min.json", false)]
+        [DataRow("bad/name_max.json", false)]
+        [DataRow("bad/name_min.json", false)]
+        [DataRow("bad/type_max.json", false)]
+        [DataRow("bad/type_min.json", false)]
+        [DataRow("bad/type_missing.json", false)]
+        
+        [DataRow("valid/attribute_value.json", true)]
+        [DataRow("valid/date.json", true)]
+        [DataRow("valid/item_children.json", true)]
+        [DataRow("valid/minimal.json", true)]
+        [DataRow("valid/name_max.json", true)]
+        [DataRow("valid/name_min.json", true)]
+        [DataRow("valid/simple.json", true)]
+        [DataRow("valid/type_max.json", true)]
+        [DataRow("valid/type_min.json", true)]
+        public void ClassValidation(string fileName, bool isValid)
+        {
+            // LOAD TEST JSON DATA
+            var filePath = $"TestData/items/{fileName}";
+            Assert.IsTrue(File.Exists(filePath));
+
+            var json = File.ReadAllText(filePath);
+            var doc = JsonDocument.Parse(json);
+
+            var item = doc.Deserialize<ItemDto>(SchemaBase.JsonSerializerOptions);
+            Assert.IsNotNull(item);
+
+            var validationErrors = item.Validate();
+            if (Debugger.IsAttached && isValid && validationErrors.Any()) { this.DebugLogResults(validationErrors, fileName); }
+
+            Assert.AreEqual(!isValid, validationErrors.Any());
         }
 
         [TestMethod]
@@ -62,16 +105,14 @@ namespace ThingsLibrary.Schema.Library.Tests
             Assert.AreEqual("test_name", item.Name);
             Assert.AreEqual("test_key", item.Key);
 
-            var attributes = new ItemAttributesDto();
+            var attributes = new ItemTagsDto();
             attributes.Add("test_1", "test_1_value");
-            attributes.Add("test_2", new List<string> { "test_2_value_1", "test_2_value_2" });
+            
+            item.Tags.Add(attributes);
 
-            item.Attributes.Add(attributes);
-
-            Assert.AreEqual("test_1_value", item.Attributes["test_1"]);
-            Assert.AreEqual("test_1_value", item.Attributes["test_1"]);
-
-            Assert.AreEqual("", item.Attributes["INVALID_KEY"]);
+            Assert.AreEqual("test_1_value", item.Tags["test_1"]);
+            
+            Assert.AreEqual("", item.Tags["INVALID_KEY"]);
 
             Assert.ThrowsException<ArgumentException>(() => new ItemDto("test", "Test", "INVALID!KEY!"));
         }
@@ -79,22 +120,20 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAttribute_Bool()
         {
-            var attributes = new ItemAttributesDto();
+            var attributes = new ItemTagsDto();
 
             // BOOL Tests
             attributes.Add("bool_false", "false");
             attributes.Add("bool_true", "true");
-            attributes.Add("bool_true_false", new List<string> { "true", "false" });
-
+            
             attributes.Add("bool_False", "False");
             attributes.Add("bool_True", "True");
 
-            Assert.AreEqual(5, attributes.Count);
+            Assert.AreEqual(4, attributes.Count);
 
             Assert.IsTrue(attributes.Get<bool>("bool_true", false));
             Assert.IsFalse(attributes.Get<bool>("bool_false", true));
-            Assert.IsTrue(attributes.Get<bool>("bool_true_false", false));  //should return the first of the array
-
+            
             Assert.IsTrue(attributes.Get<bool>("bool_True", false));
             Assert.IsFalse(attributes.Get<bool>("bool_False", true));
 
@@ -107,7 +146,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAttribute_Int()
         {
-            var attributes = new ItemAttributesDto();
+            var attributes = new ItemTagsDto();
 
             attributes.Add("int_77", "77");
             attributes.Add("int_-77", "-77");
@@ -122,7 +161,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAttribute_Decimal()
         {
-            var attributes = new ItemAttributesDto();
+            var attributes = new ItemTagsDto();
 
             attributes.Add("77", "77");
             attributes.Add("7.7", "7.7");
@@ -143,7 +182,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAttribute_TimeSpan()
         {
-            var attributes = new ItemAttributesDto();
+            var attributes = new ItemTagsDto();
 
             attributes.Add("070", "00:07:00");
             attributes.Add("077", "00:07:07");
@@ -198,7 +237,7 @@ namespace ThingsLibrary.Schema.Library.Tests
             // initialize links
             root.Init(null);
 
-            var testItem = root.Items[child.Key];
+            var testItem = root.Items[child.Key!];
             Assert.AreSame(testItem, child);
             Assert.AreSame(testItem.Parent, root);
 
@@ -228,7 +267,7 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             Assert.AreEqual(3, root.Items.Count);
             
-            var testItem = root.Items[child2.Key];
+            var testItem = root.Items[child2.Key!];
             Assert.AreSame(testItem, child2);
             Assert.AreSame(testItem.Parent, root);
         }
@@ -275,17 +314,17 @@ namespace ThingsLibrary.Schema.Library.Tests
             item["status_1"] = "Test Status 1";
             item["status_2"] = "Test Status 2";
 
-            Assert.AreEqual(2, item.Attributes.Count);
+            Assert.AreEqual(2, item.Tags.Count);
 
             var result = item.Remove("INVALID");
             Assert.IsFalse(result);
 
             result = item.Remove("status_2");
             Assert.IsTrue(result);
-            Assert.AreEqual(1, item.Attributes.Count);
+            Assert.AreEqual(1, item.Tags.Count);
 
             item.RemoveAll();
-            Assert.AreEqual(0, item.Attributes.Count);
+            Assert.AreEqual(0, item.Tags.Count);
         }
 
         [TestMethod]
@@ -365,7 +404,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         //    // group add
         //    item.Add(testAttributes);
 
-        //    foreach(var testAttribute in item.Attributes)
+        //    foreach(var testAttribute in item.Tags)
         //    {
         //        var attributeDataType = AttributeDataTypes.Items[testAttribute.Key];
 

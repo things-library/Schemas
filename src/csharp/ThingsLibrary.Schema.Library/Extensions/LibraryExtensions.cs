@@ -12,7 +12,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
 {
     public static class LibraryExtensions
     {
-        public readonly static char[] SeperatorCharacters = " \\/-_[]{}.".ToCharArray();
+        private readonly static char[] SeperatorCharacters = " \\/-_[]{}.".ToCharArray();
 
         /// <summary>
         /// Converts text to snake_case key
@@ -48,16 +48,11 @@ namespace ThingsLibrary.Schema.Library.Extensions
 
             var sb = new StringBuilder();
 
-            // only append the first character if it matches our regex  (keys can't start with a number)
-            char c = char.ToLowerInvariant(text[0]);
-            if (!SeperatorCharacters.Contains(c) && !char.IsNumber(c))
-            {
-                sb.Append(c);
-            }
-            if (text.Length < 2) { return sb.ToString(); }
-
+            // only append the first character if it matches our regex
+            char c;
+            
             // now look at all the other characters
-            for (int i = 1; i < text.Length; ++i)
+            for (int i = 0; i < text.Length; ++i)
             {
                 c = text[i];
                 if (SeperatorCharacters.Contains(c))
@@ -68,7 +63,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
                         sb.Append('_');
                     }
                 }
-                else if (char.IsUpper(c))
+                else if (i > 0 && char.IsUpper(c))
                 {
                     if (sb.Length > 0 && sb[sb.Length - 1] != '_') { sb.Append('_'); }
                     sb.Append(char.ToLowerInvariant(c));

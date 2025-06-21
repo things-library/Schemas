@@ -1,0 +1,13 @@
+{
+	"types": {
+		"test_type": {
+			"name": "Test Type"
+		}
+	},
+	"items": {
+		"test_item": {
+			"name": "Test Item",
+			"type": "test_type"
+		}
+	}
+}

@@ -56,7 +56,7 @@ namespace ThingsLibrary.Schema.Library.Validators
             return ValidationResult.Success!;
         }
 
-        private List<ValidationResult> Validate(object instance)
+        private static List<ValidationResult> Validate(object instance)
         {
             var results = new List<ValidationResult>();
             var context = new ValidationContext(instance, null, null);
@@ -66,7 +66,7 @@ namespace ThingsLibrary.Schema.Library.Validators
             return results;
         }
 
-        private List<CompositeValidationResult> ValidateList(IList list)
+        private static List<CompositeValidationResult> ValidateList(IList list)
         {
             var results = new List<CompositeValidationResult>();
 
@@ -94,7 +94,7 @@ namespace ThingsLibrary.Schema.Library.Validators
             return results;
         }
 
-        private List<CompositeValidationResult> ValidateDictionary(IDictionary dictionary)
+        private static List<CompositeValidationResult> ValidateDictionary(IDictionary dictionary)
         {
             var results = new List<CompositeValidationResult>();
 

@@ -1,10 +1,11 @@
 {
-    "name": "TEST 2024",
-    "type": "Vehicle",
+  "$schema": "https://schema.thingslibrary.io/1.0/item.json",
+  "name": "TEST 2024",
+  "type": "Vehicle",
 
-    "tags": {
-        "Brand": "Test Brand",
-        "Model": "",
-        "Color": [ "Red", "Black" ]
-    }
+  "tags": {
+    "Brand": "Test Brand",
+    "Model": "",
+    "Color": "Red"
+  }
 }

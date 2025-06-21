@@ -1,10 +1,17 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿// ================================================================================
+// <copyright file="LibraryItemTypeTag.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
-    /// Attribute
+    /// Tags
     /// </summary>
     [DebuggerDisplay("{Name}, ({Key}, Type: {Type}, Units: {Units})")]
-    public class LibraryItemTypeAttributeDto : Base.SchemaBase
+    public class LibraryItemTypeTagDto : Base.SchemaBase
     {        
         /// <summary>
         /// Library Unique Key
@@ -16,37 +23,37 @@
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
-        /// Attribute Name
+        /// Tag Name
         /// </summary>
         [JsonPropertyName("name")]
         [Display(Name = "Name"), StringLength(50, MinimumLength = 1), Required]
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Data Type that this attribute represents.. like pick list, date-time, etc
+        /// Data Type that this tag represents.. like pick list, date-time, etc
         /// </summary>        
         [JsonPropertyName("type")]
-        [Display(Name = "Data Type"), DefaultValue(AttributeDataTypes.String), Required]
+        [Display(Name = "Data Type"), DefaultValue(TagDataTypes.String), Required]
         [AllowedValues(
-            AttributeDataTypes.Boolean,
-            AttributeDataTypes.Currency,
-            AttributeDataTypes.CurrencyRange,
-            AttributeDataTypes.Date,
-            AttributeDataTypes.DateTime,
-            AttributeDataTypes.Duration,
-            AttributeDataTypes.Email,
-            AttributeDataTypes.Enum,
-            AttributeDataTypes.Html,
-            AttributeDataTypes.Password,
-            AttributeDataTypes.Phone,
-            AttributeDataTypes.String,
-            AttributeDataTypes.TextArea,
-            AttributeDataTypes.Time,
-            AttributeDataTypes.Url,
-            AttributeDataTypes.Decimal,
-            AttributeDataTypes.Integer,
-            AttributeDataTypes.IntegerRange,
-            AttributeDataTypes.DecimalRange
+            TagDataTypes.Boolean,
+            TagDataTypes.Currency,
+            TagDataTypes.CurrencyRange,
+            TagDataTypes.Date,
+            TagDataTypes.DateTime,
+            TagDataTypes.Duration,
+            TagDataTypes.Email,
+            TagDataTypes.Enum,
+            TagDataTypes.Html,
+            TagDataTypes.Password,
+            TagDataTypes.Phone,
+            TagDataTypes.String,
+            TagDataTypes.TextArea,
+            TagDataTypes.Time,
+            TagDataTypes.Url,
+            TagDataTypes.Decimal,
+            TagDataTypes.Integer,
+            TagDataTypes.IntegerRange,
+            TagDataTypes.DecimalRange
         )]
         public string Type { get; set; } = "string";
 
@@ -65,12 +72,12 @@
         public short Weight { get; set; } = 0;
 
         /// <summary>
-        /// Attribute Values
+        /// Tag Values
         /// </summary>
-        /// <remarks>Only used for enum (picklist) attributes</remarks>
-        [JsonPropertyName("values"), JsonConverter(typeof(LibraryItemTypeAttributeValueConverter)), JsonIgnoreEmptyCollection]
+        /// <remarks>Only used for enum (picklist) tags</remarks>
+        [JsonPropertyName("values"), JsonConverter(typeof(LibraryItemTypeTagsConverter)), JsonIgnoreEmptyCollection]
         [ValidateCollectionItems]
-        public IDictionary<string, LibraryItemTypeAttributeValueDto> Values { get; set; } = new Dictionary<string, LibraryItemTypeAttributeValueDto>();
+        public IDictionary<string, LibraryItemTypeTagValueDto> Values { get; set; } = new Dictionary<string, LibraryItemTypeTagValueDto>();
 
         #region --- Extended ---
 
@@ -81,7 +88,7 @@
         #region --- Initialization ---
 
         /// <summary>
-        /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
+        /// Initializes the library so that all things in it have matching tags and item types.  Creates the relationships between things and tags
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
         public void Init(LibraryItemTypeDto parent)

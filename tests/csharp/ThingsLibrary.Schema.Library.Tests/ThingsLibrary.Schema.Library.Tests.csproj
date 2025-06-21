@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFrameworks>net8.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\ThingsLibrary.Schema.Library\ThingsLibrary.Schema.Library.csproj" />
+	  <ProjectReference Include="..\..\..\src\csharp\ThingsLibrary.Schema.Library\ThingsLibrary.Schema.Library.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -29,10 +29,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="TestData\items\valid\missing_name.json">
+		<None Update="TestData\items\bad\key_min.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\items\bad\missing_type.json">
+		<None Update="TestData\items\bad\key_max.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="TestData\items\bad\name_min.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="TestData\items\bad\type_missing.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="TestData\items\valid\date.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestData\items\bad\name_max.json">
@@ -47,10 +56,7 @@
 		<None Update="TestData\items\valid\attribute_value.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\items\valid\attribute_values.json">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="TestData\items\valid\children.json">
+		<None Update="TestData\items\valid\item_children.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestData\items\valid\minimal.json">
@@ -122,9 +128,6 @@
 		<None Update="TestData\library-items\valid\simple.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="TestData\library\bad\version.json">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 	
 	<ItemGroup>		
@@ -162,6 +165,9 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestData\library\valid\basic.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="TestData\library\valid\minimal2.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 		<None Update="TestData\library\valid\minimal.json">

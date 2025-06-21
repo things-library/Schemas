@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFrameworks>net9.0;net8.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<IsPackable>true</IsPackable>
@@ -20,13 +20,6 @@
 
 	<ItemGroup>
 	  <Compile Remove="ItemAttributeGeneric.cs" />
-	  <Compile Remove="Library.cs" />
-	  <Compile Remove="LibraryItem.cs" />
-	  <Compile Remove="LibraryItemAttributeDto.cs" />
-	  <Compile Remove="LibraryItemType.cs" />
-	  <Compile Remove="LibraryItemTypeAttachment.cs" />
-	  <Compile Remove="LibraryItemTypeAttribute.cs" />
-	  <Compile Remove="LibraryItemTypeAttributeValue.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

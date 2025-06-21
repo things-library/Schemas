@@ -15,9 +15,9 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
     {
         [TestMethod]
         [DataRow("test_key", "test_key")]   //already valid
-        [DataRow("test-key", "test-key")]   //already valid
         [DataRow("000_000", "000_000")]     //already valid
-        [DataRow("000-000", "000-000")]     //already valid
+        [DataRow("test-key", "test_key")]        
+        [DataRow("000-000", "000_000")]     
         [DataRow("Test Key", "test_key")]
         [DataRow("TestKey", "test_key")]
         [DataRow("testKey", "test_key")]
@@ -56,7 +56,7 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
             Assert.AreEqual("PA", item.Type);
 
             // Attribute Tags
-            Assert.AreEqual(5, item.Attributes.Count);
+            Assert.AreEqual(5, item.Tags.Count);
             Assert.AreEqual("1", item["r"]);
             Assert.AreEqual("143", item["s"]);
             Assert.AreEqual("PPE Mask", item["p"]);
@@ -81,9 +81,9 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
                 Date = new DateTime(2024, 8, 21, 8, 15, 30, DateTimeKind.Utc)
             };
 
-            item.Attributes.Add("r", "1");
-            item.Attributes.Add("gn", "Mark");
-            item.Attributes.Add("cp", "Starlight");
+            item.Tags.Add("r", "1");
+            item.Tags.Add("gn", "Mark");
+            item.Tags.Add("cp", "Starlight");
 
             var expectedSentence = $"${item.Date.Value.ToUnixTimeMilliseconds()}|rmc|";
 

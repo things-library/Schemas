@@ -1,8 +1,10 @@
 {
+	"name":  "Something",
 	"types": {
 		"Invalid": {
 			"name": "Test Type"
 		},
-		"items": []
-	}
+		"items": {}
+	},
+	"items": {}
 }

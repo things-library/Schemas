@@ -32,7 +32,7 @@ namespace ThingsLibrary.Schema.Library
         /// Keep track of the item data type
         /// </summary>
         [JsonPropertyName("type"), JsonConverter(typeof(AttributeDataTypeConverter))]
-        public AttributeDataTypeDto DataType { get; }
+        public TagDataTypeDto DataType { get; }
 
         /// <summary>
         /// Parent Item

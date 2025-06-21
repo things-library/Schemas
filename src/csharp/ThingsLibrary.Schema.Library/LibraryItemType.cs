@@ -1,4 +1,11 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿// ================================================================================
+// <copyright file="LibraryItemType.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Item type
@@ -22,18 +29,18 @@
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Attributes
+        /// Tags
         /// </summary>
         [ValidateCollectionItems]
-        [JsonPropertyName("attributes"), JsonIgnoreEmptyCollection]
-        public IDictionary<string, LibraryItemTypeAttributeDto> Attributes { get; set; } = new Dictionary<string, LibraryItemTypeAttributeDto>();
+        [JsonPropertyName("tags"), JsonIgnoreEmptyCollection]
+        public IDictionary<string, LibraryItemTypeTagDto> Tags { get; set; } = new Dictionary<string, LibraryItemTypeTagDto>();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
-        [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public IDictionary<string, LibraryItemTypeAttachmentDto> Attachments { get; set; } = new Dictionary<string, LibraryItemTypeAttachmentDto>();
+        [JsonPropertyName("items"), JsonIgnoreEmptyCollection]
+        public IDictionary<string, LibraryItemTypeAttachmentDto> Items { get; set; } = new Dictionary<string, LibraryItemTypeAttachmentDto>();
 
 
         #region --- Extended ---
@@ -45,7 +52,7 @@
         #region --- Initialization ---
 
         /// <summary>
-        /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
+        /// Initializes the library so that all things in it have matching tags and item types.  Creates the relationships between things and tags
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
         public void Init(LibraryDto parent)
@@ -53,13 +60,13 @@
             this.Library = parent;
 
             // fix all of the reference variables
-            foreach (var pair in this.Attributes)
+            foreach (var pair in this.Tags)
             {
                 pair.Value.Key = pair.Key;                
                 pair.Value.Init(this);
             }
 
-            foreach (var pair in this.Attachments)
+            foreach (var pair in this.Items)
             {
                 pair.Value.Key = pair.Key;
                 pair.Value.Init(this);                

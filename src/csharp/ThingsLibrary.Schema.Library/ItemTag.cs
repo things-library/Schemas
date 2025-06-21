@@ -1,5 +1,5 @@
 ﻿// ================================================================================
-// <copyright file="ItemAttribute.cs" company="Starlight Software Co">
+// <copyright file="ItemTag.cs" company="Starlight Software Co">
 //    Copyright (c) Starlight Software Co. All rights reserved.
 //    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
@@ -8,10 +8,10 @@
 namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
-    /// Attribute
+    /// Tag
     /// </summary>
     [DebuggerDisplay("{Key}: {Value}")]
-    public class ItemAttributeDto : Base.SchemaBase
+    public class ItemTagDto : Base.SchemaBase
     {
         /// <summary>
         /// Library Unique Key
@@ -27,58 +27,36 @@ namespace ThingsLibrary.Schema.Library
         /// <remarks>This always return the first even if there are more than one.  Setting the value when more then one existing will remote the other items.</remarks>
         [JsonPropertyName("value")]
         [Display(Name = "Value"), StringLength(50, MinimumLength = 1)]
-        public virtual string Value
-        {
-            get => this.Values[0];
-            set
-            {
-                // simple replace?
-                if (this.Values.Count == 1) { this.Values[0] = value; }
-                else
-                {
-                    // clear the listing and add one (this works for all != 1 cases)
-                    this.Values.Clear();
-                    this.Values.Add(value);
-                }
-            }
-        }        
-
-        /// <summary>
-        /// Values
-        /// </summary>
-        /// <remarks>Collection should always have at least 1 cell</remarks>
-        [JsonPropertyName("values")]
-        [Display(Name = "Values"), StringLength(50, MinimumLength = 1)]
-        public List<string> Values { get; set; } = new List<string>() { string.Empty };
+        public virtual string Value { get; set; } = string.Empty;
 
         /// <summary>
         /// Data Type
         /// </summary>
         /// <remarks>This always return the first even if there are more than one.  Setting the value when more then one existing will remote the other items.</remarks>       
         [JsonPropertyName("type")]
-        [Display(Name = "Data Type"), DefaultValue(AttributeDataTypes.String), Required]
+        [Display(Name = "Data Type"), DefaultValue(TagDataTypes.String), Required]
         [AllowedValues(
-            AttributeDataTypes.Boolean,
-            AttributeDataTypes.Currency,
-            AttributeDataTypes.CurrencyRange,
-            AttributeDataTypes.Date,
-            AttributeDataTypes.DateTime,
-            AttributeDataTypes.Duration,
-            AttributeDataTypes.Email,
-            AttributeDataTypes.Enum,
-            AttributeDataTypes.Html,
-            AttributeDataTypes.Password,
-            AttributeDataTypes.Phone,
-            AttributeDataTypes.String,
-            AttributeDataTypes.TextArea,
-            AttributeDataTypes.Time,
-            AttributeDataTypes.Url,
-            AttributeDataTypes.Decimal,
-            AttributeDataTypes.Integer,
-            AttributeDataTypes.IntegerRange,
-            AttributeDataTypes.DecimalRange
+            TagDataTypes.Boolean,
+            TagDataTypes.Currency,
+            TagDataTypes.CurrencyRange,
+            TagDataTypes.Date,
+            TagDataTypes.DateTime,
+            TagDataTypes.Duration,
+            TagDataTypes.Email,
+            TagDataTypes.Enum,
+            TagDataTypes.Html,
+            TagDataTypes.Password,
+            TagDataTypes.Phone,
+            TagDataTypes.String,
+            TagDataTypes.TextArea,
+            TagDataTypes.Time,
+            TagDataTypes.Url,
+            TagDataTypes.Decimal,
+            TagDataTypes.Integer,
+            TagDataTypes.IntegerRange,
+            TagDataTypes.DecimalRange
         )]
-        public string DataType { get; set; } = AttributeDataTypes.String;
+        public string DataType { get; set; } = TagDataTypes.String;
 
         /// <summary>
         /// Parent Item
@@ -89,7 +67,7 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemAttributeDto()
+        public ItemTagDto()
         {
             //nothing
         }
@@ -99,7 +77,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="value">Value (or Value Key)</param>
-        public ItemAttributeDto(string key, string value)
+        public ItemTagDto(string key, string value)
         {
             this.Key = key;
             this.Value = value;
@@ -110,7 +88,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="value">Value (or Value Key)</param>
-        public ItemAttributeDto(string key, object value)
+        public ItemTagDto(string key, object value)
         {
             this.Key = key;
             if (value is string valueStr)
@@ -122,18 +100,7 @@ namespace ThingsLibrary.Schema.Library
                 this.SetValue(value);
             }            
         }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="key">Key</param>
-        /// <param name="values">Values</param>
-        public ItemAttributeDto(string key, List<string> values)
-        {
-            this.Key = key;
-            this.Values = values;
-        }
-
+                
         /// <summary>
         /// Set value / data type based on object value
         /// </summary>
@@ -147,42 +114,47 @@ namespace ThingsLibrary.Schema.Library
             else if (value is DateOnly valueDate)
             {
                 this.Value = valueDate.ToString("yyyy-MM-dd");
-                this.DataType = AttributeDataTypes.Date;
+                this.DataType = TagDataTypes.Date;
             }
             else if (value is TimeOnly valueTime)
             {
                 this.Value = valueTime.ToString("HH:mm:ss");
-                this.DataType = AttributeDataTypes.Time;
+                this.DataType = TagDataTypes.Time;
             }
             else if (value is DateTime valueDateTime)
             {
                 this.Value = valueDateTime.ToString("O");
-                this.DataType = AttributeDataTypes.DateTime;
+                this.DataType = TagDataTypes.DateTime;
             }
             else if (value is DateTimeOffset valueDateTimeOffset)
             {
                 this.Value = valueDateTimeOffset.ToString("O");
-                this.DataType = AttributeDataTypes.Date;
+                this.DataType = TagDataTypes.Date;
+            }
+            else if (value is double valueDouble)
+            {
+                this.Value = $"{valueDouble}";
+                this.DataType = TagDataTypes.Decimal;
             }
             else if (value is decimal valueDecimal)
             {
                 this.Value = $"{valueDecimal}";
-                this.DataType = AttributeDataTypes.Decimal;
+                this.DataType = TagDataTypes.Decimal;
             }
             else if (value is int valueInt)
             {
                 this.Value = $"{valueInt}";
-                this.DataType = AttributeDataTypes.Integer;
+                this.DataType = TagDataTypes.Integer;
             }
             else if (value is Uri valueUrl)
             {
                 this.Value = $"{valueUrl}";
-                this.DataType = AttributeDataTypes.Url;
+                this.DataType = TagDataTypes.Url;
             }
             else if (value is bool valueBool)
             {
                 this.Value = $"{valueBool}".ToLower();
-                this.DataType = AttributeDataTypes.Boolean;
+                this.DataType = TagDataTypes.Boolean;
             }
             else
             {
@@ -195,10 +167,10 @@ namespace ThingsLibrary.Schema.Library
         //{
         //    switch (this.DataType.Key)
         //    {
-        //        case AttributeDataTypes.String: { return this.Value; }
-        //        case AttributeDataTypes.Date: { return DateOnly.ParseExact(this.Value, "yyyy-MM-dd"); }
-        //        case AttributeDataTypes.Time: { return TimeOnly.ParseExact(this.Value, "HH:mm:ss"); }
-        //        case AttributeDataTypes.DateTime: { return DateTime.Parse(this.Value); }
+        //        case TagDataTypes.String: { return this.Value; }
+        //        case TagDataTypes.Date: { return DateOnly.ParseExact(this.Value, "yyyy-MM-dd"); }
+        //        case TagDataTypes.Time: { return TimeOnly.ParseExact(this.Value, "HH:mm:ss"); }
+        //        case TagDataTypes.DateTime: { return DateTime.Parse(this.Value); }
 
         //        default:
         //            {

@@ -1,4 +1,11 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿// ================================================================================
+// <copyright file="LibraryItem.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Library Item
@@ -11,7 +18,7 @@
         /// </summary>  
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
+        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternErrorMessage)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
@@ -37,17 +44,17 @@
         public string Type { get; set; } = string.Empty;
 
         /// <summary>
-        /// Attributes
+        /// Tags
         /// </summary>         
-        [JsonPropertyName("attributes"), JsonConverter(typeof(LibraryItemAttributeConverter)), JsonIgnoreEmptyCollection]
-        public IDictionary<string, LibraryItemAttributeDto> Attributes { get; set; } = new Dictionary<string, LibraryItemAttributeDto>();
+        [JsonPropertyName("tags"), JsonConverter(typeof(LibraryItemTagsConverter)), JsonIgnoreEmptyCollection]
+        public LibraryItemTagsDto Tags { get; set; } = new LibraryItemTagsDto();
 
         /// <summary>
         /// Attachments
         /// </summary>
         [ValidateCollectionItems]
-        [JsonPropertyName("attachments"), JsonIgnoreEmptyCollection]
-        public IDictionary<string, LibraryItemDto> Attachments { get; set; } = new Dictionary<string, LibraryItemDto>();
+        [JsonPropertyName("items"), JsonIgnoreEmptyCollection]
+        public IDictionary<string, LibraryItemDto> Items { get; set; } = new Dictionary<string, LibraryItemDto>();
 
         #region --- Extended ---
 
@@ -67,34 +74,73 @@
         /// Root Library Item
         /// </summary>
         [JsonIgnore]
-        public LibraryItemDto? RootItem { get; set; }
+        public LibraryItemDto? Root { get; set; }
+
+        /// <summary>
+        /// Parent
+        /// </summary>
+        [JsonIgnore]
+        public LibraryItemDto? Parent { get; set; }
 
         #endregion
 
         #region --- Initialization ---
 
         /// <summary>
-        /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
+        /// Initializes the library so that all things in it have matching tags and item types.  Creates the relationships between things and tags
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
-        public void Init(LibraryDto parent)
+        public void Init(LibraryDto library, LibraryItemDto? parent)
         {
-            this.Library = parent;
-            if (parent.ItemTypes.ContainsKey(this.Type)) { this.ItemType = parent.ItemTypes[this.Type]; }
-            if (this.RootItem == null) { this.RootItem = this; }
+            this.Library = library;
+            this.Parent = parent;
 
+            // if parent then the root is the parent's root
+            if (parent != null) { this.Root = parent.Root; }
+            
+            if (!library.Types.ContainsKey(this.Type)) { throw new ArgumentException($"Missing library item type '{this.Type}'."); }
+            this.ItemType = library.Types[this.Type]; 
+            
             // fix all of the reference variables
-            foreach(var pair in this.Attributes)
-            {
-                pair.Value.Key = pair.Key;                
-                pair.Value.Init(this);
+            foreach(var pair in this.Tags)
+            {                           
+                pair.Init(this);
             }
 
-            foreach (var pair in this.Attachments)
+            // children
+            foreach (var pair in this.Items)
             {
                 pair.Value.Key = pair.Key;
-                pair.Value.RootItem = this.RootItem;
-                pair.Value.Init(parent);
+                pair.Value.Init(library, this);
+            }
+        }
+
+        #endregion
+
+        #region --- Serialization / Deserialization ---
+
+        ///// <summary>
+        ///// Initialize the links
+        ///// </summary>
+        //public void OnDeserialized()
+        //{
+        //    this.Init(null);
+
+        //    // recurse
+        //    foreach (var item in this.Items)
+        //    {
+        //        item.Value.OnDeserialized(item);
+        //    }
+        //}
+
+        public void OnSerializing(LibraryItemDto childItem)
+        {
+            //because we are serilizing and children area already in a dictionary (so key is redundant to export)
+            childItem.Key = string.Empty;
+
+            foreach (var item in this.Items.Values)
+            {
+                item.OnSerializing(item);
             }
         }
 
@@ -105,7 +151,7 @@
         /// </summary>
         public LibraryItemDto()
         {
-            //nothing
+            this.Root = this;   //default until we know otherwise
         }
 
         /// <summary>
@@ -126,16 +172,16 @@
         }
 
         /// <summary>
-        /// Adds the flat listing of attributes (replacing existing)
+        /// Adds the flat listing of tags (replacing existing)
         /// </summary>
-        /// <param name="attributes">Flat attribute listing</param>
-        public void Add(IEnumerable<LibraryItemAttributeDto> attributes)
+        /// <param name="tags">Flat tag listing</param>
+        public void Add(IEnumerable<LibraryItemTagDto> tags)
         {
-            ArgumentNullException.ThrowIfNull(attributes);
+            ArgumentNullException.ThrowIfNull(tags);
 
-            foreach (var attribute in attributes)
+            foreach (var tag in tags)
             {
-                this.Attributes[attribute.Key] = attribute;
+                this.Tags[tag.Key] = tag.Value;  //TODO:
             }
         }
 
@@ -158,7 +204,7 @@
                 if (string.IsNullOrWhiteSpace(pathSegment)) { return null; }
 
                 // try to get the item, if failure then exit, otherwise we have it assignd to our item
-                if (!item.Attachments.TryGetValue(pathSegment, out item))
+                if (!item.Items.TryGetValue(pathSegment, out item))
                 {
                     return null; 
                 }                

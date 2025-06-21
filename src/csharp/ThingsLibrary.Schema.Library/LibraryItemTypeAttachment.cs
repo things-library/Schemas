@@ -1,4 +1,11 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿// ================================================================================
+// <copyright file="LibraryItemTypeAttachment.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
     /// Item type attachment
@@ -39,7 +46,7 @@
         #region --- Initialization ---
 
         /// <summary>
-        /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
+        /// Initializes the library so that all things in it have matching tags and item types.  Creates the relationships between things and tags
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
         public void Init(LibraryItemTypeDto parent)

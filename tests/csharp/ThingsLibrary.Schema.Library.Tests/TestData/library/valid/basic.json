@@ -1,7 +1,6 @@
 {
-	"key": "test_library",
 	"name": "Test Library",
-	
+
 	"types": {
 		"test_type": {
 			"name": "Test Type",
@@ -23,19 +22,42 @@
 						"blue": "Blue"
 					}
 				}
+			},
+			"items": {
+				"test_type_child": {
+					"type": "test_type_2",
+					"name": "Test Child Type"
+				}
+			}
+		},
+		"test_type_2": {
+			"name": "Test Type 2",
+			"tags": {
+				"name": {
+					"name": "Type Name",
+					"type": "string"
+				}
 			}
 		}
 	},
 
 	"items": {
-		"test_item": {			
+		"test_item": {
 			"name": "Test Item",
 			"type": "test_type",
-			"version": 1,
 			"tags": {
 				"brand": "Test",
-				"color": [ "red", "blue" ],
+				"color": "red",
 				"model": ""
+			},
+			"items": {
+				"test_item_2": {
+					"name": "Test Child Item",
+					"type": "test_type_2",
+					"tags": {
+						"name":  "Test Child Name"
+					}
+				}
 			}
 		}
 	}

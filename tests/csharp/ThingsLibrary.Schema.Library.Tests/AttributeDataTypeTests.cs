@@ -13,30 +13,30 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAll()
         {
-            var items = AttributeDataTypes.GetAll();
+            var items = TagDataTypes.GetAll();
             Assert.AreEqual(19, items.Count);
         }
 
         [TestMethod]
-        [DataRow(typeof(string), AttributeDataTypes.String)]
-        [DataRow(typeof(int), AttributeDataTypes.Integer)]
-        [DataRow(typeof(decimal), AttributeDataTypes.Decimal)]
-        [DataRow(typeof(DateTime), AttributeDataTypes.DateTime)]
-        [DataRow(typeof(DateTimeOffset), AttributeDataTypes.Date)]
-        [DataRow(typeof(DateOnly), AttributeDataTypes.Date)]
-        [DataRow(typeof(TimeOnly), AttributeDataTypes.Time)]
-        [DataRow(typeof(Uri), AttributeDataTypes.Url)]
-        [DataRow(typeof(bool), AttributeDataTypes.Boolean)]
-        [DataRow(typeof(TimeSpan), AttributeDataTypes.Duration)]
+        [DataRow(typeof(string), TagDataTypes.String)]
+        [DataRow(typeof(int), TagDataTypes.Integer)]
+        [DataRow(typeof(decimal), TagDataTypes.Decimal)]
+        [DataRow(typeof(DateTime), TagDataTypes.DateTime)]
+        [DataRow(typeof(DateTimeOffset), TagDataTypes.Date)]
+        [DataRow(typeof(DateOnly), TagDataTypes.Date)]
+        [DataRow(typeof(TimeOnly), TagDataTypes.Time)]
+        [DataRow(typeof(Uri), TagDataTypes.Url)]
+        [DataRow(typeof(bool), TagDataTypes.Boolean)]
+        [DataRow(typeof(TimeSpan), TagDataTypes.Duration)]
         // default types
-        [DataRow(typeof(long), AttributeDataTypes.String)]
-        [DataRow(typeof(double), AttributeDataTypes.String)]
-        [DataRow(typeof(AttributeDataTypesTests), AttributeDataTypes.String)]
+        [DataRow(typeof(long), TagDataTypes.String)]
+        [DataRow(typeof(double), TagDataTypes.String)]
+        [DataRow(typeof(AttributeDataTypesTests), TagDataTypes.String)]
         public void GetType(Type type, string expectedKey)
         {
-            var expectedItem = AttributeDataTypes.Items[expectedKey];
+            var expectedItem = TagDataTypes.Items[expectedKey];
 
-            var testItem = AttributeDataTypes.GetType(type);
+            var testItem = TagDataTypes.GetType(type);
 
             // just to hit all the getters 
             Assert.AreSame(expectedItem, testItem);

@@ -7,14 +7,14 @@
 
 namespace ThingsLibrary.Schema.Library.Converters
 {
-    public sealed class AttributeDataTypeConverter : JsonConverter<AttributeDataTypeDto>
+    public sealed class AttributeDataTypeConverter : JsonConverter<TagDataTypeDto>
     {
-        public override AttributeDataTypeDto Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override TagDataTypeDto Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var key = JsonSerializer.Deserialize<string>(ref reader, options);
-            if (string.IsNullOrWhiteSpace(key)) { return AttributeDataTypes.Items[AttributeDataTypes.String]; }
+            if (string.IsNullOrWhiteSpace(key)) { return TagDataTypes.Items[TagDataTypes.String]; }
 
-            if(AttributeDataTypes.Items.TryGetValue(key, out var attributeDataType))
+            if(TagDataTypes.Items.TryGetValue(key, out var attributeDataType))
             {
                 return attributeDataType;
             }
@@ -24,7 +24,7 @@ namespace ThingsLibrary.Schema.Library.Converters
             }
         }
 
-        public override void Write(Utf8JsonWriter writer, AttributeDataTypeDto attribute, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, TagDataTypeDto attribute, JsonSerializerOptions options)
         {
             writer.WriteRawValue(JsonSerializer.Serialize(attribute.Key));
         }            

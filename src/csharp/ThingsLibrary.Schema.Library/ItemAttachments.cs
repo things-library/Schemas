@@ -8,7 +8,7 @@
 //namespace ThingsLibrary.Schema.Library
 //{
 //    /// <summary>
-//    /// Basic Item Attributes
+//    /// Basic Item Tags
 //    /// </summary>
 //    [DebuggerDisplay("({Items.Count} Attachments)")]
 //    public class ItemAttachmentsDto : IEnumerable<ItemDto>
@@ -40,9 +40,9 @@
 //        }
 
 //        /// <summary>
-//        /// Add basic collection of attributes to the listing
+//        /// Add basic collection of tags to the listing
 //        /// </summary>
-//        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
+//        /// <param name="tags">Flat listing of Item Basic Tags</param>
 //        public void Add(ItemDto item)
 //        {
 //            //TODO: assign a key or throw a error?
@@ -55,9 +55,9 @@
 //        }
 
 //        /// <summary>
-//        /// Add basic collection of attributes to the listing
+//        /// Add basic collection of tags to the listing
 //        /// </summary>
-//        /// <param name="attributes">Flat listing of Item Basic Attributes</param>
+//        /// <param name="tags">Flat listing of Item Basic Tags</param>
 //        public void Add(IEnumerable<ItemDto> attachments)
 //        {
 //            // nothing to do?

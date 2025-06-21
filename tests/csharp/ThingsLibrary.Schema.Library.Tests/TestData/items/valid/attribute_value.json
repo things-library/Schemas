@@ -1,12 +1,14 @@
 {
-    "name": "TEST 2024",
-    "type": "test_type",
+  "name": "TEST 2024",
+  "type": "test_type",
 
-    "tags": {
-        "String": "Red",
-        "Visible": true,
-        "Invisible": false,
-        "Nothing": null,
-        "Number": 1234.56
-    }
+  "tags": {
+    "String": "String Value",
+    "Visible": true,
+    "Invisible": false,
+    "Nothing": null,
+    "Number": 1234.56,
+    "Integer": 1234,
+    "Null": null
+  }
 }

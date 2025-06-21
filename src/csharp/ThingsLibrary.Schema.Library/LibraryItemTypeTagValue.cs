@@ -1,13 +1,20 @@
-﻿namespace ThingsLibrary.Schema.Library
+﻿// ================================================================================
+// <copyright file="LibraryItemTypeTagValue.cs" company="Starlight Software Co">
+//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+// </copyright>
+// ================================================================================
+
+namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
-    /// Attribute Value
+    /// Tag Value
     /// </summary>
     [DebuggerDisplay("{Name} ({Key})")]
-    public class LibraryItemTypeAttributeValueDto : Base.SchemaBase
+    public class LibraryItemTypeTagValueDto : Base.SchemaBase
     {        
         /// <summary>
-        /// Attribute Unique Key
+        /// Tag Unique Key
         /// </summary>  
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
@@ -15,7 +22,7 @@
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
-        /// Attribute Name
+        /// Tag Name
         /// </summary>
         [JsonPropertyName("name")]
         [Display(Name = "Name"), StringLength(50, MinimumLength = 1), Required]
@@ -24,29 +31,27 @@
 
         #region --- Extended ---
 
-        public LibraryItemTypeAttributeDto? Attribute { get; set; }
+        public LibraryItemTypeTagDto? Tag { get; set; }
 
         #endregion
 
         #region --- Initialization ---
 
         /// <summary>
-        /// Initializes the library so that all things in it have matching attributes and item types.  Creates the relationships between things and attributes
+        /// Initializes the library so that all things in it have matching tags and item types.  Creates the relationships between things and tags
         /// </summary>
         /// <remarks>Normally only needed to be called after deserialization</remarks>
-        public void Init(LibraryItemTypeAttributeDto parent)
+        public void Init(LibraryItemTypeTagDto parent)
         {
-            this.Attribute = parent;            
+            this.Tag = parent;            
         }
 
-        #endregion
-
-        
+        #endregion        
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public LibraryItemTypeAttributeValueDto()
+        public LibraryItemTypeTagValueDto()
         {
             //nothing
         }
@@ -56,7 +61,7 @@
         /// </summary>
         /// <param name="key">Key</param>
         /// <param name="name">Name</param>
-        public LibraryItemTypeAttributeValueDto(string key, string name)
+        public LibraryItemTypeTagValueDto(string key, string name)
         {
             this.Key = key;
             this.Name = name;
