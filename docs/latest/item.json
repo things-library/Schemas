@@ -1,72 +1,87 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://schema.thingslibrary.io/1.0/item.json",
-    "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.  A item can contain key/value pairs of tags as well as other child items.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.thingslibrary.io/1.0/item.json",
+  "$comment": "Items are the base data object of the things library. This schema is indentionally relaxed to allow maximum compatibility.  A item can contain key/value pairs of tags as well as other child items.",
 
-    "$defs": {        
-        "item": {
-            "type": "object",
-            "properties": {
-                "key": {
-                    "type": "string",
-                    "title": "Key",
-                    "minLength": 1,
-                    "maxLength": 50
-                },
+  "$defs": {
+    "item": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "title": "Key",
+          "minLength": 1,
+          "maxLength": 50
+        },
 
-                "date": {
-                    "type": "string",
-                    "title": "Date",
-                    "format": "date-time"
-                },
+        "date": {
+          "type": "string",
+          "title": "Date",
+          "format": "date-time"
+        },
 
-                "name": {
-                    "type": "string",
-                    "title": "Name",
-                    "minLength": 1,
-                    "maxLength": 50
-                },
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
 
-                "type": {
-                    "type": "string",
-                    "title": "Type",
-                    "minLength": 1,
-                    "maxLength": 50
-                },                
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "minLength": 1,
+          "maxLength": 50
+        },
 
-                "tags": {
-                    "type": "object",
-                    "title": "Attribute Tags",
-                    "additionalProperties": {
-                        "anyOf": [
-                            { "title": "string", "type": "string" },
-                            { "title": "integer", "type": "integer" },
-                            { "title": "number", "type": "number" },
-                            { "title": "boolean", "type": "boolean" },
-                            { "title": "null", "type": "null" }                          
-                        ]
-                    }
-                },
+        "tags": {
+          "type": "object",
+          "title": "Attribute Tags",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "title": "string",
+                "type": "string"
+              },
+              {
+                "title": "integer",
+                "type": "integer"
+              },
+              {
+                "title": "number",
+                "type": "number"
+              },
+              {
+                "title": "boolean",
+                "type": "boolean"
+              },
+              {
+                "title": "null",
+                "type": "null"
+              }
+            ]
+          }
+        },
 
-                "items": {
-                    "type": "object",
-                    "title": "Attachments",
-                    "additionalProperties": {
-                    	"$ref": "#/$defs/item"                        
-                    }
-                },
+        "items": {
+          "type": "object",
+          "title": "Attachments",
+          "additionalProperties": {
+            "$ref": "#/$defs/item"
+          }
+        },
 
-                "meta": {
-                    "type": "object",
-                    "title": "Metadata",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [ "type" ]
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
-    },
+      },
+      "required": [ "type" ]
+    }
+  },
 
-    "$ref": "#/$defs/item"
+  "$ref": "#/$defs/item"
 }
