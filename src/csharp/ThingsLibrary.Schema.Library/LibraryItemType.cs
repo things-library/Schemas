@@ -93,7 +93,7 @@ namespace ThingsLibrary.Schema.Library
             ArgumentNullException.ThrowIfNullOrWhiteSpace(key);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
 
-            if (SchemaBase.IsKeyValid(key)) { throw new ArgumentException(SchemaBase.KeyPatternErrorMessage); }
+            if (Base.SchemaBase.IsKeyValid(key)) { throw new ArgumentException(Base.SchemaBase.KeyPatternErrorMessage); }
 
             this.Key = key;
             this.Name = name;

@@ -18,7 +18,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>  
         [JsonIgnore]
         [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = SchemaBase.KeyPatternErrorMessage)]
+        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string Key { get; set; } = string.Empty;
 
         /// <summary>
@@ -163,8 +163,8 @@ namespace ThingsLibrary.Schema.Library
             ArgumentNullException.ThrowIfNullOrWhiteSpace(key);            
             ArgumentNullException.ThrowIfNullOrWhiteSpace(name);
 
-            if (!SchemaBase.IsKeyValid(type)) { throw new ArgumentException(SchemaBase.KeyPatternErrorMessage); }
-            if (!SchemaBase.IsKeyValid(key)) { throw new ArgumentException(SchemaBase.KeyPatternErrorMessage); }
+            if (!Base.SchemaBase.IsKeyValid(type)) { throw new ArgumentException(Base.SchemaBase.KeyPatternErrorMessage); }
+            if (!Base.SchemaBase.IsKeyValid(key)) { throw new ArgumentException(Base.SchemaBase.KeyPatternErrorMessage); }
 
             this.Type = type;
             this.Key = key;

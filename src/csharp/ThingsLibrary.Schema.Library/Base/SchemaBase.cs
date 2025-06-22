@@ -102,12 +102,5 @@ namespace ThingsLibrary.Schema.Library.Base
         /// <remarks>Not Serialized</remarks>
         [JsonIgnore]
         public Guid? Id { get; set; }
-
-        /// <summary>
-        /// Tag
-        /// </summary>
-        /// <remarks>Not Serialized</remarks>
-        [JsonIgnore]
-        public object? Tag { get; set; }
     }
 }
