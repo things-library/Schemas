@@ -13,18 +13,17 @@ The latest schema document can be found here:
 
 **Rules**
 
-* Items must have a 'name' property.
 * Items must have a 'type' property that differenciates it from other types of items.
+* Items can have a 'name' property.
 * Items can have 'tags' that are key/value pairs which describe the item.
-* Items can have 'items' which are dependencies to the item.  Item attachments are also items that have a key, name, type and can have tags (attributes) and also have item attachments.
-* Items must have a 'key' property which are either a system or user defined key that is unique at the level to which it appears.  Keys can not be changed once set and must be snake case.  
+* Items can have attached 'items' which are dependencies to the item.  Item attachments are also items that have a key, name, type and tags (attributes) and also other item attachments.
+* Attached Items must have a 'key' property which are either a system or user defined key that is unique at the level to which it appears.  Keys can not be changed once set and must be snake case.  
 
 ## Examples
 
 The minimal item structure looks like this:
 ```json
 {    
-    "name": "Example Movie (2024)",
     "type": "movie" 
 }
 ```
@@ -40,15 +39,7 @@ A more typical item structure would look like this:
 		"Studio": "BigPac Entertainment",
 		"Content Rating": "PG-13",
 		"Duration": "01:53:29.4710000",
-		"Genre": [
-			"Science Fiction",
-			"Action"
-		],        
-		"Role": [
-			"Tom Feather",
-			"Emily Sharp",
-			"Bill Smith"
-		]
+		"Genre": "Science Fiction"		
 	},
 	"items": {
 		"box_office": {
