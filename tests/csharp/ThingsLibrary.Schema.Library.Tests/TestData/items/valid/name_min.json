@@ -1,4 +1,6 @@
 {
+	"$schema": "https://schema.thingslibrary.io/1.0/item.json",
+	
 	"name": "1",
 	"type": "test_type"
 }
