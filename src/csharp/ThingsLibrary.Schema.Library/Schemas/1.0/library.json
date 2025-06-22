@@ -188,6 +188,11 @@
     "library": {
       "type": "object",
       "properties": {
+        "$schema": {
+          "type": "string",          
+          "pattern": "^https:\\/\\/schema\\.thingslibrary\\.io\\/\\d+\\.\\d\\/library\\.json$"
+        },
+
         "name": {
           "type": "string",
           "title": "Name",

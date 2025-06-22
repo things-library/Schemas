@@ -1,5 +1,7 @@
 {
-	"name":  "Something",
+	"$schema": "https://schema.thingslibrary.io/1.0/library.json",
+	
+	"name": "Something",
 	"types": {},
 	"items": {
 		"test key": {

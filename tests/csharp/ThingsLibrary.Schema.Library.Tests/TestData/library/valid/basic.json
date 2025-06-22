@@ -1,4 +1,5 @@
 {
+	"$schema": "https://schema.thingslibrary.io/1.0/library.json",
 	"name": "Test Library",
 
 	"types": {
@@ -36,6 +37,10 @@
 				"name": {
 					"name": "Type Name",
 					"type": "string"
+				},
+				"number": {
+					"name": "Test Number",
+					"type": "int"
 				}
 			}
 		}
@@ -55,7 +60,17 @@
 					"name": "Test Child Item",
 					"type": "test_type_2",
 					"tags": {
-						"name":  "Test Child Name"
+						"name": "Test Child Name",
+						"number": "177"
+					}
+				},
+				"test_item": {
+					"name": "Test Item Jr.",
+					"type": "test_type",
+					"tags": {
+						"brand": "Test 2",
+						"color": "blue",
+						"model": "RR123"
 					}
 				}
 			}

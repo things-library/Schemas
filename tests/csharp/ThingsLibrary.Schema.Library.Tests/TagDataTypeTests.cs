@@ -1,5 +1,5 @@
 ﻿// ================================================================================
-// <copyright file="AttributeDataTypeTests.cs" company="Starlight Software Co">
+// <copyright file="TagDataTypeTests.cs" company="Starlight Software Co">
 //    Copyright (c) Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
@@ -8,7 +8,7 @@
 namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
-    public class AttributeDataTypesTests
+    public class TagDataTypesTests
     {
         [TestMethod]
         public void GetAll()
@@ -31,7 +31,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         // default types
         [DataRow(typeof(long), TagDataTypes.String)]
         [DataRow(typeof(double), TagDataTypes.String)]
-        [DataRow(typeof(AttributeDataTypesTests), TagDataTypes.String)]
+        [DataRow(typeof(TagDataTypesTests), TagDataTypes.String)]
         public void GetType(Type type, string expectedKey)
         {
             var expectedItem = TagDataTypes.Items[expectedKey];

@@ -97,14 +97,6 @@ namespace ThingsLibrary.Schema.Library.Base
         public IDictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
-        /// Revision Number (1 = first, 0 = unknown/unspecified)
-        /// </summary>
-        [JsonPropertyName("rev"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        [DefaultValue(0), Range(0, int.MaxValue)]
-        public int Revision { get; set; } = 0; 
-
-
-        /// <summary>
         /// Record ID
         /// </summary>
         /// <remarks>Not Serialized</remarks>

@@ -25,6 +25,7 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         [DataRow("valid/basic.json", true)]
         [DataRow("valid/minimal.json", true)]
+        [DataRow("valid/minimal2.json", true)]
         [DataRow("valid/tree.json", true)]
         [DataRow("bad/tree_node_name.json", false)]
         [DataRow("bad/tree_node_type.json", false)]
