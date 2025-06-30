@@ -7,10 +7,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>ThingsLibrary.Schema.Library.Library</PackageId>
+		<PackageId>ThingsLibrary.Schema.Library</PackageId>
 		<PackageDescription>Things Library base schema library.</PackageDescription>
 
-		<ProductName>ThingsLibrary.Schema.Library.Library</ProductName>
+		<ProductName>ThingsLibrary.Schema.Library</ProductName>
 		<Title>Things Library Schema Library</Title>
 		<Description>This is the common base schema library.</Description>
 
