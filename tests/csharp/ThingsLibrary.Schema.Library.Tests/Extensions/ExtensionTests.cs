@@ -6,9 +6,9 @@
 // ================================================================================
 
 using System.Text;
-using ThingsLibrary.Schema.Library.Extensions;
+using ThingsLibrary.Schema.Telemetry;
 
-namespace ThingsLibrary.Schema.Library.Tests.Extensions
+namespace ThingsLibrary.Schema.Tests.Extensions
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class ExtensionTests
@@ -16,8 +16,8 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
         [TestMethod]
         [DataRow("test_key", "test_key")]   //already valid
         [DataRow("000_000", "000_000")]     //already valid
-        [DataRow("test-key", "test_key")]        
-        [DataRow("000-000", "000_000")]     
+        [DataRow("test-key", "test-key")]   //already valid    
+        [DataRow("000-000", "000-000")]     //already valid
         [DataRow("Test Key", "test_key")]
         [DataRow("TestKey", "test_key")]
         [DataRow("testKey", "test_key")]
@@ -57,11 +57,11 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
 
             // Attribute Tags
             Assert.AreEqual(5, item.Tags.Count);
-            Assert.AreEqual("1", item["r"]);
-            Assert.AreEqual("143", item["s"]);
-            Assert.AreEqual("PPE Mask", item["p"]);
-            Assert.AreEqual("1", item["q"]);
-            Assert.AreEqual("414", item["pr"]);
+            Assert.AreEqual("1", item.Tags["r"]);
+            Assert.AreEqual("143", item.Tags["s"]);
+            Assert.AreEqual("PPE Mask", item.Tags["p"]);
+            Assert.AreEqual("1", item.Tags["q"]);
+            Assert.AreEqual("414", item.Tags["pr"]);
 
             // test without * char
             var sb = new StringBuilder();
@@ -75,7 +75,7 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
         [TestMethod]
         public void ToTelemetrySentence()
         {
-            var item = new ItemDto()
+            var item = new TelemItemDto()
             {
                 Type = "rmc",
                 Date = new DateTime(2024, 8, 21, 8, 15, 30, DateTimeKind.Utc)
@@ -85,7 +85,7 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
             item.Tags.Add("gn", "Mark");
             item.Tags.Add("cp", "Starlight");
 
-            var expectedSentence = $"${item.Date.Value.ToUnixTimeMilliseconds()}|rmc|";
+            var expectedSentence = $"${item.Date.ToUnixTimeMilliseconds()}|rmc|";
 
             var sentence = item.ToTelemetrySentence();
 

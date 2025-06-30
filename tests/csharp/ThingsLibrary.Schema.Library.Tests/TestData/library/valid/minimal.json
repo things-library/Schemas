@@ -1,6 +1,13 @@
 {
-	"$schema": "https://schema.thingslibrary.io/1.0/library.json",
-	
-	"types": {},
-	"items": {}
+	"$schema": "https://schema.thingslibrary.io/1.1/item.json",
+
+	"types": {
+		"test_type": {
+			"name": "Test Type"
+		}
+	},
+
+	"key": "test_key",
+	"type": "test_type",
+	"name": "Test Name"
 }

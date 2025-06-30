@@ -1,16 +1,15 @@
 {
-  "$schema": "https://schema.thingslibrary.io/1.0/item.json",
+  "$schema": "https://schema.thingslibrary.io/1.1/item.json",
 
+  "key": "test_key",
   "name": "TEST 2024",
   "type": "test_type",
 
   "tags": {
-    "String": "String Value",
-    "Visible": true,
-    "Invisible": false,
-    "Nothing": null,
-    "Number": 1234.56,
-    "Integer": 1234,
-    "Null": null
+    "string": "String Value",
+    "visible": "true",
+    "invisible": "false",    
+    "number": "1234.56",
+    "integer": "1234"    
   }
 }

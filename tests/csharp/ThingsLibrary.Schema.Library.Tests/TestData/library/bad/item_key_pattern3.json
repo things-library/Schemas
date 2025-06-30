@@ -1,11 +1,7 @@
 {
-	"$schema": "https://schema.thingslibrary.io/1.0/library.json",
-	
-	"types": {},
-	"items": {
-		"test-key": {
-			"name": "Test Type"
-		}
+  "$schema": "https://schema.thingslibrary.io/1.1/item.json",
 
-	}
+  "types": {},
+
+  "name": "Test Type"
 }

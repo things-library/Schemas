@@ -1,12 +1,25 @@
 {
-  "$schema": "https://schema.thingslibrary.io/1.0/item.json",
+  "$schema": "https://schema.thingslibrary.io/1.1/item.json",
   
-  "name": "TEST 2024",
-  "type": "Vehicle",
+  "key": "key",
+  "name": "Parent Node",
+  "type": "parent",
 
   "tags": {
-    "Brand": "Test Brand",
-    "Model": "",
-    "Color": "Red"
+    "brand": "Test Brand",
+    "model": "Test Model",
+    "color": "Test Color"
+  },
+
+  "items": {
+    "child": {
+      "name": "Child",
+      "type": "child",
+      "tags": {
+        "brand": "Test Brand 2",
+        "model": "Test Model 2",
+        "color": "Test Color 2"
+      }
+    }
   }
 }

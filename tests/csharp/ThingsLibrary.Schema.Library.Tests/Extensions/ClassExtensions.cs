@@ -8,7 +8,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace ThingsLibrary.Schema.Library.Tests.Extensions
+namespace ThingsLibrary.Schema.Tests.Extensions
 {
     public static class ClassExtensions
     {

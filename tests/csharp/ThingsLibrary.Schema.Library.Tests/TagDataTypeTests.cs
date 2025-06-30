@@ -5,7 +5,7 @@
 // </copyright>
 // ================================================================================
 
-namespace ThingsLibrary.Schema.Library.Tests
+namespace ThingsLibrary.Schema.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class TagDataTypesTests
@@ -13,30 +13,30 @@ namespace ThingsLibrary.Schema.Library.Tests
         [TestMethod]
         public void GetAll()
         {
-            var items = TagDataTypes.GetAll();
+            var items = ItemTagDataTypesDto.GetAll();
             Assert.AreEqual(19, items.Count);
         }
 
         [TestMethod]
-        [DataRow(typeof(string), TagDataTypes.String)]
-        [DataRow(typeof(int), TagDataTypes.Integer)]
-        [DataRow(typeof(decimal), TagDataTypes.Decimal)]
-        [DataRow(typeof(DateTime), TagDataTypes.DateTime)]
-        [DataRow(typeof(DateTimeOffset), TagDataTypes.Date)]
-        [DataRow(typeof(DateOnly), TagDataTypes.Date)]
-        [DataRow(typeof(TimeOnly), TagDataTypes.Time)]
-        [DataRow(typeof(Uri), TagDataTypes.Url)]
-        [DataRow(typeof(bool), TagDataTypes.Boolean)]
-        [DataRow(typeof(TimeSpan), TagDataTypes.Duration)]
+        [DataRow(typeof(string), ItemTagDataTypesDto.String)]
+        [DataRow(typeof(int), ItemTagDataTypesDto.Integer)]
+        [DataRow(typeof(decimal), ItemTagDataTypesDto.Decimal)]
+        [DataRow(typeof(DateTime), ItemTagDataTypesDto.DateTime)]
+        [DataRow(typeof(DateTimeOffset), ItemTagDataTypesDto.Date)]
+        [DataRow(typeof(DateOnly), ItemTagDataTypesDto.Date)]
+        [DataRow(typeof(TimeOnly), ItemTagDataTypesDto.Time)]
+        [DataRow(typeof(Uri), ItemTagDataTypesDto.Url)]
+        [DataRow(typeof(bool), ItemTagDataTypesDto.Boolean)]
+        [DataRow(typeof(TimeSpan), ItemTagDataTypesDto.Duration)]
         // default types
-        [DataRow(typeof(long), TagDataTypes.String)]
-        [DataRow(typeof(double), TagDataTypes.String)]
-        [DataRow(typeof(TagDataTypesTests), TagDataTypes.String)]
+        [DataRow(typeof(long), ItemTagDataTypesDto.String)]
+        [DataRow(typeof(double), ItemTagDataTypesDto.String)]
+        [DataRow(typeof(TagDataTypesTests), ItemTagDataTypesDto.String)]
         public void GetType(Type type, string expectedKey)
         {
-            var expectedItem = TagDataTypes.Items[expectedKey];
+            var expectedItem = ItemTagDataTypesDto.Items[expectedKey];
 
-            var testItem = TagDataTypes.GetType(type);
+            var testItem = ItemTagDataTypesDto.GetType(type);
 
             // just to hit all the getters 
             Assert.AreSame(expectedItem, testItem);

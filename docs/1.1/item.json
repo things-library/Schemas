@@ -207,7 +207,7 @@
           "type": "string",
           "title": "Schema Document Uri",
           "format": "uri-reference",
-          "pattern": "^https:\\/\\/schema\\.thingslibrary\\.io\\/\\d+\\.\\d\\/item\\.json$"
+          "pattern": "^https:\\/\\/schema\\.thingslibrary\\.io\\/\\d+\\.\\d\\/library\\.json$"
         },
 
         "$id": {

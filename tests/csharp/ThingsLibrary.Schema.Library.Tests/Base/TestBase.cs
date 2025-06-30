@@ -7,17 +7,15 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace ThingsLibrary.Schema.Library.Tests.Base
+namespace ThingsLibrary.Schema.Tests.Base
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class TestBase
     {
-        public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.0/item.json");
-        public static Uri LibrarySchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.0/library.json");
-
+        public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.1/item.json");
+        
         public static JsonSchema ItemSchemaDoc { get; set; } = JsonSchema.Empty;
-        public static JsonSchema LibrarySchemaDoc { get; set; } = JsonSchema.Empty;
-
+        
         public static EvaluationOptions EvaluationOptions = new () { OutputFormat = OutputFormat.List };
 
 
@@ -26,18 +24,13 @@ namespace ThingsLibrary.Schema.Library.Tests.Base
         {
             // https://docs.json-everything.net/schema/examples/external-schemas/
 
-            var schemaFolderPath = "Schemas/1.0";
+            var schemaFolderPath = "Schemas/1.1";
             Assert.IsTrue(Directory.Exists(schemaFolderPath));
 
             Console.WriteLine("Loading Item Schemas...");
-            var schemaDoc = JsonSchema.FromFile("Schemas/1.0/item.json");
+            var schemaDoc = JsonSchema.FromFile("Schemas/1.1/item.json");
             SchemaRegistry.Global.Register(schemaDoc);
-            TestBase.ItemSchemaDoc = schemaDoc;
-
-            Console.WriteLine("Loading Item Schemas...");
-            schemaDoc = JsonSchema.FromFile("Schemas/1.0/library.json");
-            SchemaRegistry.Global.Register(schemaDoc);
-            TestBase.LibrarySchemaDoc = schemaDoc;            
+            TestBase.ItemSchemaDoc = schemaDoc;            
         }
 
         public void DebugLogResults(EvaluationResults? results, string filename)
