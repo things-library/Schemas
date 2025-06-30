@@ -17,7 +17,7 @@ namespace ThingsLibrary.Schema.Library
         /// Json Schema Definition
         /// </summary>
         [JsonPropertyName("$schema"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public Uri SchemaUrl { get; set; } = new Uri($"{Base.SchemaBase.SchemaBaseUrl}/item.json");
+        public Uri SchemaUrl { get; set; } = new Uri($"{Base.SchemaBase.SchemaBaseUrl}/library.json");
 
         /// <summary>
         /// Item Type - describes what type of item we are talking about.

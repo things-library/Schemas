@@ -9,7 +9,7 @@ permalink: /item-schema
 The item schema is designed to be a very flexible schema to maximize compatibility across systems.  The only required properties are 'name' and 'type'.  Once an item is imported into a library it is required to have a much more strict data structure seen in the library schema documentation below.
 
 The latest schema document can be found here:
-* [Item Json Schema](https://schema.thingslibrary.io/latest/item.json)
+* [Item Json Schema](https://schema.thingslibrary.io/latest/library.json)
 
 **Rules**
 
