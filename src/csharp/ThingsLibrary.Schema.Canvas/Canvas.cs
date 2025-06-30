@@ -28,7 +28,7 @@ namespace ThingsLibrary.Schema.Canvas
         /// Service Info
         /// </summary>
         [Required]
-        public CanvasInfo Info { get; init; } = new CanvasInfo();
+        public CanvasInfo Info { get; init; }
 
         /// <summary>
         /// Auth Dependency
