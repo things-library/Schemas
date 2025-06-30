@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.thingslibrary.io/1.1/item.json",
+  "$comment": "Items are the base data object of the things library.",
+
+  "$defs": {
+    "item-type-tag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+
+        "type": {
+          "type": "string",
+          "title": "Data Type",
+          "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
+        },
+
+        "units": {
+          "type": "string",
+          "title": "Unit Symbol",
+          "maxLength": 20
+        },
+
+        "weight": {
+          "type": "integer",
+          "title": "Order (Weight)",
+          "description": "Where in the list should this item show up priority wise.  Higher the number, higher on the list it will appear.",
+          "default": 0
+        },
+
+        "values": {
+          "type": "object",
+          "title": "Values",
+          "patternProperties": {
+            "^[a-z0-9_-]{1,50}$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [ "name", "type" ]
+    },
+
+    "item-type-attachment": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[a-z0-9_-]+$"
+        },
+
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+
+        "weight": {
+          "type": "integer",
+          "title": "Order (Weight)",
+          "description": "Where in the list should this item show up priority wise.  Higher the number, higher on the list it will appear.",
+          "default": 0
+        },
+
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [ "type", "name" ]
+    },
+
+    "item-type": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+
+        "tags": {
+          "type": "object",
+          "title": "Attributes",
+          "patternProperties": {
+            "^[a-z0-9_-]{1,50}$": {
+              "$ref": "#/$defs/item-type-tag"
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "items": {
+          "type": "array",
+          "title": "Attachments",
+          "items": {
+            "$ref": "#/$defs/item-type-attachment"
+          }
+        },
+
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [ "name" ]
+    },
+
+    "item": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "title": "Date",
+          "format": "date-time"
+        },
+
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[a-z0-9_-]+$"
+        },
+
+        "tags": {
+          "type": "object",
+          "title": "Tags",
+          "patternProperties": {
+            "^[a-z0-9_-]{1,50}$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "items": {
+          "type": "object",
+          "title": "Attached Items",
+          "additionalProperties": {
+            "^[a-z0-9_-]{1,50}$": {
+              "$ref": "#/$defs/item"
+            }
+          }
+        },
+
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [ "type" ]
+    },
+
+    "item-root": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "title": "Schema Document Uri",
+          "format": "uri-reference",
+          "pattern": "^https:\\/\\/schema\\.thingslibrary\\.io\\/\\d+\\.\\d\\/library\\.json$"
+        },
+
+        "$id": {
+          "type": "string",
+          "title": "Record Uri",
+          "format": "uri-reference"
+        },
+
+        "types": {
+          "type": "object",
+          "title": "Item Types",
+          "patternProperties": {
+            "^[a-z0-9_-]{1,50}$": {
+              "$ref": "#/$defs/item-type"
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "key": {
+          "type": "string",
+          "title": "Key",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[a-z0-9_-]+$"
+        },
+
+        "date": {
+          "type": "string",
+          "title": "Date",
+          "format": "date-time"
+        },
+
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[a-z0-9_-]+$"
+        },
+
+        "tags": {
+          "type": "object",
+          "title": "Attribute Tags",
+          "patternProperties": {
+            "^[a-z0-9_-]{1,50}$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "items": {
+          "type": "object",
+          "title": "Attached Items",
+          "additionalProperties": {
+            "^[a-z0-9_-]{1,50}$": {
+              "$ref": "#/$defs/item"
+            }
+          }
+        },
+
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [ "type", "key", "name" ]
+    }
+
+  },
+
+  "$ref": "#/$defs/item-root"
+}
