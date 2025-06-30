@@ -1,0 +1,10 @@
+﻿{
+  "$schema": "https://schema.thingslibrary.io/1.1/canvas.json",
+
+  "Info": {
+    "Namespace": "1",
+    "Name": "1",
+    "Description": "1",
+    "Environment": "1"    
+  }
+}

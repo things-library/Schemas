@@ -5,13 +5,13 @@
 // </copyright>
 // ================================================================================
 
-namespace ThingsLibrary.Schema.Library
+namespace ThingsLibrary.Schema
 {
     /// <summary>
     /// Tag
     /// </summary>
     [DebuggerDisplay("{Key}: {Value}")]
-    public class ItemTagDto : Base.SchemaBase
+    public class ItemTagDto
     {
         /// <summary>
         /// Library Unique Key
@@ -26,43 +26,37 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         /// <remarks>This always return the first even if there are more than one.  Setting the value when more then one existing will remote the other items.</remarks>
         [JsonPropertyName("value")]
-        [Display(Name = "Value"), StringLength(50, MinimumLength = 1)]
-        public virtual string Value { get; set; } = string.Empty;
+        [Display(Name = "Value")]
+        public string Value { get; set; } = string.Empty;
 
         /// <summary>
         /// Data Type
         /// </summary>
         /// <remarks>This always return the first even if there are more than one.  Setting the value when more then one existing will remote the other items.</remarks>       
         [JsonPropertyName("type")]
-        [Display(Name = "Data Type"), DefaultValue(TagDataTypes.String), Required]
+        [Display(Name = "Data Type"), DefaultValue(ItemTagDataTypesDto.String), Required]
         [AllowedValues(
-            TagDataTypes.Boolean,
-            TagDataTypes.Currency,
-            TagDataTypes.CurrencyRange,
-            TagDataTypes.Date,
-            TagDataTypes.DateTime,
-            TagDataTypes.Duration,
-            TagDataTypes.Email,
-            TagDataTypes.Enum,
-            TagDataTypes.Html,
-            TagDataTypes.Password,
-            TagDataTypes.Phone,
-            TagDataTypes.String,
-            TagDataTypes.TextArea,
-            TagDataTypes.Time,
-            TagDataTypes.Url,
-            TagDataTypes.Decimal,
-            TagDataTypes.Integer,
-            TagDataTypes.IntegerRange,
-            TagDataTypes.DecimalRange
+            ItemTagDataTypesDto.Boolean,
+            ItemTagDataTypesDto.Currency,
+            ItemTagDataTypesDto.CurrencyRange,
+            ItemTagDataTypesDto.Date,
+            ItemTagDataTypesDto.DateTime,
+            ItemTagDataTypesDto.Duration,
+            ItemTagDataTypesDto.Email,
+            ItemTagDataTypesDto.Enum,
+            ItemTagDataTypesDto.Html,
+            ItemTagDataTypesDto.Password,
+            ItemTagDataTypesDto.Phone,
+            ItemTagDataTypesDto.String,
+            ItemTagDataTypesDto.TextArea,
+            ItemTagDataTypesDto.Time,
+            ItemTagDataTypesDto.Url,
+            ItemTagDataTypesDto.Decimal,
+            ItemTagDataTypesDto.Integer,
+            ItemTagDataTypesDto.IntegerRange,
+            ItemTagDataTypesDto.DecimalRange
         )]
-        public string DataType { get; set; } = TagDataTypes.String;
-
-        /// <summary>
-        /// Parent Item
-        /// </summary>
-        [JsonIgnore]
-        public ItemDto? Parent { get; set; }
+        public string DataType { get; set; } = ItemTagDataTypesDto.String;
 
         /// <summary>
         /// Constructor
@@ -114,47 +108,47 @@ namespace ThingsLibrary.Schema.Library
             else if (value is DateOnly valueDate)
             {
                 this.Value = valueDate.ToString("yyyy-MM-dd");
-                this.DataType = TagDataTypes.Date;
+                this.DataType = ItemTagDataTypesDto.Date;
             }
             else if (value is TimeOnly valueTime)
             {
                 this.Value = valueTime.ToString("HH:mm:ss");
-                this.DataType = TagDataTypes.Time;
+                this.DataType = ItemTagDataTypesDto.Time;
             }
             else if (value is DateTime valueDateTime)
             {
                 this.Value = valueDateTime.ToString("O");
-                this.DataType = TagDataTypes.DateTime;
+                this.DataType = ItemTagDataTypesDto.DateTime;
             }
             else if (value is DateTimeOffset valueDateTimeOffset)
             {
                 this.Value = valueDateTimeOffset.ToString("O");
-                this.DataType = TagDataTypes.Date;
+                this.DataType = ItemTagDataTypesDto.Date;
             }
             else if (value is double valueDouble)
             {
                 this.Value = $"{valueDouble}";
-                this.DataType = TagDataTypes.Decimal;
+                this.DataType = ItemTagDataTypesDto.Decimal;
             }
             else if (value is decimal valueDecimal)
             {
                 this.Value = $"{valueDecimal}";
-                this.DataType = TagDataTypes.Decimal;
+                this.DataType = ItemTagDataTypesDto.Decimal;
             }
             else if (value is int valueInt)
             {
                 this.Value = $"{valueInt}";
-                this.DataType = TagDataTypes.Integer;
+                this.DataType = ItemTagDataTypesDto.Integer;
             }
             else if (value is Uri valueUrl)
             {
                 this.Value = $"{valueUrl}";
-                this.DataType = TagDataTypes.Url;
+                this.DataType = ItemTagDataTypesDto.Url;
             }
             else if (value is bool valueBool)
             {
                 this.Value = $"{valueBool}".ToLower();
-                this.DataType = TagDataTypes.Boolean;
+                this.DataType = ItemTagDataTypesDto.Boolean;
             }
             else
             {

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Schema.Canvas</PackageId>
+		<PackageDescription>Things Library base schema library.</PackageDescription>
+
+		<ProductName>ThingsLibrary.Schema.Canvas</ProductName>
+		<Title>Things Library Service Canvas Schema Library</Title>
+		<Description>This schema represents an application's service configuration in a strongly typed fashion.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/things-library/Schemas</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Update="Schemas\1.1\canvas.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+	
+</Project>

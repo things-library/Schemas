@@ -5,7 +5,7 @@
 // </copyright>
 // ================================================================================
 
-namespace ThingsLibrary.Schema.Tests
+namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class TagDataTypesTests

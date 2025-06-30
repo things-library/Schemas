@@ -6,9 +6,9 @@
 // ================================================================================
 
 using System.Text;
-using ThingsLibrary.Schema.Telemetry;
+using ThingsLibrary.Schema.Library.Telemetry;
 
-namespace ThingsLibrary.Schema.Tests.Extensions
+namespace ThingsLibrary.Schema.Library.Tests.Extensions
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class ExtensionTests

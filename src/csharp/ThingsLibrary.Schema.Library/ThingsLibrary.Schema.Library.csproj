@@ -1,42 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<PackageId>ThingsLibrary.Schema.Library</PackageId>
-		<ProductName>ThingsLibrary.Schema.Library</ProductName>
+		<PackageId>ThingsLibrary.Schema.Library.Library</PackageId>
+		<PackageDescription>Things Library base schema library.</PackageDescription>
+
+		<ProductName>ThingsLibrary.Schema.Library.Library</ProductName>
 		<Title>Things Library Schema Library</Title>
-		<Description>Deserialization objects library for thingslibrary.io schema documents.</Description>
+		<Description>This is the common base schema library.</Description>
 
 		<Authors>Mark Lanning</Authors>
 		<Company>Starlight Software Co.</Company>
-		<RepositoryUrl>https://github.com/things-library/Schemas.git</RepositoryUrl>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/things-library/Schemas</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="ItemAttributeGeneric.cs" />
+		<Compile Remove="ItemTag.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="Schemas\1.0\item.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
-		<None Update="Schemas\1.0\library.json">
+		<None Update="Schemas\1.1\library.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-	
-	<Target Name="CopySchemas" AfterTargets="Build">
-		<Message Text="Copying Schema Documents..." Importance="High" />
 
-		<Copy SourceFiles="$(TargetDir)Schemas\1.0\item.json;$(TargetDir)Schemas\1.0\library.json" DestinationFolder="$(SolutionDir)Docs\1.0" />
-		<Copy SourceFiles="$(TargetDir)Schemas\1.0\item.json;$(TargetDir)Schemas\1.0\library.json" DestinationFolder="$(SolutionDir)Docs\latest" />
-
-		<Message Text="Schemas Copied" Importance="High" />
-	</Target>
 </Project>

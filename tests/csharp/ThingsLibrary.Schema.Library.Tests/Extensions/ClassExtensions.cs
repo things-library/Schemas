@@ -8,7 +8,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace ThingsLibrary.Schema.Tests.Extensions
+namespace ThingsLibrary.Schema.Library.Tests.Extensions
 {
     public static class ClassExtensions
     {
@@ -58,7 +58,6 @@ namespace ThingsLibrary.Schema.Tests.Extensions
                 }
             }
 
-            //return list.OrderBy(x => x.MemberNames.FirstOrDefault()).ToList();
             return list;
         }
 

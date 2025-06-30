@@ -1,5 +1,5 @@
 {
-	"$schema": "https://schema.thingslibrary.io/1.1/item.json",
+	"$schema": "https://schema.thingslibrary.io/1.1/library.json",
 
 	"key": "key",
 	"name": "Name",

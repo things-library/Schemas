@@ -9,6 +9,7 @@ using System.Collections;
 
 namespace ThingsLibrary.Schema.Library.Validators
 {
+    [System.AttributeUsage(System.AttributeTargets.Property, Inherited = true)]
     public class ValidateCollectionItemsAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
@@ -29,7 +30,7 @@ namespace ThingsLibrary.Schema.Library.Validators
                     );
                 }
             }
-                        
+
             var compositeResult = new CompositeValidationResult($"Validation failed!",
                 new List<string> { $"{validationContext.MemberName}" }
             );
@@ -42,7 +43,7 @@ namespace ThingsLibrary.Schema.Library.Validators
             {
                 compositeResult.Add(ValidateDictionary(dictionary));
             }
-            else if(value != null)
+            else if (value != null)
             {
                 compositeResult.Add(Validate(value));
             }
@@ -110,9 +111,7 @@ namespace ThingsLibrary.Schema.Library.Validators
                 if (Validator.TryValidateObject(value, context, subResults, true)) { continue; }
                 if (!subResults.Any()) { continue; }
 
-                var compositeResult = new CompositeValidationResult($"Validation failed!",
-                    new List<string> { $"[\"{key}\"]" }
-                );
+                var compositeResult = new CompositeValidationResult($"Validation failed!", new List<string> { $"[\"{key}\"]" });
 
                 compositeResult.Add(subResults);
 

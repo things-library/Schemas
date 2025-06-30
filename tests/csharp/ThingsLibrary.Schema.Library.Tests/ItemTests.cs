@@ -5,9 +5,9 @@
 // </copyright>
 // ================================================================================
 
-using ThingsLibrary.Schema.Tests.Base;
+using ThingsLibrary.Schema.Library.Tests.Base;
 
-namespace ThingsLibrary.Schema.Tests
+namespace ThingsLibrary.Schema.Library.Tests
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class ItemTests : TestBase

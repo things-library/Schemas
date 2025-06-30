@@ -7,17 +7,16 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace ThingsLibrary.Schema.Tests.Base
+namespace ThingsLibrary.Schema.Library.Tests.Base
 {
     [TestClass, ExcludeFromCodeCoverage]
     public class TestBase
     {
-        public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.1/item.json");
+        public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.1/library.json");
         
         public static JsonSchema ItemSchemaDoc { get; set; } = JsonSchema.Empty;
         
         public static EvaluationOptions EvaluationOptions = new () { OutputFormat = OutputFormat.List };
-
 
 
         public static void LoadSchemas()
@@ -27,10 +26,13 @@ namespace ThingsLibrary.Schema.Tests.Base
             var schemaFolderPath = "Schemas/1.1";
             Assert.IsTrue(Directory.Exists(schemaFolderPath));
 
+            string schemaFilePath = "Schemas/1.1/library.json";
+            Assert.IsTrue(File.Exists(schemaFilePath));
+
             Console.WriteLine("Loading Item Schemas...");
-            var schemaDoc = JsonSchema.FromFile("Schemas/1.1/item.json");
-            SchemaRegistry.Global.Register(schemaDoc);
-            TestBase.ItemSchemaDoc = schemaDoc;            
+            TestBase.ItemSchemaDoc = JsonSchema.FromFile(schemaFilePath);
+
+            SchemaRegistry.Global.Register(TestBase.ItemSchemaDoc);
         }
 
         public void DebugLogResults(EvaluationResults? results, string filename)
