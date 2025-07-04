@@ -32,5 +32,23 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         [JsonPropertyName("types")]
         public IDictionary<string, ItemTypeDto> Types { get; set; } = new Dictionary<string, ItemTypeDto>();
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public RootItemDto() : base()
+        {
+            //nothing            
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public RootItemDto(string type, string name, string key) : base(type, name)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(key);
+
+            this.Key = key;
+        }
     }
 }

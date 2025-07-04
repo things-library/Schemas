@@ -60,14 +60,14 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Unit Symbol
         /// </summary>
-        [JsonPropertyName("units"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        [Display(Name = "Unit Symbol"), Required(AllowEmptyStrings = true), DefaultValue(""), MaxLength(20)]
+        [JsonPropertyName("units"), JsonIgnoreDefault]
+        [Display(Name = "Unit Symbol"), StringLength(20, MinimumLength = 1)]
         public string Units { get; set; } = string.Empty;
 
         /// <summary>
         /// Where in the list should this item show up priority wise?
         /// </summary>        
-        [JsonPropertyName("weight"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [JsonPropertyName("weight"), JsonIgnoreDefault]
         [Display(Name = "Display Order (Weight)"), DefaultValue(0), Required]
         public short Weight { get; set; } = 0;
 
@@ -84,5 +84,22 @@ namespace ThingsLibrary.Schema.Library
         [JsonPropertyName("meta"), JsonIgnoreEmptyCollection]
         public IDictionary<string, string> Meta { get; set; } = new Dictionary<string, string>();
 
+
+        /// <summary>
+        /// Easy lookup
+        /// </summary>
+        /// <param name="key">Tag Key</param>
+        /// <returns></returns>
+        public string this[string key]
+        {
+            get
+            {
+                if (!this.Values.ContainsKey(key)) { return string.Empty; }
+
+                return this.Values[key];
+            }
+
+            set { this.Values[key] = value; }
+        }
     }
 }

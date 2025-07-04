@@ -65,5 +65,35 @@ namespace ThingsLibrary.Schema.Library
         {
             //nothing
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ItemDto(string type, string name)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(type);
+            ArgumentException.ThrowIfNullOrEmpty(name);
+
+            this.Type = type;
+            this.Name = name;
+        }
+
+
+        /// <summary>
+        /// Easy lookup and empty string lookup
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string this[string key]
+        {
+            get 
+            {
+                if(!this.Tags.ContainsKey(key)) { return string.Empty; }
+
+                return this.Tags[key];
+            }
+            
+            set { this.Tags[key] = value; }
+        }
     }
 }

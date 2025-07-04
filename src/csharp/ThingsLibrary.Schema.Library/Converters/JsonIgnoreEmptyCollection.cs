@@ -14,6 +14,12 @@ namespace ThingsLibrary.Schema.Library.Converters
     public class JsonIgnoreEmptyCollectionAttribute : Attribute { }
 
     /// <summary>
+    /// Json Ignore Attribute that when added to collections will JsonIgnore the collection when empty.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class JsonIgnoreDefaultAttribute : Attribute { }
+
+    /// <summary>
     /// Json ignores any collection that is empty that has the above attribute attached to it.
     /// </summary>
     /// <remarks>To use this resolver it must be registered with the json serialization options:
@@ -35,32 +41,50 @@ namespace ThingsLibrary.Schema.Library.Converters
             foreach (JsonPropertyInfo propertyInfo in jsonTypeInfo.Properties)
             {
                 // property MUST have a JsonIgnoreEmptyCollection attribute declaration
-                if (propertyInfo.AttributeProvider?.GetCustomAttributes(typeof(JsonIgnoreEmptyCollectionAttribute), true).Length == 0)
+                if (propertyInfo.AttributeProvider?.GetCustomAttributes(typeof(JsonIgnoreEmptyCollectionAttribute), true).Length > 0)
                 {
-                    continue;
-                }
-
-                propertyInfo.ShouldSerialize = (obj, prop) =>
-                {
-                    if (prop == null) { return false; }
-
-                    var collectionType = typeof(ICollection<>);
-
-                    foreach (var interfaceType in prop.GetType().GetInterfaces())
+                    propertyInfo.ShouldSerialize = (obj, prop) =>
                     {
-                        if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == collectionType)
+                        if (prop == null) { return false; }
+
+                        var collectionType = typeof(ICollection<>);
+
+                        foreach (var interfaceType in prop.GetType().GetInterfaces())
                         {
-                            var countProperty = interfaceType.GetProperty("Count");
-                            if (countProperty != null && (int)countProperty.GetValue(prop)! == 0)   //if the property exist then it is a int
+                            if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == collectionType)
                             {
-                                return false;
+                                var countProperty = interfaceType.GetProperty("Count");
+                                if (countProperty != null && (int)countProperty.GetValue(prop)! == 0)   //if the property exist then it is a int
+                                {
+                                    return false;
+                                }
                             }
                         }
-                    }
 
-                    return true;
-                };
+                        return true;
+                    };
+                }
 
+                // STRING EMPTY OR NULL
+                if (propertyInfo.AttributeProvider?.GetCustomAttributes(typeof(JsonIgnoreDefaultAttribute), true).Length > 0)
+                {
+                    propertyInfo.ShouldSerialize = (obj, propValue) =>
+                    {
+                        if (propValue == null) { return false; }
+                                                
+                        if (propertyInfo.PropertyType == typeof(String))
+                        {
+                            return ((string)propValue != string.Empty);
+                        }
+
+                        if (propertyInfo.PropertyType == typeof(Int16))
+                        {
+                            return ((Int16)propValue != 0);
+                        }
+
+                        return true;
+                    };
+                }
             }
         }
     }

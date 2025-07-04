@@ -54,7 +54,9 @@ namespace ThingsLibrary.Schema.Library.Base
 
         public static string GenerateKey()
         {
-            return ToShortCode(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+            var epoch = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
+            return ToShortCode(epoch - 1735689600); //minus 1/1/2025
         }
 
         public static string GenerateKey(string value)
