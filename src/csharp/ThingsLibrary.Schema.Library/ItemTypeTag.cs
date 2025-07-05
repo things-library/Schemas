@@ -12,13 +12,13 @@ namespace ThingsLibrary.Schema.Library
     /// </summary>
     [DebuggerDisplay("{Name}, ({Key}, Type: {Type}, Units: {Units})")]
     public class ItemTypeTagDto
-    {        
+    {
         /// <summary>
         /// Library Unique Key
         /// </summary>
         /// <remarks>(Pattern: {library_key}/{item_type_key}</remarks>
         [JsonIgnore]
-        [Display(Name = "Key"), StringLength(50, MinimumLength = 1), Required]
+        [Display(Name = "Key"), StringLength(50, MinimumLength = 1)]
         [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string Key { get; set; } = string.Empty;
 
@@ -68,14 +68,14 @@ namespace ThingsLibrary.Schema.Library
         /// Where in the list should this item show up priority wise?
         /// </summary>        
         [JsonPropertyName("weight"), JsonIgnoreDefault]
-        [Display(Name = "Display Order (Weight)"), DefaultValue(0), Required]
+        [Display(Name = "Display Order (Weight)"), Required]
         public short Weight { get; set; } = 0;
 
         /// <summary>
         /// Tag Values
         /// </summary>
         /// <remarks>Only used for enum (picklist) tags</remarks>
-        [JsonPropertyName("values"), JsonIgnoreEmptyCollection]        
+        [JsonPropertyName("values"), JsonIgnoreEmptyCollection]
         public IDictionary<string, string> Values { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
@@ -84,6 +84,14 @@ namespace ThingsLibrary.Schema.Library
         [JsonPropertyName("meta"), JsonIgnoreEmptyCollection]
         public IDictionary<string, string> Meta { get; set; } = new Dictionary<string, string>();
 
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ItemTypeTagDto()
+        {
+            //nothing
+        }
 
         /// <summary>
         /// Easy lookup

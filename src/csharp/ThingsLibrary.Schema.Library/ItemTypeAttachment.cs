@@ -39,7 +39,7 @@ namespace ThingsLibrary.Schema.Library
         /// Where in the list should this item show up priority wise?
         /// </summary>        
         [JsonPropertyName("weight"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        [Display(Name = "Display Order (Weight)"), DefaultValue(0), Required]
+        [Display(Name = "Display Order (Weight)"), Required]
         public short Weight { get; set; } = 0;
 
         /// <summary>

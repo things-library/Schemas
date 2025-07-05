@@ -159,7 +159,7 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// JSON Schema 'type' field.. expected: string, number, integer, boolean
         /// </summary>
-        [Display(Name = "Type"), StringLength(50), Required]
+        [Display(Name = "Type"), StringLength(50, MinimumLength = 1), Required]
         public string Type { get; init; } = string.Empty;
 
         /// <summary>
