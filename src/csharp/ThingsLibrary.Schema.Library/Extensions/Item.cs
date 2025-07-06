@@ -5,8 +5,6 @@
 // </copyright>
 // ================================================================================
 
-using System.Security.Claims;
-
 namespace ThingsLibrary.Schema.Library.Extensions
 {
     public static class ItemExtensions

@@ -10,18 +10,9 @@ namespace ThingsLibrary.Schema.Library
     /// <summary>
     /// Tags
     /// </summary>
-    [DebuggerDisplay("{Name}, ({Key}, Type: {Type}, Units: {Units})")]
+    [DebuggerDisplay("{Name}, (Type: {Type}, Units: {Units})")]
     public class ItemTypeTagDto
-    {
-        /// <summary>
-        /// Library Unique Key
-        /// </summary>
-        /// <remarks>(Pattern: {library_key}/{item_type_key}</remarks>
-        [JsonIgnore]
-        [Display(Name = "Key"), StringLength(50, MinimumLength = 1)]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
-        public string Key { get; set; } = string.Empty;
-
+    {        
         /// <summary>
         /// Tag Name
         /// </summary>

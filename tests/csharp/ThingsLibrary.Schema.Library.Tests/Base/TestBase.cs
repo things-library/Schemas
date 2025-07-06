@@ -15,8 +15,8 @@ namespace ThingsLibrary.Schema.Library.Tests.Base
         public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.1/library.json");
         
         public static JsonSchema ItemSchemaDoc { get; set; } = JsonSchema.Empty;
-        
-        public static EvaluationOptions EvaluationOptions = new () { OutputFormat = OutputFormat.List };
+
+        public static EvaluationOptions EvaluationOptions = new() { OutputFormat = OutputFormat.List };
 
 
         public static void LoadSchemas()
