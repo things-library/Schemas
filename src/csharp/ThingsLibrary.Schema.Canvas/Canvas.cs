@@ -28,7 +28,7 @@ namespace ThingsLibrary.Schema.Canvas
         /// Service Info
         /// </summary>
         [Required]
-        public CanvasInfo Info { get; init; }
+        public CanvasInfo Info { get; init; } = new CanvasInfo();
 
         /// <summary>
         /// Auth Dependency
@@ -72,6 +72,12 @@ namespace ThingsLibrary.Schema.Canvas
         /// </summary>
         [Display(Name = "Logging Details")]
         public CanvasLogging? Logging { get; init; }
+
+        /// <summary>
+        /// Notifications Dependency
+        /// </summary>
+        [Display(Name = "Notification Details")]
+        public CanvasNotification? Notification { get; init; }
 
         /// <summary>
         /// Registered API dependencies for HttpClient registrations

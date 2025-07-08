@@ -13,7 +13,7 @@ namespace ThingsLibrary.Schema.Canvas
         /// Open ID Provider Uri 
         /// </summary>
         /// <example>https://login.microsoftonline.com/{{tenant_id}}/v2.0</example>
-        [DataType(DA.DataType.Url)]
+        [DataType(DT.Url)]
         public Uri? Authority { get; init; }
 
         /// <summary>

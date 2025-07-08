@@ -16,5 +16,5 @@ global using System.Text.Json;
 global using System.Text.Json.Serialization;
 global using System.Text.Json.Serialization.Metadata;
 
-global using DA = System.ComponentModel.DataAnnotations;
+global using DT = System.ComponentModel.DataAnnotations.DataType;
 

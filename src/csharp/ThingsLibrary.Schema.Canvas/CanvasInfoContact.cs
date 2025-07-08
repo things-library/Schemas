@@ -30,7 +30,7 @@ namespace ThingsLibrary.Schema.Canvas
         /// <summary>
         /// Contact Email Address
         /// </summary>
-        [Display(Name = "Email"), StringLength(200), DataType(DA.DataType.EmailAddress), Required]
+        [Display(Name = "Email"), StringLength(200), DataType(DT.EmailAddress), Required]
         public string Email { get; init; } = string.Empty;
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace ThingsLibrary.Schema.Canvas
         /// <summary>
         /// Project Url
         /// </summary>
-        [Display(Name = "Project Url"), StringLength(200), DataType(DA.DataType.Url)]
+        [Display(Name = "Project Url"), StringLength(200), DataType(DT.Url)]
         public string ProjectUrl { get; init; } = string.Empty;
     }
 }

@@ -12,8 +12,14 @@ namespace ThingsLibrary.Schema.Canvas
         /// <summary>
         /// Dependency Name
         /// </summary>
-        [Display(Name = "Name"), StringLength(200), Required]
+        [Display(Name = "Name"), StringLength(200, MinimumLength = 1), Required]
         public string Name { get; init; } = string.Empty;
+
+        /// <summary>
+        /// Database Name
+        /// </summary>
+        [Display(Name = "Database Name"), StringLength(200, MinimumLength = 1), Required]
+        public string DatabaseName { get; init; } = string.Empty;
 
         /// <summary>
         /// Origin

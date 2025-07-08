@@ -53,13 +53,13 @@ namespace ThingsLibrary.Schema.Canvas
         /// <summary>
         /// DNS Hostname
         /// </summary>
-        [Display(Name = "Host (Uri)"), DataType(DA.DataType.Url)]
+        [Display(Name = "Host (Uri)"), DataType(DT.Url)]
         public Uri? Host { get; init; }
 
         /// <summary>
         /// Route Prefix / PathBase
         /// </summary>
-        [Display(Name = "Route Prefix"), DataType(DA.DataType.Url)]
+        [Display(Name = "Route Prefix"), DataType(DT.Url)]
         public string? RoutePrefix { get; init; }
         
         /// <summary>
