@@ -27,6 +27,20 @@ namespace ThingsLibrary.Schema.Library.Extensions
             if (!type.Tags.ContainsKey(tagKey)) { return 0; }
 
             return type.Tags[tagKey].Weight;
-        }        
+        }
+
+        public static void SetTagIfNotNull(this ItemDto item, string itemPropertyName, string? value)
+        {
+            if (value == null) { return; }
+
+            item.Tags[itemPropertyName] = value;
+        }
+
+        public static void SetMetaIfNotNull(this ItemDto item, string itemPropertyName, string? value)
+        {
+            if (value == null) { return; }
+
+            item.Meta[itemPropertyName] = value;
+        }
     }
 }
