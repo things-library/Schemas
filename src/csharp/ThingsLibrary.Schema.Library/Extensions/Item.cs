@@ -36,11 +36,50 @@ namespace ThingsLibrary.Schema.Library.Extensions
             item.Tags[itemPropertyName] = value;
         }
 
+        public static void SetTagIfNotNull(this ItemDto item, string itemPropertyName, double? value)
+        {
+            if (value == null) { return; }
+
+            item.Tags[itemPropertyName] = $"{value}";
+        }
+
+        public static void SetTagIfNotNull(this ItemDto item, string itemPropertyName, DateTime? value)
+        {
+            if (value == null) { return; }
+
+            item.Tags[itemPropertyName] = $"{value:O}";
+        }
+
+        public static void SetTagIfNotNull(this ItemDto item, string itemPropertyName, Guid? value)
+        {
+            if (value == null) { return; }
+
+            item.Tags[itemPropertyName] = $"{value}";
+        }
+
         public static void SetMetaIfNotNull(this ItemDto item, string itemPropertyName, string? value)
         {
             if (value == null) { return; }
 
             item.Meta[itemPropertyName] = value;
+        }
+
+        public static ItemDto ToResultsDto(this List<RootItemDto> list)
+        {
+            var results =  new ItemDto
+            {
+                Type = "results",
+                Name = "Results",
+                //Items = list.ToDictionary(x => x.Key, x => (ItemDto)x)
+            };
+
+            // just incase there is a duplicate which is possible for a listing
+            foreach(var item in list)
+            {
+                results.Items[item.Key] = item;
+            }
+
+            return results;
         }
     }
 }

@@ -63,7 +63,7 @@ namespace ThingsLibrary.Schema.Library.Base
         {
             if (string.IsNullOrEmpty(value)) { return value; }
 
-            string pattern = "^[a-z0-9_]+$";
+            string pattern = "^[a-z0-9_-]+$";
             var regex = new Regex(pattern);
 
             value = value
