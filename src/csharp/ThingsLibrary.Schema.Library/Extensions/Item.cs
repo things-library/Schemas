@@ -1,6 +1,6 @@
 ﻿// ================================================================================
 // <copyright file="Item.cs" company="Starlight Software Co">
-//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
 // ================================================================================
@@ -9,77 +9,93 @@ namespace ThingsLibrary.Schema.Library.Extensions
 {
     public static class ItemExtensions
     {
-        public static string GetTypeTagName(this RootItemDto rootItemDto, string typeKey, string tagKey)
+        /// <summary>
+        /// Get all types in use for the item recursive
+        /// </summary>
+        /// <param name="item">Item to traverse</param>
+        /// <returns></returns>
+        public static List<string> GetAllTypes(this ItemDto item)
         {
-            if (!rootItemDto.Types.ContainsKey(typeKey)) { return tagKey; }
+            var list = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-            var type = rootItemDto.Types[typeKey];
-            if (!type.Tags.ContainsKey(tagKey)) { return tagKey; }
-
-            return type.Tags[tagKey].Name;
+            GetAllTypes(item, list);
+            
+            return list.ToList();
         }
 
-        public static short GetTypeTagWeight(this RootItemDto rootItemDto, string typeKey, string tagKey)
-        {
-            if (!rootItemDto.Types.ContainsKey(typeKey)) { return 0; }
+        private static void GetAllTypes(ItemDto item, HashSet<string> list)
+        {      
+            list.Add(item.Type);
 
-            var type = rootItemDto.Types[typeKey];
-            if (!type.Tags.ContainsKey(tagKey)) { return 0; }
-
-            return type.Tags[tagKey].Weight;
-        }
-
-        public static void SetTagIfNotNull(this ItemDto item, string itemPropertyName, string? value)
-        {
-            if (value == null) { return; }
-
-            item.Tags[itemPropertyName] = value;
-        }
-
-        public static void SetTagIfNotNull(this ItemDto item, string itemPropertyName, double? value)
-        {
-            if (value == null) { return; }
-
-            item.Tags[itemPropertyName] = $"{value}";
-        }
-
-        public static void SetTagIfNotNull(this ItemDto item, string itemPropertyName, DateTime? value)
-        {
-            if (value == null) { return; }
-
-            item.Tags[itemPropertyName] = $"{value:O}";
-        }
-
-        public static void SetTagIfNotNull(this ItemDto item, string itemPropertyName, Guid? value)
-        {
-            if (value == null) { return; }
-
-            item.Tags[itemPropertyName] = $"{value}";
-        }
-
-        public static void SetMetaIfNotNull(this ItemDto item, string itemPropertyName, string? value)
-        {
-            if (value == null) { return; }
-
-            item.Meta[itemPropertyName] = value;
-        }
-
-        public static ItemDto ToResultsDto(this List<RootItemDto> list)
-        {
-            var results =  new ItemDto
+            foreach (var childItem in item.Items.Values)
             {
-                Type = "results",
-                Name = "Results",
-                //Items = list.ToDictionary(x => x.Key, x => (ItemDto)x)
-            };
-
-            // just incase there is a duplicate which is possible for a listing
-            foreach(var item in list)
-            {
-                results.Items[item.Key] = item;
-            }
-
-            return results;
+                GetAllTypes(childItem, list);
+            }            
         }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTagIfNotNull(this ItemDto item, string tagName, string? value)
+        {
+            if (value == null || string.IsNullOrEmpty(value)) { return; }
+
+            item.Tags[tagName] = value;
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTagIfNotNull(this ItemDto item, string tagName, double? value)
+        {
+            if (value == null) { return; }
+
+            item.Tags[tagName] = $"{value}";
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTagIfNotNull(this ItemDto item, string tagName, DateTime? value)
+        {
+            if (value == null) { return; }
+
+            item.Tags[tagName] = $"{value:O}";
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTagIfNotNull(this ItemDto item, string tagName, Guid? value)
+        {
+            if (value == null) { return; }
+
+            item.Tags[tagName] = $"{value}";
+        }
+
+        /// <summary>
+        /// Set the metadata value if provided value is set
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="tagName"></param>
+        /// <param name="value"></param>
+        public static void SetMetaIfNotNull(this ItemDto item, string tagName, string? value)
+        {
+            if (value == null || string.IsNullOrEmpty(value)) { return; }
+
+            item.Meta[tagName] = value;
+        }        
     }
 }

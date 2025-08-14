@@ -1,24 +1,31 @@
 ﻿// ================================================================================
-// <copyright file="ItemTypeTag.cs" company="Starlight Software Co">
+// <copyright file="ItemTag.cs" company="Starlight Software Co">
 //    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
 // ================================================================================
 
-namespace ThingsLibrary.Schema.Library
+namespace ThingsLibrary.Schema.Library.Poc
 {
     /// <summary>
     /// Tags
     /// </summary>
-    [DebuggerDisplay("{Name}, (Type: {Type}, Units: {Units})")]
-    public class ItemTypeTagDto
-    {        
+    [DebuggerDisplay("{Name}:{Value}, (Type: {Type}, Units: {Units})")]
+    public class ItemTagDto
+    {
         /// <summary>
-        /// Tag Name
+        /// Name
         /// </summary>
         [JsonPropertyName("name")]
         [Display(Name = "Name"), StringLength(50, MinimumLength = 1), Required]
         public string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Value
+        /// </summary>
+        [JsonPropertyName("value")]
+        [Display(Name = "Value"), Required]
+        public string Value { get; set; } = string.Empty;
 
         /// <summary>
         /// Data Type that this tag represents.. like pick list, date-time, etc
@@ -56,18 +63,18 @@ namespace ThingsLibrary.Schema.Library
         public string? Units { get; set; }
 
         /// <summary>
-        /// Position (1 = top)
+        /// Where in the list should this item show up priority wise?
         /// </summary>        
-        [JsonPropertyName("seq"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [Display(Name = "Display Order (Sequence)"), Required]
-        public short? Sequence { get; set; }
+        [JsonPropertyName("seq"), JsonIgnoreDefault]
+        [Display(Name = "Sequence Order"), Required]
+        public short Sequence { get; set; } = 0;
 
         /// <summary>
         /// Tag Values
         /// </summary>
         /// <remarks>Only used for enum (picklist) tags</remarks>
         [JsonPropertyName("values"), JsonIgnoreEmptyCollection]
-        public IDictionary<string, string> Values { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, ItemTagValueDto> Values { get; set; } = new Dictionary<string, ItemTagValueDto>();
 
         /// <summary>
         /// Generic metadata which is a simple key-value dictionary
@@ -79,26 +86,9 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemTypeTagDto()
+        public ItemTagDto()
         {
             //nothing
-        }
-
-        /// <summary>
-        /// Easy lookup
-        /// </summary>
-        /// <param name="key">Tag Key</param>
-        /// <returns></returns>
-        public string this[string key]
-        {
-            get
-            {
-                if (!this.Values.ContainsKey(key)) { return string.Empty; }
-
-                return this.Values[key];
-            }
-
-            set { this.Values[key] = value; }
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// ================================================================================
 // <copyright file="ItemType.cs" company="Starlight Software Co">
-//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
 // ================================================================================
@@ -25,7 +25,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         [JsonPropertyName("description"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         [Display(Name = "Description"), StringLength(50, MinimumLength = 1)]
-        public string? Description { get; set; } = string.Empty;
+        public string? Description { get; set; }
 
         /// <summary>
         /// Tags
@@ -54,6 +54,14 @@ namespace ThingsLibrary.Schema.Library
         public ItemTypeDto()
         {
             //nothing
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ItemTypeDto(string name)
+        {
+            this.Name = name;
         }
     }
 }

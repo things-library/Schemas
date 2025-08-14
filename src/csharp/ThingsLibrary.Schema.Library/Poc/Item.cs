@@ -5,9 +5,7 @@
 // </copyright>
 // ================================================================================
 
-using ThingsLibrary.Schema.Library.Base;
-
-namespace ThingsLibrary.Schema.Library
+namespace ThingsLibrary.Schema.Library.Poc
 {
     /// <summary>
     /// Item Schema - Flexible
@@ -43,7 +41,7 @@ namespace ThingsLibrary.Schema.Library
         /// <remarks>Value must be a string or array of strings</remarks>
         [JsonPropertyName("tags"), JsonIgnoreEmptyCollection]
         [Display(Name = "Tags")]
-        public IDictionary<string, string> Tags { get; set; } = new Dictionary<string, string>();
+        public IDictionary<string, ItemTagDto> Tags { get; set; } = new Dictionary<string, ItemTagDto>();
 
         /// <summary>
         /// Attachments
@@ -75,10 +73,9 @@ namespace ThingsLibrary.Schema.Library
         {
             ArgumentException.ThrowIfNullOrEmpty(type);
             ArgumentException.ThrowIfNullOrEmpty(name);
-            if (!SchemaBase.IsKeyValid(type)) { throw new ArgumentException($"Invalid type '{type}"); }
 
-            this.Type = type;
-            this.Name = name;
+            Type = type;
+            Name = name;
         }
 
 
@@ -93,10 +90,8 @@ namespace ThingsLibrary.Schema.Library
             {
                 if(!this.Tags.ContainsKey(key)) { return string.Empty; }
 
-                return this.Tags[key];
+                return this.Tags[key].Value;
             }
-            
-            set { this.Tags[key] = value; }
         }
     }
 }

@@ -26,10 +26,10 @@
           "maxLength": 20
         },
 
-        "weight": {
+        "seq": {
           "type": "integer",
-          "title": "Order (Weight)",
-          "description": "Where in the list should this item show up priority wise.  Higher the number, higher on the list it will appear.",
+          "title": "Sequence Order",
+          "description": "Where in the list should this item show up priority wise.  Higher the number, lower on the list it will appear.",
           "default": 0
         },
 
@@ -79,10 +79,10 @@
           "title": "Description"
         },
 
-        "weight": {
+        "seq": {
           "type": "integer",
-          "title": "Order (Weight)",
-          "description": "Where in the list should this item show up priority wise.  Higher the number, higher on the list it will appear.",
+          "title": "Sequence Order",
+          "description": "Where in the list should this item show up priority wise.  Higher the number, lower on the list it will appear.",
           "default": 0
         },
 

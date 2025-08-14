@@ -1,9 +1,11 @@
 ﻿// ================================================================================
 // <copyright file="ItemTypeAttachment.cs" company="Starlight Software Co">
-//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
 // ================================================================================
+
+using ThingsLibrary.Schema.Library.Base;
 
 namespace ThingsLibrary.Schema.Library
 {
@@ -38,9 +40,9 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Where in the list should this item show up priority wise?
         /// </summary>        
-        [JsonPropertyName("weight"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
-        [Display(Name = "Display Order (Weight)"), Required]
-        public short Weight { get; set; } = 0;
+        [JsonPropertyName("seq"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        [Display(Name = "Sequence Order"), Required]
+        public short Sequence { get; set; } = 0;
 
         /// <summary>
         /// Generic metadata which is a simple key-value dictionary
@@ -55,6 +57,22 @@ namespace ThingsLibrary.Schema.Library
         public ItemTypeAttachmentDto()
         {
             //nothing
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="type">Item Type</param>
+        /// <param name="name">Name</param>
+        /// <exception cref="ArgumentException">When invalid type</exception>
+        public ItemTypeAttachmentDto(string type, string name)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(type);
+            ArgumentException.ThrowIfNullOrEmpty(name);
+            if (!SchemaBase.IsKeyValid(type)) { throw new ArgumentException($"Invalid type '{type}"); }
+
+            this.Type = type;
+            this.Name = name;
         }
     }
 }

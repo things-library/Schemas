@@ -1,7 +1,7 @@
 ﻿// ================================================================================
 // <copyright file="SchemaBase.cs" company="Starlight Software Co">
-//    Copyright (c) Starlight Software Co. All rights reserved.
-//    Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
+//    Copyright (c) 2025 Starlight Software Co. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
 // ================================================================================
 
@@ -224,6 +224,97 @@ namespace ThingsLibrary.Schema.Library.Base
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Try to detect what data type exists based on key or value
+        /// </summary>
+        /// <param name="key">Key</param>
+        /// <param name="value">Value</param>
+        /// <returns></returns>
+        public static string DetectDataType(string key, string value)
+        {
+            // KEY matches?
+            if (key.EndsWith("url")) { return ItemTagDataTypesDto.Url; }
+            if (key.EndsWith("phone")) { return ItemTagDataTypesDto.Phone; }
+            if (key == "notes" || key == "details") { return ItemTagDataTypesDto.TextArea; }
+
+            // VALUE matches
+            value = value.Trim();
+
+            // Unknown, assume string
+            if (string.IsNullOrEmpty(value)) { return ItemTagDataTypesDto.String; }
+
+            // HTML
+            if (Regex.IsMatch(value, @"<[^>]+>"))
+            {
+                return ItemTagDataTypesDto.Html;
+            }
+
+            // Boolean
+            if (value.Equals("true", StringComparison.OrdinalIgnoreCase) ||
+                value.Equals("false", StringComparison.OrdinalIgnoreCase))
+            {
+                return ItemTagDataTypesDto.Boolean;
+            }
+
+            // DateTime
+            if (DateTime.TryParseExact(value, "yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            {
+                return ItemTagDataTypesDto.DateTime;
+            }
+
+            // Date
+            if (DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            {
+                return ItemTagDataTypesDto.Date;
+            }
+
+            //// Time
+            //if (TimeSpan.TryParseExact(input, "c", CultureInfo.InvariantCulture, out _))
+            //{
+            //    return ItemTagDataTypesDto.Time;
+            //}
+
+            // Email
+            if (Regex.IsMatch(value, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                return ItemTagDataTypesDto.Email;
+            }
+
+            // URL
+            if (value.StartsWith("http", StringComparison.OrdinalIgnoreCase) 
+                && Uri.TryCreate(value, UriKind.Absolute, out _))                
+            {
+                return ItemTagDataTypesDto.Url;
+            }
+
+            // Phone  ??
+            if (Regex.IsMatch(value, @"^[+]{1}(?:[0-9\-\(\)\/\.]\s?){6, 15}[0-9]{1}$"))
+            {
+                return ItemTagDataTypesDto.Phone;
+            }
+
+            // Integer
+            if (int.TryParse(value, out _))
+            {
+                return ItemTagDataTypesDto.Integer;
+            }
+
+            // Decimal
+            if (value.Contains(".") && decimal.TryParse(value, out _))
+            {
+                return ItemTagDataTypesDto.Decimal;
+            }
+
+            // Text - multi-line textbox?
+            if (value.Contains('\n'))
+            {
+                return ItemTagDataTypesDto.TextArea;
+            }
+
+            // Default
+            return ItemTagDataTypesDto.String;
         }
 
         /// <summary>
