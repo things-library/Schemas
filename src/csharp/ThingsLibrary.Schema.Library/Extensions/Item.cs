@@ -9,6 +9,20 @@ namespace ThingsLibrary.Schema.Library.Extensions
 {
     public static class ItemExtensions
     {
+        public static bool IsInvalid(this RootItemDto itemDto)
+        {
+            // quick and dirty check
+            if (string.IsNullOrEmpty(itemDto.Key)) { return false; }
+
+            return ((ItemDto)itemDto).IsInvalid();
+        }
+
+        public static bool IsInvalid(this ItemDto itemDto)
+        {
+            // quick and dirty check
+            return string.IsNullOrEmpty(itemDto.Type) || string.IsNullOrEmpty(itemDto.Name);
+        }
+
         /// <summary>
         /// Get all types in use for the item recursive
         /// </summary>
@@ -52,11 +66,39 @@ namespace ThingsLibrary.Schema.Library.Extensions
         /// <param name="item">Item</param>
         /// <param name="tagName">Tag Name</param>
         /// <param name="value">Value</param>
-        public static void SetTagIfNotNull(this ItemDto item, string tagName, double? value)
+        public static void SetTagIfNotNull(this ItemDto item, string tagName, double? value, short? precision = null)
         {
             if (value == null) { return; }
 
-            item.Tags[tagName] = $"{value}";
+            if (precision != null)
+            {
+                var format = $"D{precision}";
+                item.Tags[tagName] = string.Format($"{{0:{format}}}", value);
+            }
+            else
+            {
+                item.Tags[tagName] = $"{value}";
+            }            
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTagIfNotNull(this ItemDto item, string tagName, decimal? value, int? precision = null)
+        {
+            if (value == null) { return; }
+
+            if (precision != null)
+            {                
+                item.Tags[tagName] = $"{decimal.Round(value.Value, precision.Value)}";
+            }
+            else
+            {
+                item.Tags[tagName] = $"{value}";
+            }
         }
 
         /// <summary>
@@ -70,6 +112,19 @@ namespace ThingsLibrary.Schema.Library.Extensions
             if (value == null) { return; }
 
             item.Tags[tagName] = $"{value:O}";
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTagIfNotNull(this ItemDto item, string tagName, DateOnly? value)
+        {
+            if (value == null) { return; }
+
+            item.Tags[tagName] = $"{value:yyyy-MM-dd}";
         }
 
         /// <summary>
