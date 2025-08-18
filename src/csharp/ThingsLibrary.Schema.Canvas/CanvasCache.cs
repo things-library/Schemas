@@ -17,6 +17,12 @@ namespace ThingsLibrary.Schema.Canvas
         public string? ConnectionStringVariable { get; init; }
 
         /// <summary>
+        /// Server Host
+        /// </summary>
+        [Display(Name = "Server Host"), StringLength(200)]
+        public string? Host { get; init; }
+
+        /// <summary>
         /// Listing of items and their cache policy (timespan).  TimeSpan is serialized 00:00:00
         /// </summary>        
         [Display(Name = "Cache Policies"), StringLength(200), Required]
