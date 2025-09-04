@@ -12,7 +12,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         public static bool IsInvalid(this RootItemDto itemDto)
         {
             // quick and dirty check
-            if (string.IsNullOrEmpty(itemDto.Key)) { return false; }
+            if (!string.IsNullOrEmpty(itemDto.Key)) { return false; }
 
             return ((ItemDto)itemDto).IsInvalid();
         }
@@ -47,6 +47,8 @@ namespace ThingsLibrary.Schema.Library.Extensions
             }            
         }
 
+        #region --- SetTagIfNotNull ---
+
         /// <summary>
         /// Set the tag if the provided value is set
         /// </summary>
@@ -66,6 +68,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         /// <param name="item">Item</param>
         /// <param name="tagName">Tag Name</param>
         /// <param name="value">Value</param>
+        /// <param name="precision">Precision for formatting the value (optional)</param>
         public static void SetTagIfNotNull(this ItemDto item, string tagName, double? value, short? precision = null)
         {
             if (value == null) { return; }
@@ -78,7 +81,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
             else
             {
                 item.Tags[tagName] = $"{value}";
-            }            
+            }
         }
 
         /// <summary>
@@ -92,7 +95,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
             if (value == null) { return; }
 
             if (precision != null)
-            {                
+            {
                 item.Tags[tagName] = $"{decimal.Round(value.Value, precision.Value)}";
             }
             else
@@ -140,6 +143,130 @@ namespace ThingsLibrary.Schema.Library.Extensions
             item.Tags[tagName] = $"{value}";
         }
 
+        #endregion
+
+        #region --- SetTag ---
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTag(this ItemDto item, string tagName, string? value)
+        {
+            if (value == null || string.IsNullOrEmpty(value)) 
+            {
+                item.Tags[tagName] = string.Empty;
+                return;
+            }
+
+            item.Tags[tagName] = value;
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        /// <param name="precision">Precision for formatting the value (optional)</param>
+        public static void SetTag(this ItemDto item, string tagName, double? value, short? precision = null)
+        {
+            if (value == null) 
+            {
+                item.Tags[tagName] = string.Empty;
+                return;
+            }
+
+            if (precision != null)
+            {
+                var format = $"D{precision}";
+                item.Tags[tagName] = string.Format($"{{0:{format}}}", value);
+            }
+            else
+            {
+                item.Tags[tagName] = $"{value}";
+            }
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTag(this ItemDto item, string tagName, decimal? value, int? precision = null)
+        {
+            if (value == null) 
+            {
+                item.Tags[tagName] = string.Empty;
+                return;
+            }
+
+            if (precision != null)
+            {
+                item.Tags[tagName] = $"{decimal.Round(value.Value, precision.Value)}";
+            }
+            else
+            {
+                item.Tags[tagName] = $"{value}";
+            }
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTag(this ItemDto item, string tagName, DateTime? value)
+        {
+            if (value == null) 
+            {
+                item.Tags[tagName] = string.Empty;
+                return;
+            }
+
+            item.Tags[tagName] = $"{value:O}";
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTag(this ItemDto item, string tagName, DateOnly? value)
+        {
+            if (value == null)
+            {
+                item.Tags[tagName] = string.Empty;
+                return;
+            }
+
+            item.Tags[tagName] = $"{value:yyyy-MM-dd}";
+        }
+
+        /// <summary>
+        /// Set the tag if the provided value is set
+        /// </summary>
+        /// <param name="item">Item</param>
+        /// <param name="tagName">Tag Name</param>
+        /// <param name="value">Value</param>
+        public static void SetTag(this ItemDto item, string tagName, Guid? value)
+        {
+            if (value == null) 
+            {
+                item.Tags[tagName] = string.Empty;
+                return;
+            }
+
+            item.Tags[tagName] = $"{value}";
+        }
+
+        #endregion
+
         /// <summary>
         /// Set the metadata value if provided value is set
         /// </summary>
@@ -148,7 +275,11 @@ namespace ThingsLibrary.Schema.Library.Extensions
         /// <param name="value"></param>
         public static void SetMetaIfNotNull(this ItemDto item, string tagName, string? value)
         {
-            if (value == null || string.IsNullOrEmpty(value)) { return; }
+            if (value == null || string.IsNullOrEmpty(value)) 
+            {
+                item.Tags[tagName] = string.Empty;
+                return;
+            }
 
             item.Meta[tagName] = value;
         }        

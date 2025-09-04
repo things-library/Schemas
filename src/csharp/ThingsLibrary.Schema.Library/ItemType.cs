@@ -8,7 +8,7 @@
 namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
-    /// Item type
+    /// Item type definition language
     /// </summary>    
     [DebuggerDisplay("{Name}")]
     public class ItemTypeDto

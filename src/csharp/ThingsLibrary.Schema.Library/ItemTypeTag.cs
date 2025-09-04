@@ -33,7 +33,7 @@ namespace ThingsLibrary.Schema.Library
             ItemTagDataTypesDto.DateTime,
             ItemTagDataTypesDto.Duration,
             ItemTagDataTypesDto.Email,
-            ItemTagDataTypesDto.Enum,
+            ItemTagDataTypesDto.Enum,   //pick-list
             ItemTagDataTypesDto.Html,
             ItemTagDataTypesDto.Password,
             ItemTagDataTypesDto.Phone,
@@ -65,7 +65,7 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Tag Values
         /// </summary>
-        /// <remarks>Only used for enum (picklist) tags</remarks>
+        /// <remarks>Only used for enum (pick-list) tags</remarks>
         [JsonPropertyName("values"), JsonIgnoreEmptyCollection]
         public IDictionary<string, string> Values { get; set; } = new Dictionary<string, string>();
 

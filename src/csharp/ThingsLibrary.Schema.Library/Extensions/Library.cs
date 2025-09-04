@@ -219,6 +219,9 @@ namespace ThingsLibrary.Schema.Library.Extensions
 
         public static void GenerateDefinitions(this RootItemDto library)
         {
+            // nothing to do?
+            if (library.Type == "library" && library.Items.Count == 0) { return; }
+
             library.GenerateDefinitions(library);  // start at the top node
         }
 
@@ -265,6 +268,96 @@ namespace ThingsLibrary.Schema.Library.Extensions
             foreach (var childItem in currentItem.Items.Values)
             {
                 GenerateDefinitions(library, childItem);
+            }
+        }
+
+
+        /// <summary>
+        /// Apply the full definitions from the authorative source to another library
+        /// </summary>
+        /// <param name="library">Target Library</param>
+        /// <param name="definitionLibrary">Library containing the type definitions</param>
+        public static void ApplyDefinitions(this RootItemDto library, RootItemDto definitionLibrary)
+        {
+            foreach (var itemType in library.Types)
+            {
+                var definitionType = definitionLibrary.Types.FirstOrDefault(x => x.Key == itemType.Key).Value;
+                if (definitionType == null) { continue; }
+
+                itemType.Value.ApplyDefinition(definitionType);
+            }
+        }
+
+        public static Dictionary<string, ItemTypeDto> GetDefinitionUsage(this RootItemDto library, ItemDto currentItem)
+        {
+            var usedTypes = new Dictionary<string, ItemTypeDto>();
+
+            PopulateDefinitionUsage(library, usedTypes, currentItem);
+
+            return usedTypes;
+        }
+
+        private static void PopulateDefinitionUsage(RootItemDto library, Dictionary<string, ItemTypeDto> usedTypes, ItemDto currentItem)
+        {
+            // don't include 'library' type as it is just a container
+            if (currentItem.Type != "library")
+            {
+                // get the matching item type
+                ItemTypeDto itemType;
+                if (usedTypes.ContainsKey(currentItem.Type))
+                {
+                    itemType = usedTypes[currentItem.Type];
+                }
+                else
+                {
+                    itemType = new ItemTypeDto
+                    {
+                        Name = currentItem.Type.ToDisplayName()
+                    };
+                    usedTypes.Add(currentItem.Type, itemType);
+                }
+
+                // figure out the current position / sequence number
+                short seq = 0;
+                if (itemType.Tags.Count > 0) { seq = itemType.Tags.Select(x => x.Value.Sequence ?? 0).Max(); }
+
+                foreach (var tag in currentItem.Tags)
+                {
+                    ItemTypeTagDto itemTypeTag;
+
+                    // we already have something?  NEXT!
+                    if (itemType.Tags.ContainsKey(tag.Key))
+                    {
+                        itemTypeTag = itemType.Tags[currentItem.Type];
+                    }
+                    else
+                    {
+                        itemTypeTag = new ItemTypeTagDto
+                        {
+                            Type = SchemaBase.DetectDataType(tag.Key, tag.Value), //TODO: try to determine type based on pattern matching
+
+                            Name = tag.Key.ToDisplayName(),
+                            Sequence = ++seq
+                        };
+                        itemType.Tags.Add(tag.Key, itemTypeTag);
+                    }
+
+                    // if picklist create list of unique keys
+                    if(itemTypeTag.Type == ItemTagDataTypesDto.Enum)
+                    {
+                        var key = SchemaBase.GenerateKey(tag.Value);
+                        if (!itemTypeTag.Values.ContainsKey(key))
+                        {
+                            itemTypeTag.Values.Add(key, tag.Value);
+                        }
+                    }
+                }
+            }
+
+            // Recurse the child items
+            foreach (var childItem in currentItem.Items.Values)
+            {
+                PopulateDefinitionUsage(library, usedTypes, childItem);
             }
         }
     }
