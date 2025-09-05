@@ -39,7 +39,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         [ValidateCollectionItems]
         [JsonPropertyName("items"), JsonIgnoreEmptyCollection]
-        public List<ItemTypeAttachmentDto> Items { get; set; } = new List<ItemTypeAttachmentDto>();
+        public IDictionary<string, ItemTypeAttachmentDto> Items { get; set; } = new Dictionary<string, ItemTypeAttachmentDto>();
 
         /// <summary>
         /// Generic metadata which is a simple key-value dictionary

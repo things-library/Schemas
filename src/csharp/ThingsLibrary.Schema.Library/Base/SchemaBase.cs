@@ -21,7 +21,7 @@ namespace ThingsLibrary.Schema.Library.Base
         /// <summary>
         /// Version string
         /// </summary>
-        public const string CurrentVersion = "1.1";
+        public const string CurrentVersion = "1.2";
 
         /// <summary>
         /// Current Version
