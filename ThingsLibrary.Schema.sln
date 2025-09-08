@@ -14,8 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B0E6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schemas", "Schemas", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
-		docs\1.1\canvas.json = docs\1.1\canvas.json
-		docs\1.1\library.json = docs\1.1\library.json
+		docs\latest\canvas.json = docs\latest\canvas.json
+		docs\latest\library.json = docs\latest\library.json
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThingsLibrary.Schema.Library", "src\csharp\ThingsLibrary.Schema.Library\ThingsLibrary.Schema.Library.csproj", "{71A5543B-E153-1EF7-8889-2BE90568E540}"

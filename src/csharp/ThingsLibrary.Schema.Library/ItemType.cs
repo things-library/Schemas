@@ -63,6 +63,30 @@ namespace ThingsLibrary.Schema.Library
         {
             this.Name = name;
         }
+
+        /// <summary>
+        /// Easy lookup and empty string lookup
+        /// </summary>
+        /// <param name="key">Dictionary Key</param>
+        /// <param name="isMeta">If the value from metadata</param>
+        /// <returns></returns>
+        public string this[string key, bool isMeta = false]
+        {
+            get
+            {
+                if (isMeta)
+                {
+                    if (!this.Meta.ContainsKey(key)) { return string.Empty; }
+
+                    return this.Meta[key];
+                }
+                else
+                {
+                    if (!this.Tags.ContainsKey(key)) { return string.Empty; }
+
+                    return this.Tags[key].Name;
+                }
+            }            
+        }
     }
 }
-

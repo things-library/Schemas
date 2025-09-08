@@ -5,6 +5,8 @@
 // </copyright>
 // ================================================================================
 
+using System.Security.Cryptography;
+
 namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
@@ -49,6 +51,37 @@ namespace ThingsLibrary.Schema.Library
             ArgumentException.ThrowIfNullOrEmpty(key);
 
             this.Key = key;
+        }
+
+
+        /// <summary>
+        /// Get the name from the definitions doc
+        /// </summary>        
+        /// <param name="typeKey">Type</param>        
+        /// <returns></returns>
+        public string GetTypeName(string typeKey)
+        {
+            var type = this.Types.FirstOrDefault(x => x.Key == typeKey);
+            if (type.Value == null) { return string.Empty; }
+
+            return type.Value.Name;
+        }
+
+        /// <summary>
+        /// Get the tag name from the definitions doc
+        /// </summary>        
+        /// <param name="typeKey">Type</param>
+        /// <param name="tagKey">Tag Name</param>
+        /// <returns></returns>
+        public string GetTypeTagName(string typeKey, string tagKey)
+        {
+            var type = this.Types.FirstOrDefault(x => x.Key == typeKey);
+            if (type.Value == null) { return string.Empty; }
+
+            var typeTag = type.Value.Tags.FirstOrDefault(x => x.Key == tagKey);
+            if (typeTag.Value == null) { return string.Empty; }
+
+            return typeTag.Value.Name;
         }
     }
 }

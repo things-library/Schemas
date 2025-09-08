@@ -17,12 +17,11 @@ namespace ThingsLibrary.Schema.Library.Extensions
         {
             var results = new RootItemDto
             {
-                Type = "results",
+                Type = "library",
 
                 Key = "results",
-                Name = "Results",
+                Name = "Results"                
             };
-
             // just incase there is a duplicate which is possible for a listing
             foreach (var item in list)
             {
@@ -222,7 +221,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
             // nothing to do?
             if (library.Type == "library" && library.Items.Count == 0) { return; }
 
-            library.GenerateDefinitions(library);  // start at the top node
+            library.GenerateDefinitions(library);  // start at the top node            
         }
 
         private static void GenerateDefinitions(this RootItemDto library, ItemDto currentItem)
@@ -284,7 +283,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 var definitionType = definitionLibrary.Types.FirstOrDefault(x => x.Key == itemType.Key).Value;
                 if (definitionType == null) { continue; }
 
-                itemType.Value.ApplyDefinition(definitionType);
+                itemType.Value.ApplyDefinition(definitionType);                
             }
         }
 

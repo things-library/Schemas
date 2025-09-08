@@ -88,17 +88,26 @@ namespace ThingsLibrary.Schema.Library
         /// Easy lookup
         /// </summary>
         /// <param name="key">Tag Key</param>
+        /// <param name="isMeta">If value is in metadata</param>
         /// <returns></returns>
-        public string this[string key]
+        public string this[string key, bool isMeta]
         {
             get
             {
-                if (!this.Values.ContainsKey(key)) { return string.Empty; }
+                if (isMeta)
+                {
+                    if (!this.Meta.ContainsKey(key)) { return string.Empty; }
 
-                return this.Values[key];
+                    return this.Meta[key];
+                }
+                else
+                {
+                    if (!this.Values.ContainsKey(key)) { return string.Empty; }
+
+                    return this.Values[key];
+                }
+                
             }
-
-            set { this.Values[key] = value; }
         }
     }
 }
