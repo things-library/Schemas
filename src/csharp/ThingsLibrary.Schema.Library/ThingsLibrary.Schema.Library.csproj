@@ -25,16 +25,10 @@
 		<Compile Remove="ItemTag.cs" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Update="Schemas\1.0\item.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
+	<ItemGroup>		
 		<None Update="Schemas\1.2\library.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-		<None Update="Schemas\1.1\library.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
+		</None>		
 	</ItemGroup>
 
 </Project>

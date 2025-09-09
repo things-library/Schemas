@@ -1,6 +1,6 @@
 ﻿// ================================================================================
 // <copyright file="TestBase.cs" company="Starlight Software Co">
-//    Copyright (c) Starlight Software Co. All rights reserved.
+//    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
 // ================================================================================
@@ -12,7 +12,7 @@ namespace ThingsLibrary.Schema.Canvas.Tests.Base
     [TestClass, ExcludeFromCodeCoverage]
     public class TestBase
     {
-        public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.1/library.json");
+        public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.2/library.json");
         
         public static JsonSchema CanvasSchemaDoc { get; set; } = JsonSchema.Empty;
         

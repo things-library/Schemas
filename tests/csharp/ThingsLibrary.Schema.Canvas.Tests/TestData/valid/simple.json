@@ -93,7 +93,7 @@
   "Api": {
     "Endpoints": {
       "BaseSchema": {
-        "BaseUrl": "https://schema.thingslibrary.io/1.1/library.json"
+        "BaseUrl": "https://schema.thingslibrary.io/1.2/library.json"
       },
       "CanvasSchema": {
         "BaseUrl": "https://schema.thingslibrary.io/1.1/canvas.json"

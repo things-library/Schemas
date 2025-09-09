@@ -12,7 +12,7 @@ namespace ThingsLibrary.Schema.Library.Tests.Base
     [TestClass, ExcludeFromCodeCoverage]
     public class TestBase
     {
-        public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.1/library.json");
+        public static Uri ItemSchemaUrl { get; } = new Uri("https://schema.thingslibrary.io/1.2/library.json");
         
         public static JsonSchema ItemSchemaDoc { get; set; } = JsonSchema.Empty;
 
@@ -23,14 +23,15 @@ namespace ThingsLibrary.Schema.Library.Tests.Base
         {
             // https://docs.json-everything.net/schema/examples/external-schemas/
 
-            var schemaFolderPath = "Schemas/1.1";
+            var schemaFolderPath = "Schemas/1.2";
             Assert.IsTrue(Directory.Exists(schemaFolderPath));
 
-            string schemaFilePath = "Schemas/1.1/library.json";
+            string schemaFilePath = "Schemas/1.2/library.json";
             Assert.IsTrue(File.Exists(schemaFilePath));
 
             Console.WriteLine("Loading Item Schemas...");
             TestBase.ItemSchemaDoc = JsonSchema.FromFile(schemaFilePath);
+            //var json = File.ReadAllText(schemaFilePath);
 
             SchemaRegistry.Global.Register(TestBase.ItemSchemaDoc);
         }

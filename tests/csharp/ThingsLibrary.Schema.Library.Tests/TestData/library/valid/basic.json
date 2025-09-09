@@ -1,5 +1,5 @@
 {
-	"$schema": "https://schema.thingslibrary.io/1.1/library.json",
+	"$schema": "https://schema.thingslibrary.io/1.2/library.json",
 
 	"types": {
 		"test_type": {
@@ -23,12 +23,12 @@
 					}
 				}
 			},
-			"items": [
-				{
-					"type": "test_type_2",
-					"name": "Test Child Type"
-				}
-			]
+      "items": {
+        "test_type_2": {          
+          "name": "Test Child Type",
+					"type": "test_type"					
+        }
+      }			
 		},
 		"test_type_2": {
 			"name": "Test Type 2",
