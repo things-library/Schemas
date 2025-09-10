@@ -21,13 +21,6 @@ namespace ThingsLibrary.Schema.Library
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Description
-        /// </summary>
-        [JsonPropertyName("description"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [Display(Name = "Description"), StringLength(50, MinimumLength = 1)]
-        public string? Description { get; set; }
-
-        /// <summary>
         /// Tags
         /// </summary>
         [ValidateCollectionItems]

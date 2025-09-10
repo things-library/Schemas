@@ -5,6 +5,8 @@
 // </copyright>
 // ================================================================================
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ThingsLibrary.Schema.Library
 {
     /// <summary>
@@ -59,7 +61,7 @@ namespace ThingsLibrary.Schema.Library
         /// Position (1 = top)
         /// </summary>        
         [JsonPropertyName("seq"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [Display(Name = "Display Order (Sequence)"), Required]
+        [Display(Name = "Display Order (Sequence)")]
         public short? Sequence { get; set; }
 
         /// <summary>

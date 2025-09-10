@@ -29,14 +29,7 @@ namespace ThingsLibrary.Schema.Library
         [JsonPropertyName("name")]
         [Display(Name = "Name"), StringLength(50, MinimumLength = 1), Required]
         public string Name { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Description
-        /// </summary>
-        [JsonPropertyName("description"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [Display(Name = "Description"), StringLength(50, MinimumLength = 1)]
-        public string? Description { get; set; } = string.Empty;
-
+        
         /// <summary>
         /// Where in the list should this item show up priority wise?
         /// </summary>        

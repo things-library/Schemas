@@ -14,8 +14,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         public static void ApplyDefinition(this ItemTypeDto itemType, ItemTypeDto definitionType)
         {
             itemType.Name = itemType.Name;
-            itemType.Description = itemType.Description;
-
+            
             // replace the tags with their definitions
             foreach (var tagKey in itemType.Tags.Keys)
             {
