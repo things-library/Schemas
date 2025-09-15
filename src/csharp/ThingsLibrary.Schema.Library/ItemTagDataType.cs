@@ -103,6 +103,139 @@ namespace ThingsLibrary.Schema.Library
             return ItemTagDataTypesDto.String;
         }
 
+        public static bool IsValid(string typeKey, string value)
+        {
+            if (string.IsNullOrEmpty(value)) { return true; }   //empty means we want to remove the tag
+
+            switch (typeKey)
+            {
+                case ItemTagDataTypesDto.Boolean:
+                    {
+                        return bool.TryParse(value, out _);
+                    }
+
+                case ItemTagDataTypesDto.Currency:
+                    {
+                        // Accepts decimal with optional currency symbol, but here just check decimal
+                        return decimal.TryParse(value, out _);
+                    }
+
+                case ItemTagDataTypesDto.Date:
+                    {
+                        return DateOnly.TryParse(value, out _);
+                    }
+
+                case ItemTagDataTypesDto.DateTime:
+                    {
+                        return System.DateTime.TryParse(value, out _);
+                    }
+
+                case ItemTagDataTypesDto.Duration:
+                    {
+                        // Accepts TimeSpan format (e.g., "01:30:00")
+                        return TimeSpan.TryParse(value, out _);
+                    }
+
+                case ItemTagDataTypesDto.Email:
+                    {
+                        // Simple email validation
+                        try
+                        {
+                            var addr = new System.Net.Mail.MailAddress(value);
+                            return addr.Address == value;
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    }
+
+                case ItemTagDataTypesDto.Enum: // pick-list
+                    {                        
+                        return true;
+                    }
+
+                case ItemTagDataTypesDto.Html:
+                    {                        
+                        return true;
+                    }
+
+                case ItemTagDataTypesDto.Password:
+                    {                        
+                        return true;
+                    }
+
+                case ItemTagDataTypesDto.Phone:
+                    {
+                        // Simple phone validation: digits, spaces, dashes, parentheses, plus
+                        return System.Text.RegularExpressions.Regex.IsMatch(value, @"^[\d\s\-\+\(\)]+$");
+                    }
+
+                case ItemTagDataTypesDto.String:
+                    {
+                        return true;
+                    }
+
+                case ItemTagDataTypesDto.TextArea:
+                    {
+                        return true;
+                    }
+
+                case ItemTagDataTypesDto.Time:
+                    {
+                        return TimeOnly.TryParse(value, out _);
+                    }
+
+                case ItemTagDataTypesDto.Url:
+                    {
+                        return Uri.TryCreate(value, UriKind.Absolute, out var uriResult)
+                               && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+                    }
+
+                case ItemTagDataTypesDto.Decimal:
+                    {
+                        return decimal.TryParse(value, out _);
+                    }
+
+                case ItemTagDataTypesDto.Integer:
+                    {
+                        return int.TryParse(value, out _);
+                    }
+
+                case ItemTagDataTypesDto.DecimalRange:
+                    {
+                        // Accepts two decimals separated by a comma or dash
+                        var decimalParts = value?.Split(new[] { ',', '-' }, StringSplitOptions.RemoveEmptyEntries);
+                        return decimalParts?.Length == 2
+                            && decimal.TryParse(decimalParts[0], out _)
+                            && decimal.TryParse(decimalParts[1], out _);
+                    }
+
+                case ItemTagDataTypesDto.IntegerRange:
+                    {
+                        // Accepts two integers separated by a comma or dash
+                        var intParts = value?.Split(new[] { ',', '-' }, StringSplitOptions.RemoveEmptyEntries);
+                        return intParts?.Length == 2
+                            && int.TryParse(intParts[0], out _)
+                            && int.TryParse(intParts[1], out _);
+                    }
+
+                case ItemTagDataTypesDto.CurrencyRange:
+                    {
+                        // Accepts two decimals separated by a comma or dash
+                        var currencyParts = value?.Split(new[] { ',', '-' }, StringSplitOptions.RemoveEmptyEntries);
+                        return currencyParts?.Length == 2
+                            && decimal.TryParse(currencyParts[0], out _)
+                            && decimal.TryParse(currencyParts[1], out _);
+                    }
+
+                default:
+                    {
+                        return false;
+                    }
+            }            
+        }
+
         /// <summary>
         /// Get Tag data type based on generic object
         /// </summary>

@@ -61,6 +61,8 @@ namespace ThingsLibrary.Schema.Library.Base
 
         public static string GenerateKey(string value)
         {
+            value = value.Trim();
+
             if (string.IsNullOrEmpty(value)) { return value; }
 
             string pattern = "^[a-z0-9_-]+$";
@@ -240,6 +242,7 @@ namespace ThingsLibrary.Schema.Library.Base
             if (key == "notes" || key == "details") { return ItemTagDataTypesDto.TextArea; }
 
             // VALUE matches
+            if (value == null) { return ItemTagDataTypesDto.String; }
             value = value.Trim();
 
             // Unknown, assume string

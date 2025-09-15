@@ -13,7 +13,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
     {
         public static void ApplyDefinition(this ItemTypeDto itemType, ItemTypeDto definitionType)
         {
-            itemType.Name = itemType.Name;
+            itemType.Name = definitionType.Name;
             
             // replace the tags with their definitions
             foreach (var tagKey in itemType.Tags.Keys)
@@ -24,9 +24,9 @@ namespace ThingsLibrary.Schema.Library.Extensions
             }
 
             // copy over the meta data (don't replace any already existing items)            
-            foreach (var tag in definitionType.Meta)
+            foreach (var definitionTag in definitionType.Meta)
             {
-                itemType.Meta[tag.Key] = tag.Value;
+                itemType.Meta[definitionTag.Key] = definitionTag.Value;
             }
         }
     }

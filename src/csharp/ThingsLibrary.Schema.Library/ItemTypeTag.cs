@@ -76,7 +76,13 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         [JsonPropertyName("meta"), JsonIgnoreEmptyCollection]
         public IDictionary<string, string> Meta { get; set; } = new Dictionary<string, string>();
+        
 
+        /// <summary>
+        /// HTML Input type field
+        /// </summary>
+        public string InputType => ItemTagDataTypesDto.Items[this.Type].InputType;
+        
 
         /// <summary>
         /// Constructor
