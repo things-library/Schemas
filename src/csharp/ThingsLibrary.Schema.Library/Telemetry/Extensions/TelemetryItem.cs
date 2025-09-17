@@ -1,5 +1,5 @@
 ﻿// ================================================================================
-// <copyright file="Checksum.cs" company="Starlight Software Co">
+// <copyright file="TelemetryItem.cs" company="Starlight Software Co">
 //    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
@@ -7,104 +7,28 @@
 
 using System.Text;
 
-namespace ThingsLibrary.Schema.Library.Telemetry
+namespace ThingsLibrary.Schema.Library.Telemetry.Extensions
 {
-    public static class ChecksumExtensions
+    public static class TelemExtensions
     {
-        /// <summary>
-        /// Append the checksum
-        /// </summary>
-        /// <param name="sentence"></param>
-        /// <remarks>Checksum based on the NMEA0183 checksum which is just a simple byte-by-byte XOR of all the bytes between $ and * signs exclusively.</remarks>
-        public static void AppendChecksum(this StringBuilder sentence)
-        {
-            // not the beginning of a sentence
-            if (sentence.Length == 0) { return; }
-            if (sentence[0] != '$') { return; }
-
-            //Start with first Item
-            int checksum = Convert.ToByte(sentence[1]);
-
-            // Loop through all chars to get a checksum
-            int i;
-            for (i = 2; i < sentence.Length; i++)
-            {
-                if (sentence[i] == '*') { break; }
-
-                // No. XOR the checksum with this character's value
-                checksum ^= Convert.ToByte(sentence[i]);
-            }
-
-            // no astrisk to mark the CRC check
-            if (i == sentence.Length)
-            {
-                sentence.Append("*");
-            }
-
-            // Return the checksum formatted as a two-character hexadecimal
-            sentence.Append(checksum.ToString("X2"));
-        }
-
-        /// <summary>
-        /// Calculate a checksum value based on the NMEA0183 style calculation
-        /// </summary>
-        /// <param name="sentence">Sentence</param>
-        /// <remarks>Checksum based on the NMEA0183 checksum which is just a simple byte-by-byte XOR of all the bytes between $ and * signs exclusively.</remarks>
-        /// <returns>Two character hexadecimal checksum value</returns>
-        public static string ToChecksum(this string sentence)
-        {
-            if (string.IsNullOrEmpty(sentence)) { return string.Empty; }
-
-            // not the beginning of a sentence
-            if (sentence[0] != '$') { return string.Empty; }
-
-            //Start with first Item
-            int checksum = Convert.ToByte(sentence[1]);
-
-            // Loop through all chars to get a checksum
-            for (int i = 2; i < sentence.Length; i++)
-            {
-                if (sentence[i] == '*') { break; }
-
-                // No. XOR the checksum with this character's value
-                checksum ^= Convert.ToByte(sentence[i]);
-            }
-
-            // Return the checksum formatted as a two-character hexadecimal
-            return checksum.ToString("X2");
-        }
-
-        /// <summary>
-        /// Validate that the checksum on the sentence is correct
-        /// </summary>
-        /// <param name="sentence"></param>
-        /// <returns></returns>
-        public static bool ValidateChecksum(this string sentence)
-        {
-            var checksum = sentence.ToChecksum();
-            if (string.IsNullOrEmpty(checksum)) { return false; }
-
-            return sentence.EndsWith(checksum);
-        }
-
         /// <summary>
         /// Convert a telemetry string into a Item object
         /// </summary>
         /// <param name="telemetrySentence"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public static TelemItemDto ToItem(this string telemetrySentence)
+        public static TelemetryItemDto ToTelemetryItem(this string telemetrySentence)
         {
             //  $1724387849602|PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
             //  $1724387850520|ET|r:1|q:2*33
             //  $PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
 
             ArgumentException.ThrowIfNullOrEmpty(telemetrySentence);
+            
+            if (telemetrySentence[0] != '$' || !telemetrySentence.Contains("*")) { throw new ArgumentException("Invalid telemetry sentence"); }
             if (!telemetrySentence.ValidateChecksum()) { throw new ArgumentException("Invalid checksum"); }
-            if (telemetrySentence[0] != '$') { throw new ArgumentException("Invalid telemetry sentence"); }
-
+            
             // create item
-
             var pos = telemetrySentence.LastIndexOf('*');
             if (pos < 0) { throw new ArgumentException("Unable to find end of telemetry sentence"); }
 
@@ -125,7 +49,7 @@ namespace ThingsLibrary.Schema.Library.Telemetry
                 i++;    //move to next field
             }
 
-            var item = new TelemItemDto()
+            var item = new TelemetryItemDto()
             {
                 Date = timestamp,
                 Type = parts[i]     // SENTENCE ID
@@ -148,7 +72,7 @@ namespace ThingsLibrary.Schema.Library.Telemetry
         /// </summary>
         /// <param name="telemetryItem">Telemetry Item</param>
         /// <returns></returns>
-        public static string ToTelemetrySentence(this TelemItemDto telemetryItem)
+        public static string ToTelemetrySentence(this TelemetryItemDto telemetryItem)
         {
             ArgumentNullException.ThrowIfNull(telemetryItem);
             //ArgumentNullException.ThrowIfNull(telemetryItem.Date);

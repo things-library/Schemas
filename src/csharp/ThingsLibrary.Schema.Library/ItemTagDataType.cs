@@ -51,19 +51,19 @@ namespace ThingsLibrary.Schema.Library
                 new() { Key = ItemTagDataTypesDto.Date,       Name = "Date Only",         Type = "string",  InputType = "date",          Format = "date"     },
                 new() { Key = ItemTagDataTypesDto.DateTime,   Name = "Date + Time",       Type = "string",  InputType = "datetime",      Format = "date-time"  },
                 new() { Key = ItemTagDataTypesDto.Duration,   Name = "Duration",          Type = "string",  InputType = "text",          Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Email,      Name = "Email",             Type = "string",  InputType = "email",         Format = "email"    },
-                new() { Key = ItemTagDataTypesDto.Enum,       Name = "Pick List",         Type = "string",  InputType = "text",          Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Email,      Name = "Email",             Type = "string",  InputType = "email",         Format = "email"    },                
                 new() { Key = ItemTagDataTypesDto.Html,       Name = "HTML",              Type = "string",  InputType = "text",          Format = ""         },
                 new() { Key = ItemTagDataTypesDto.Password,   Name = "Password",          Type = "string",  InputType = "text",          Format = ""         },
                 new() { Key = ItemTagDataTypesDto.Phone,      Name = "Phone Number",      Type = "string",  InputType = "tel",           Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Enum,       Name = "Pick List",         Type = "string",  InputType = "text",          Format = ""         },
                 new() { Key = ItemTagDataTypesDto.String,     Name = "String",            Type = "string",  InputType = "text",          Format = ""       },   //DEFAULT ASSUMED (Safe)
                 new() { Key = ItemTagDataTypesDto.TextArea,   Name = "Text (MultiLine)",  Type = "string",  InputType = "textarea",      Format = "textarea" },
                 new() { Key = ItemTagDataTypesDto.Time,       Name = "Time Only",         Type = "string",  InputType = "time",          Format = "time"     },
                 new() { Key = ItemTagDataTypesDto.Url,        Name = "Url",               Type = "string",  InputType = "url",           Format = "uri"      },
-                new() { Key = ItemTagDataTypesDto.Decimal,    Name = "Number (Decimals)", Type = "number",  InputType = "number",        Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Integer,    Name = "Number (Whole)",    Type = "integer", InputType = "number",        Format = ""         },
-                new() { Key = ItemTagDataTypesDto.DecimalRange, Name = "Number Range (Decimals)", Type = "number", InputType = "number",    Format = ""},
-                new() { Key = ItemTagDataTypesDto.IntegerRange,  Name = "Number Range (Whole)", Type = "integer", InputType = "number",   Format = "" },
+                new() { Key = ItemTagDataTypesDto.Decimal,    Name = "Decimal Number", Type = "number",  InputType = "number",        Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Integer,    Name = "Whole Number",    Type = "integer", InputType = "number",        Format = ""         },
+                new() { Key = ItemTagDataTypesDto.DecimalRange, Name = "Decimal Range", Type = "number", InputType = "number",    Format = ""},
+                new() { Key = ItemTagDataTypesDto.IntegerRange,  Name = "Whole Number Range", Type = "integer", InputType = "number",   Format = "" },
                 new() { Key = ItemTagDataTypesDto.CurrencyRange,  Name = "Currency Range", Type = "number", InputType = "number",   Format = "" }
             };
         }

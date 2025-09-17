@@ -22,6 +22,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 Key = "results",
                 Name = "Results"                
             };
+
             // just incase there is a duplicate which is possible for a listing
             foreach (var item in list)
             {

@@ -11,6 +11,12 @@ namespace ThingsLibrary.Schema.Library.Extensions
 {
     public static class ItemTypeExtensions
     {
+        public static bool IsInvalid(this ItemTypeDto itemTypeDto)
+        {
+            // quick and dirty check
+            return (string.IsNullOrEmpty(itemTypeDto.Name));
+        }
+
         public static void ApplyDefinition(this ItemTypeDto itemType, ItemTypeDto definitionType)
         {
             itemType.Name = definitionType.Name;

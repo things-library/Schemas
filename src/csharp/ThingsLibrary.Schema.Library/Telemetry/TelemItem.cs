@@ -5,19 +5,21 @@
 // </copyright>
 // ================================================================================
 
+using ThingsLibrary.Schema.Library.Telemetry.Extensions;
+
 namespace ThingsLibrary.Schema.Library.Telemetry
 {
     /// <summary>
     /// Item Schema - Flexible
     /// </summary>
     [DebuggerDisplay("Date: {Date}, Type: {Type})")]
-    public class TelemItemDto
+    public class TelemetryItemDto
     {           
         /// <summary>
         /// Date (If item is an 'event')
         /// </summary>
         /// <remarks>Designed for maintaining chronological listing</remarks>
-        [JsonPropertyName("date"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [JsonPropertyName("date")]
         public DateTimeOffset Date { get; set; }
                 
         /// <summary>
@@ -38,7 +40,7 @@ namespace ThingsLibrary.Schema.Library.Telemetry
         /// <summary>
         /// Constructor
         /// </summary>
-        public TelemItemDto()
+        public TelemetryItemDto()
         {
             //nothing
         }
