@@ -217,6 +217,10 @@ namespace ThingsLibrary.Schema.Library.Extensions
             return newTypeTag;
         }
 
+        /// <summary>
+        /// Generate all definitions based on what was actually used in the items list
+        /// </summary>
+        /// <param name="library">Library</param>
         public static void GenerateDefinitions(this RootItemDto library)
         {
             // nothing to do?
