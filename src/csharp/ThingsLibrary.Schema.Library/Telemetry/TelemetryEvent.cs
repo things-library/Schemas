@@ -1,5 +1,5 @@
 ﻿// ================================================================================
-// <copyright file="TelemItem.cs" company="Starlight Software Co">
+// <copyright file="TelemetryEvent.cs" company="Starlight Software Co">
 //    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
@@ -13,7 +13,7 @@ namespace ThingsLibrary.Schema.Library.Telemetry
     /// Item Schema - Flexible
     /// </summary>
     [DebuggerDisplay("Date: {Date}, Type: {Type})")]
-    public class TelemetryItemDto
+    public class TelemetryEventDto
     {           
         /// <summary>
         /// Date (If item is an 'event')
@@ -40,9 +40,42 @@ namespace ThingsLibrary.Schema.Library.Telemetry
         /// <summary>
         /// Constructor
         /// </summary>
-        public TelemetryItemDto()
+        public TelemetryEventDto()
         {
             //nothing
+        }
+
+        /// <summary>
+        /// Easy lookup and empty string lookup
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string? this[string key]
+        {
+            get
+            {
+                if (this.Tags.ContainsKey(key))
+                {
+                    return this.Tags[key];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            set
+            {
+                // just remove if it is null
+                if (value != null)
+                {
+                    this.Tags[key] = value;
+                }
+                else if (this.Tags.ContainsKey(key))
+                {
+                    this.Tags.Remove(key);
+                }
+            }
         }
 
         public override string ToString() => this.ToTelemetrySentence();

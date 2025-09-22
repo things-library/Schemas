@@ -47,6 +47,22 @@ namespace ThingsLibrary.Schema.Library.Extensions
             }            
         }
 
+
+        public static void Merge(this RootItemDto libraryDto, RootItemDto itemDto)
+        {
+            if(itemDto.Type != "library")
+            {
+                libraryDto.Items.Add(itemDto.Key, itemDto);
+            }
+            else
+            {
+                foreach(var childItemDto in itemDto.Items)
+                {
+                    libraryDto.Items.Add(childItemDto.Key, childItemDto.Value);
+                }
+            }
+        }
+
         #region --- SetTagIfNotNull ---
 
         /// <summary>

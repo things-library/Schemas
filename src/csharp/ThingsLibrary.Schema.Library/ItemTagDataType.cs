@@ -46,25 +46,25 @@ namespace ThingsLibrary.Schema.Library
         {
             return new List<ItemTagDataTypeDto>()
             {
-                new() { Key = ItemTagDataTypesDto.Boolean,    Name = "True / False",      Type = "boolean", InputType = "checkbox",      Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Currency,   Name = "Currency",          Type = "string",  InputType = "text",          Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Date,       Name = "Date Only",         Type = "string",  InputType = "date",          Format = "date"     },
-                new() { Key = ItemTagDataTypesDto.DateTime,   Name = "Date + Time",       Type = "string",  InputType = "datetime",      Format = "date-time"  },
-                new() { Key = ItemTagDataTypesDto.Duration,   Name = "Duration",          Type = "string",  InputType = "text",          Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Email,      Name = "Email",             Type = "string",  InputType = "email",         Format = "email"    },                
-                new() { Key = ItemTagDataTypesDto.Html,       Name = "HTML",              Type = "string",  InputType = "text",          Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Password,   Name = "Password",          Type = "string",  InputType = "text",          Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Phone,      Name = "Phone Number",      Type = "string",  InputType = "tel",           Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Enum,       Name = "Pick List",         Type = "string",  InputType = "text",          Format = ""         },
-                new() { Key = ItemTagDataTypesDto.String,     Name = "String",            Type = "string",  InputType = "text",          Format = ""       },   //DEFAULT ASSUMED (Safe)
-                new() { Key = ItemTagDataTypesDto.TextArea,   Name = "Text (MultiLine)",  Type = "string",  InputType = "textarea",      Format = "textarea" },
-                new() { Key = ItemTagDataTypesDto.Time,       Name = "Time Only",         Type = "string",  InputType = "time",          Format = "time"     },
-                new() { Key = ItemTagDataTypesDto.Url,        Name = "Url",               Type = "string",  InputType = "url",           Format = "uri"      },
-                new() { Key = ItemTagDataTypesDto.Decimal,    Name = "Decimal Number", Type = "number",  InputType = "number",        Format = ""         },
-                new() { Key = ItemTagDataTypesDto.Integer,    Name = "Whole Number",    Type = "integer", InputType = "number",        Format = ""         },
-                new() { Key = ItemTagDataTypesDto.DecimalRange, Name = "Decimal Range", Type = "number", InputType = "number",    Format = ""},
-                new() { Key = ItemTagDataTypesDto.IntegerRange,  Name = "Whole Number Range", Type = "integer", InputType = "number",   Format = "" },
-                new() { Key = ItemTagDataTypesDto.CurrencyRange,  Name = "Currency Range", Type = "number", InputType = "number",   Format = "" }
+                new() { Key = ItemTagDataTypesDto.Boolean,    Name = "True / False",      Type = "boolean", InputType = "checkbox",   Alignment = "center", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Currency,   Name = "Currency",          Type = "string",  InputType = "text",       Alignment = "left", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Date,       Name = "Date Only",         Type = "string",  InputType = "date",       Alignment = "left", Format = "date"     },
+                new() { Key = ItemTagDataTypesDto.DateTime,   Name = "Date + Time",       Type = "string",  InputType = "datetime",   Alignment = "left", Format = "date-time"  },
+                new() { Key = ItemTagDataTypesDto.Duration,   Name = "Duration",          Type = "string",  InputType = "text",       Alignment = "left", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Email,      Name = "Email",             Type = "string",  InputType = "email",      Alignment = "left", Format = "email"    },                
+                new() { Key = ItemTagDataTypesDto.Html,       Name = "HTML",              Type = "string",  InputType = "text",       Alignment = "left", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Password,   Name = "Password",          Type = "string",  InputType = "text",       Alignment = "left", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Phone,      Name = "Phone Number",      Type = "string",  InputType = "tel",        Alignment = "left", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Enum,       Name = "Pick List",         Type = "string",  InputType = "text",       Alignment = "left", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.String,     Name = "String",            Type = "string",  InputType = "text",       Alignment = "left", Format = ""       },   //DEFAULT ASSUMED (Safe)
+                new() { Key = ItemTagDataTypesDto.TextArea,   Name = "Text (MultiLine)",  Type = "string",  InputType = "textarea",   Alignment = "left", Format = "textarea" },
+                new() { Key = ItemTagDataTypesDto.Time,       Name = "Time Only",         Type = "string",  InputType = "time",       Alignment = "right", Format = "time"     },
+                new() { Key = ItemTagDataTypesDto.Url,        Name = "Url",               Type = "string",  InputType = "url",        Alignment = "left", Format = "uri"      },
+                new() { Key = ItemTagDataTypesDto.Decimal,    Name = "Decimal Number",    Type = "number",  InputType = "number",     Alignment = "right", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.Integer,    Name = "Whole Number",      Type = "integer", InputType = "number",     Alignment = "right", Format = ""         },
+                new() { Key = ItemTagDataTypesDto.DecimalRange,  Name = "Decimal Range",  Type = "number",  InputType = "number",     Alignment = "left", Format = ""},
+                new() { Key = ItemTagDataTypesDto.IntegerRange,  Name = "Whole Number Range", Type = "integer", InputType = "number", Alignment = "left", Format = "" },
+                new() { Key = ItemTagDataTypesDto.CurrencyRange, Name = "Currency Range", Type = "number", InputType = "number",      Alignment = "left", Format = "" }
             };
         }
 
@@ -282,12 +282,18 @@ namespace ThingsLibrary.Schema.Library
 
         [Display(Name = "Name"), StringLength(50, MinimumLength = 2), Required]
         public string Name { get; init; } = string.Empty;
-        
+
         /// <summary>
         /// Html Input Type
         /// </summary>
         [Display(Name = "Input Name"), StringLength(50), Required]
         public string InputType { get; init; } = string.Empty;
+
+        /// <summary>
+        /// Alignment (expected: left, center, right)
+        /// </summary>
+        [Display(Name = "List View Alignment"), StringLength(10), Required]
+        public string Alignment { get; init; } = string.Empty;
 
         /// <summary>
         /// JSON Schema 'type' field.. expected: string, number, integer, boolean

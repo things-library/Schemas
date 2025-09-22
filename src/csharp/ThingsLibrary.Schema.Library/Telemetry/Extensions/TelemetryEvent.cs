@@ -1,5 +1,5 @@
 ﻿// ================================================================================
-// <copyright file="TelemetryItem.cs" company="Starlight Software Co">
+// <copyright file="TelemetryEvent.cs" company="Starlight Software Co">
 //    Copyright (c) 2025 Starlight Software Co. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 // </copyright>
@@ -9,7 +9,7 @@ using System.Text;
 
 namespace ThingsLibrary.Schema.Library.Telemetry.Extensions
 {
-    public static class TelemExtensions
+    public static class TelemetryEventExtensions
     {
         /// <summary>
         /// Convert a telemetry string into a Item object
@@ -17,12 +17,11 @@ namespace ThingsLibrary.Schema.Library.Telemetry.Extensions
         /// <param name="telemetrySentence"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public static TelemetryItemDto ToTelemetryItem(this string telemetrySentence)
+        public static TelemetryEventDto ToTelemetryItem(this string telemetrySentence)
         {
             //  $1724387849602|PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
             //  $1724387850520|ET|r:1|q:2*33
-            //  $PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
-
+            
             ArgumentException.ThrowIfNullOrEmpty(telemetrySentence);
             
             if (telemetrySentence[0] != '$' || !telemetrySentence.Contains("*")) { throw new ArgumentException("Invalid telemetry sentence"); }
@@ -49,7 +48,7 @@ namespace ThingsLibrary.Schema.Library.Telemetry.Extensions
                 i++;    //move to next field
             }
 
-            var item = new TelemetryItemDto()
+            var item = new TelemetryEventDto()
             {
                 Date = timestamp,
                 Type = parts[i]     // SENTENCE ID
@@ -72,16 +71,14 @@ namespace ThingsLibrary.Schema.Library.Telemetry.Extensions
         /// </summary>
         /// <param name="telemetryItem">Telemetry Item</param>
         /// <returns></returns>
-        public static string ToTelemetrySentence(this TelemetryItemDto telemetryItem)
+        public static string ToTelemetrySentence(this TelemetryEventDto telemetryItem)
         {
-            ArgumentNullException.ThrowIfNull(telemetryItem);
-            //ArgumentNullException.ThrowIfNull(telemetryItem.Date);
+            ArgumentNullException.ThrowIfNull(telemetryItem);            
             ArgumentException.ThrowIfNullOrWhiteSpace(telemetryItem.Type);
 
             //EXAMPLES:
             //  $1724387849602|PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
-            //  $1724387850520|ET|r:1|q:2*33
-            //  $PA|r:1|s:143|p:PPE Mask|q:1|p:000*79
+            //  $1724387850520|ET|r:1|q:2*33            
 
             var sentence = new StringBuilder();
 

@@ -7,6 +7,7 @@
 
 using System.Text;
 using ThingsLibrary.Schema.Library.Telemetry;
+using ThingsLibrary.Schema.Library.Telemetry.Extensions;
 
 namespace ThingsLibrary.Schema.Library.Tests.Extensions
 {
@@ -46,7 +47,7 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
         {
             var sentence = "$1724380000000|PA|r:1|s:143|p:PPE Mask|q:1|pr:414*44";
 
-            var item = sentence.ToItem();
+            var item = sentence.ToTelemetryItem();
 
             // TIMESTAMP
             //1724380000000 = Friday, August 23, 2024 2:26:40 AM
@@ -75,7 +76,7 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
         [TestMethod]
         public void ToTelemetrySentence()
         {
-            var item = new TelemItemDto()
+            var item = new TelemetryEventDto()
             {
                 Type = "rmc",
                 Date = new DateTime(2024, 8, 21, 8, 15, 30, DateTimeKind.Utc)

@@ -225,8 +225,8 @@ namespace ThingsLibrary.Schema.Library.Extensions
         {
             // nothing to do?
             if (library.Type == "library" && library.Items.Count == 0) { return; }
-
-            library.GenerateDefinitions(library);  // start at the top node            
+            
+            library.GenerateDefinitions(library);  // start at the top node 
         }
 
         private static void GenerateDefinitions(this RootItemDto library, ItemDto currentItem)

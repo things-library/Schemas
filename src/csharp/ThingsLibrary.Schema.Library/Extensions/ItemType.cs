@@ -29,6 +29,10 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 itemType.Tags[tagKey] = definitionType.Tags[tagKey].Clone();
             }
 
+            // now that we have the sequence, reorder by it
+            itemType.Tags = itemType.Tags.OrderBy(x => x.Value.Sequence).ToDictionary();
+            itemType.Items = itemType.Items.OrderBy(x => x.Value.Sequence).ToDictionary();
+
             // copy over the meta data (don't replace any already existing items)            
             foreach (var definitionTag in definitionType.Meta)
             {
