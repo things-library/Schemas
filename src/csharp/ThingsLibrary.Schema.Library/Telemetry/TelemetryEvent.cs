@@ -46,6 +46,15 @@ namespace ThingsLibrary.Schema.Library.Telemetry
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public TelemetryEventDto(string type, DateTimeOffset eventDate)
+        {
+            this.Type = type;
+            this.Date = eventDate;
+        }
+
+        /// <summary>
         /// Easy lookup and empty string lookup
         /// </summary>
         /// <param name="key"></param>

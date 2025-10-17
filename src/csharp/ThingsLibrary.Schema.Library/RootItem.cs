@@ -5,7 +5,7 @@
 // </copyright>
 // ================================================================================
 
-using System.Security.Cryptography;
+using ThingsLibrary.Schema.Library.Interfaces;
 
 namespace ThingsLibrary.Schema.Library
 {
@@ -13,7 +13,7 @@ namespace ThingsLibrary.Schema.Library
     /// Root Item - Designed to be the serialized root
     /// </summary>
     [DebuggerDisplay("Name: {Name}, Type: {Type})")]
-    public class RootItemDto : ItemDto
+    public class RootItemDto : ItemDto, IRootItemDto
     {
         /// <summary>
         /// Json Schema Definition

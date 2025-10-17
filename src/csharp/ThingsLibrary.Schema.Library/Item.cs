@@ -6,6 +6,7 @@
 // ================================================================================
 
 using ThingsLibrary.Schema.Library.Base;
+using ThingsLibrary.Schema.Library.Interfaces;
 
 namespace ThingsLibrary.Schema.Library
 {
@@ -13,8 +14,8 @@ namespace ThingsLibrary.Schema.Library
     /// Item Schema - Flexible
     /// </summary>
     [DebuggerDisplay("Name: {Name}, Type: {Type})")]
-    public class ItemDto
-    {   
+    public class ItemDto : IItemDto
+    {
         /// <summary>
         /// Name
         /// </summary>
@@ -28,7 +29,7 @@ namespace ThingsLibrary.Schema.Library
         /// <remarks>Designed for maintaining chronological listing</remarks>
         [JsonPropertyName("date"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public DateTimeOffset? Date { get; set; }
-                
+
         /// <summary>
         /// Item Type - describes what type of item we are talking about.
         /// </summary>
