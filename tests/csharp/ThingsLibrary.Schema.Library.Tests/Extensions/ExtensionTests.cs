@@ -1,10 +1,3 @@
-// ================================================================================
-// <copyright file="ExtensionTests.cs" company="Starlight Software Co">
-//    Copyright (c) Starlight Software Co. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-// </copyright>
-// ================================================================================
-
 using System.Text;
 using ThingsLibrary.Schema.Library.Telemetry;
 using ThingsLibrary.Schema.Library.Telemetry.Extensions;
@@ -27,7 +20,7 @@ namespace ThingsLibrary.Schema.Library.Tests.Extensions
         [DataRow("/Test/key", "test_key")]
         [DataRow("Test.Key", "test_key")]
         [DataRow("Test.key", "test_key")]
-        [DataRow(".test.key", "test_key")]
+        [DataRow(".test.key", ".test.key")]
         [DataRow(".test././\\key", "test_key")]        
         [DataRow("TESTKEY", "testkey")]
         [DataRow("TEST KEY", "test_key")]

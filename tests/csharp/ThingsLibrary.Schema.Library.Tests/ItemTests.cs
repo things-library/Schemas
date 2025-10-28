@@ -107,7 +107,7 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             Assert.AreEqual("Test Value", item.Tags["test_1"]);
                         
-            Assert.ThrowsException<KeyNotFoundException>(() => item.Tags["INVALID_KEY"]);
+            Assert.Throws<KeyNotFoundException>(() => item.Tags["INVALID_KEY"]);
         }
         
 
