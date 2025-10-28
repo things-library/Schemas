@@ -43,12 +43,12 @@ namespace ThingsLibrary.Schema.Library.Base
         /// <summary>
         /// Pattern to use for all non-root library keys
         /// </summary>
-        public const string KeyPattern = "^[a-z0-9_-]{1,50}$";
+        public const string KeyPattern = "^[a-z0-9_.-]{1,50}$";
 
         /// <summary>
         /// Key pattern description
         /// </summary>
-        public const string KeyPatternErrorMessage = "Invalid Characters.  Please only use lowercase letters, numeric, underscores and hyphens.";
+        public const string KeyPatternErrorMessage = "Invalid Characters.  Please only use lowercase letters, numeric, underscores, periods and hyphens.";
 
         #region --- Keys ---
 
@@ -65,7 +65,7 @@ namespace ThingsLibrary.Schema.Library.Base
 
             if (string.IsNullOrEmpty(value)) { return value; }
 
-            string pattern = "^[a-z0-9_-]+$";
+            string pattern = "^[a-z0-9_.-]+$";
             var regex = new Regex(pattern);
 
             value = value
@@ -86,15 +86,9 @@ namespace ThingsLibrary.Schema.Library.Base
             return string.Join('_', key.ToString().Split('_', StringSplitOptions.RemoveEmptyEntries));
         }
                 
-        public static bool IsKeyValid(string key)
-        {
-            return IsKeyValid(key, SchemaBase.KeyPattern);
-        }
-
-        public static bool IsKeyValid(string key, string keyPattern)
-        {
-            return Regex.IsMatch(key, keyPattern);
-        }
+        public static bool IsKeyValid(string key) => IsKeyValid(key, SchemaBase.KeyPattern);
+        
+        public static bool IsKeyValid(string key, string keyPattern) => Regex.IsMatch(key, keyPattern);
 
 
         /// <summary>
