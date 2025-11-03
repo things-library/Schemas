@@ -93,6 +93,15 @@ namespace ThingsLibrary.Schema.Library
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public ItemTypeTagDto(string type, string name)
+        {
+            this.Type = type;
+            this.Name = name;            
+        }
+
+        /// <summary>
         /// Easy lookup
         /// </summary>
         /// <param name="key">Tag Key</param>

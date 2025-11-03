@@ -254,17 +254,17 @@ namespace ThingsLibrary.Schema.Library.Base
             {
                 return ItemTagDataTypesDto.Boolean;
             }
-
-            // DateTime
-            if (DateTime.TryParseExact(value, "yyyy-MM-ddTHH:mm:ss.fffffff", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
-            {
-                return ItemTagDataTypesDto.DateTime;
-            }
-
+            
             // Date
             if (DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
             {
                 return ItemTagDataTypesDto.Date;
+            }
+
+            // DateTime
+            if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+            {
+                return ItemTagDataTypesDto.DateTime;
             }
 
             //// Time
