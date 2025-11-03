@@ -63,7 +63,7 @@ namespace ThingsLibrary.Schema.Library.Telemetry.Extensions
                 item.Tags.Add(parts[i].Substring(0, pos), parts[i].Substring(pos + 1));
             }
 
-            item.Tags["ts"] = timestamp.ToString("O"); // add ISO 8601 timestamp
+            //item.Tags["ts"] = timestamp.ToString("O"); // add ISO 8601 timestamp
 
             return item;
         }
