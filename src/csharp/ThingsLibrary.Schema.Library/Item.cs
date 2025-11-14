@@ -89,19 +89,19 @@ namespace ThingsLibrary.Schema.Library
         /// <param name="key">Dictionary Key</param>
         /// <param name="isMeta">If the value from metadata</param>
         /// <returns></returns>
-        public string this[string key, bool isMeta = false]
+        public string? this[string key, bool isMeta = false]
         {
             get
             {
                 if (isMeta)
                 {
-                    if (!this.Meta.ContainsKey(key)) { return string.Empty; }
+                    if (!this.Meta.ContainsKey(key)) { return null; }
 
                     return this.Meta[key];
                 }
                 else
                 {
-                    if (!this.Tags.ContainsKey(key)) { return string.Empty; }
+                    if (!this.Tags.ContainsKey(key)) { return null; }
 
                     return this.Tags[key];
                 }
