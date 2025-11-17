@@ -17,6 +17,6 @@ namespace ThingsLibrary.Schema.Library.Interfaces
 
         public IDictionary<string, string> Tags { get; set; }
 
-        public string this[string key, bool isMeta = false] { get; }
+        public string? this[string key, bool isMeta = false] { get; }
     }
 }

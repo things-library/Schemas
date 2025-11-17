@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.thingslibrary.io/1.2/telemetry.json",
+  "$comment": "Telemetry events are the base data object of the telemetry schema.",
+
+  "$defs": {
+    "event-type-tag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+
+        "type": {
+          "type": "string",
+          "title": "Data Type",
+          "enum": [ "boolean", "currency", "date", "date_time", "duration", "email", "enum", "html", "password", "phone", "string", "text", "time", "url", "decimal", "int", "decimal_range", "int_range" ]
+        },
+
+        "units": {
+          "type": "string",
+          "title": "Unit Symbol",
+          "maxLength": 20
+        },
+
+        "scale": {
+          "type": "integer",
+          "title": "Scale Factor",
+          "dscription": "A scale factor to apply to the value so decimal points are not transmitted.  For example, a scale of 2 means the value should be multiplied by 10^2 (100).",
+          "minimum": 0,
+          "maximum": 10          
+        },
+
+        "values": {
+          "type": "object",
+          "title": "Values",
+          "patternProperties": {
+            "^[a-z0-9_.-]{1,50}$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [ "name", "type" ]
+    },
+    
+    "event-type": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "minLength": 1,
+          "maxLength": 50
+        },
+        
+        "tags": {
+          "type": "object",
+          "title": "Attributes",
+          "patternProperties": {
+            "^[a-z0-9_.-]{1,50}$": {
+              "$ref": "#/$defs/event-type-tag"
+            }
+          },
+          "additionalProperties": false
+        },
+                
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [ "name" ]
+    },
+
+    "event": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "title": "Date",
+          "format": "date-time"
+        },
+       
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "minLength": 1,
+          "maxLength": 50,
+          "pattern": "^[a-z0-9_.-]+$"
+        },
+
+        "tags": {
+          "type": "object",
+          "title": "Tags",
+          "patternProperties": {
+            "^[a-z0-9_-]{1,50}$": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }        
+      },
+      "required": [ "type", "date" ]
+    },
+
+    "telemetry": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "title": "Schema Document Uri",
+          "format": "uri-reference",
+          "pattern": "^https:\\/\\/schema\\.thingslibrary\\.io\\/\\d+\\.\\d\\/telemetry\\.json$"
+        },       
+
+        "types": {
+          "type": "object",
+          "title": "Item Types",
+          "patternProperties": {
+            "^[a-z0-9_.-]{1,50}$": {
+              "$ref": "#/$defs/event-type"
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "events": {
+          "type": "array",
+          "title": "Telemetry Events",
+          "items": {
+            "$ref": "#/$defs/event"            
+          }
+        },
+
+        "meta": {
+          "type": "object",
+          "title": "Metadata",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [ "events" ]
+    }
+
+  },
+
+  "$ref": "#/$defs/telemetry"
+}

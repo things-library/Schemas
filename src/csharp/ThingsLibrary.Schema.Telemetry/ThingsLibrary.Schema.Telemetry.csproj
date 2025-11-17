@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>ThingsLibrary.Schema.Telemetry</PackageId>
+		<PackageDescription>Things Library telemetry schema library.</PackageDescription>
+
+		<ProductName>ThingsLibrary.Schema.Telemetry</ProductName>
+		<Title>Things Library Telemetry Schema Library</Title>
+		<Description>This is the common base schema library for telemetry.</Description>
+
+		<Authors>Mark Lanning</Authors>
+		<Company>Starlight Software Co.</Company>
+
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/things-library/Schemas</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Update="Schemas\1.2\telemetry.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>
