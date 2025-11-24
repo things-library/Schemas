@@ -5,6 +5,7 @@
 // </copyright>
 // ================================================================================
 
+using System.Diagnostics.CodeAnalysis;
 using ThingsLibrary.Schema.Library.Base;
 using ThingsLibrary.Schema.Library.Interfaces;
 
@@ -105,6 +106,35 @@ namespace ThingsLibrary.Schema.Library
 
                     return this.Tags[key];
                 }
+            }
+        }
+
+        public bool TryGetItem(string key, [MaybeNullWhen(false)] out ItemDto item)
+        {
+            var keyPath = key.Split('/');
+
+            // nested item
+            if(this.Items.TryGetValue(keyPath[0], out var currentItem))
+            {
+                // end of key path
+                if (keyPath.Length == 1)
+                {
+                    item = currentItem;
+                    return true;
+                }
+                else
+                {
+                    var remainingKey = string.Join('/', keyPath.Skip(1));
+
+                    // recurse to find the item
+                    return currentItem.TryGetItem(remainingKey, out item);
+                }
+            }
+            else
+            {
+                // unable to find at this branch level
+                item = null;
+                return false;
             }
         }
     }

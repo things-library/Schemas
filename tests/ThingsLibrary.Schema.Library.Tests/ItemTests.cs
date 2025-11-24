@@ -160,6 +160,32 @@ namespace ThingsLibrary.Schema.Library.Tests
 
             item.Tags.Clear();
             Assert.AreEqual(0, item.Tags.Count);
-        }       
+        }
+
+
+        [TestMethod]
+        public void TreeSearch()
+        {
+            var root = new RootItemDto(type: "root", name: "Root", key: "root");
+            
+            var child1 = new RootItemDto(type: "child", name: "Child 1", key: "child_1");
+
+            root.Items["child_1"] = child1;
+            var grandChild1 = new RootItemDto(type: "grand_child", name: "Grand Child 1", key: "grand_child_1");
+            child1.Items["grand_child_1"] = grandChild1;
+
+            var child2 = new RootItemDto(type: "child", name: "Child 2", key: "child_2");
+            root.Items["child_2"] = child2;
+            var grandChild2 = new RootItemDto(type: "grand_child", name: "Grand Child 2", key: "grand_child_2");
+            child2.Items["grand_child_2"] = grandChild2;
+
+                        
+            Assert.IsTrue(root.TryGetItem("child_1", out _));
+            Assert.IsTrue(root.TryGetItem("child_1/grand_child_1", out _));
+
+            Assert.IsFalse(root.TryGetItem("not_real_key", out _));
+            Assert.IsFalse(root.TryGetItem("child_1/not_real_key", out _));
+            Assert.IsFalse(root.TryGetItem("child_1/grand_child_1/not_real_key", out _));            
+        }
     }
 }
