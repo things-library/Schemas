@@ -18,6 +18,5 @@ The **library schema** is designed to be a robust schema to hold many items that
 
 The latest schema documents are always found in the **/latest** folder but within the document it will refer to the actual version it represents:
 
-* [Item Schema](item-schema.md)
 * [Library Schema](library-schema.md)
 * [Telemetry / Logging](telemetry.md)
