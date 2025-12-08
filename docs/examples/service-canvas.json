@@ -1,213 +1,198 @@
 {
     "$schema": "https://schema.thingslibrary.io/1.0/item.json",
 
-    "type": "service_canvas",
-    "key": "ThingsLibrary.Services.Identity.Development",
-    "name": "Identity Service (Development)",
-
-    "attributes": {
-        "namespace": "ThingsLibrary.Services.Identity",
-        "description": "This is the main API service for Data Locker",
-        "group": "ThingsLibrary",
-
-        "host": "https://devaccount.thingslibrary.io",
-        "environment": "Development",
-        "project_url": null,
-
-        "type": "canvas_auth",
-        "name": "Microsoft EntraID",
+    "type": "$canvas",
+    "name": "Testing Services API",
+    "tags": {
+        "namespace": "TestServices.Api",
+        "group": "Test Services",
+        "environment": "Production",
+        "host": "https://api.test.com"
     },
 
-    "attachments": {
+    "items": {
         "capabilities": {
-            "type": "canvas_capabilities",
-            "name": "Service Capabilities",
-
-            "attributes": {
-                "health_checks": true,
-                "swagger": false,
-                "controllers": true,
-                "http_redirect": true,
-                "compression": true,
-
-                "razor": true,
-                "blazor_server": false,
-                "static_files": true
+            "type": "capabilities",
+            "name": "Capabilities",
+            "tags": {
+                "healthChecks": "true",
+                "openApi": "false",
+                "controllers": "true",
+                "httpRedirection": "true",
+                "responseCompression": "true",
+                "razorPages": "true",
+                "serverSideBlazor": "false",
+                "staticFiles": "true"
             }
         },
-
-        "api": {
-            "type": "canvas_api",
-            "name": "API Integrations",
-
-            "attachments": {
-                "keycloak_admin": {
-                    "type": "canvas_api_endpoint",
-                    "name": "Keycload Admin Service",
-
-                    "attributes": {
-                        "base_url": "https://account.thingslibrary.io/admin/realms/library"
+        "owner": {
+            "type": "contact",
+            "name": "Contact",
+            "tags": {
+                "name": "Tester McTesterson",
+                "email": "test@test.com",
+                "company": "Testing Group LLC"
+            }
+        },
+        "authentication": {
+            "type": "authentication",
+            "name": "Authentication",
+            "tags": {
+                "login_url": "/account/login",
+                "logout_url": "/account/logout",
+                "access_denied_url": "/error/401"
+            },
+            "items": {  
+                "azure_ad": {
+                "type": "azure_ad",
+                "name": "Azure AD Service",
+                "tags": {
+                    "authority": "https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/v2.0",
+                    "domain": "testing.onmicrosoft.com",
+                    "client_id": "00000000-0000-0000-0000-000000000000",                    
+                    "scopes": "openid",                                          
+                    "callback_path": "/signin-oidc"
+                }
+                },
+                "jwt": {
+                    "type": "jwt",
+                    "name": "External JWT",
+                    "tags": {                            
+                        "authority": "https://signodeconnectusers.ciamlogin.com/00000000-0000-0000-0000-000000000000/v2.0",
+                        "issuers": "https://sts.windows.net/00000000-0000-0000-0000-000000000000/|https://sts.windows.net/00000000-0000-0000-0000-000000000000/",
+                        "audience": "00000003-0000-0000-c000-000000000000",                            
+                        "name_claim_type": "name",
+                        "role_claim_type": "roles",
+                        "disable_validation": "true",
+                        "show_validation_errors": "true"
                     }
                 },
-                "product_service": {
-                    "type": "canvas_api_endpoint",
-                    "name": "Product Service",
-
-                    "attributes": {
-                        "base_url": "https://products.thingslibrary.io"
+                "graph_api": {
+                    "type": "ms_graph",
+                    "name": "MS Graph API",
+                    "tags": {
+                        "tenant_id": "00000000-0000-0000-0000-000000000000",
+                        "tenant_domain": "signodeconnectusers.onmicrosoft.com",
+                        "client_id": "00000000-0000-0000-0000-000000000000",                        
+                        "app_object_id": "00000000-0000-0000-0000-000000000000"
                     }
                 }
             }
         },
-        "auth": {
-            "type": "canvas_auth",
-            "name": "Microsoft EntraID",
+        "authorization": {
+            "type": "authorization",
+            "name": "Authorization Policy",
+            "items": {
+                "roles": { 
+                    "type": "roles",
+                    "Name": "Application Roles",
+                    "items": {
+                        "testing.app": {
+                            "type": "role",
+                            "name": "Testing Services App",
+                            "tags": {
+                                "description": "Enables access to the Testing Services application"
+                            },
+                            "items": {
+                                "00000000-0000-0000-0000-000000000000": {
+                                    "type": "app_role",
+                                    "name": "SC Testing Service"
+                                },
 
-            "attributes": {
-                "logout_url": "/account/logout",
-                "login_url": "/account/login",
-                "access_denied_url": "/error/401",
-
-                "roles": [
-                    "Developer",
-                    "SystemManager",
-                    "ServiceManager",
-                    "UserManager",
-                    "User"
-                ]
-            },
-
-            "attachments": {
-                "openid": {
-                    "type": "canvas_auth_openid",
-                    "name": "OpenID",
-
-                    "attributes": {
-                        "authority": "https://account.thingslibrary.io/realms/library",
-                        "clientId": "portal",
-                        "client_secret_variable": "ClientSecret",
-                        "scope": [ "openid", "offline_access" ]
-                    }
-                },
-
-                "jwt": {
-                    "type": "canvas_auth_jwt",
-                    "name": "JWT",
-
-                    "attributes": {
-                        "authority": "https://account.thingslibrary.io/realms/library",
-                        "issuer": "https://account.thingslibrary.io/realms/library",
-                        "audience": "portal",
-
-                        "claim_name": "name",
-                        "claim_role": "roles",
-
-                        "validation_disabled": true,
-                        "validation_show_errors": true
-                    }
-                },
-
-                "cookie": {
-                    "type": "canvas_auth_cookie",
-                    "name": "Cookies",
-
-                    "attributes": {
-                        "name": "CookieAuth",
-                        "path": "/",
-                        "domain": null,
-                        "ttl": 480
-                    }
-                },
-
-                "policies": {
-                    "type": "canvas_auth_policies",
-                    "name": "Auth Policies",
-                    "attachments": {
-                        "user_manager": {
-                            "type": "canvas_auth_policy",
-                            "name": "User Manager Policy",
-                            "attributes": {
-                                "roles": [ "UserManager", "Developer" ]
+                                "00000000-0000-0000-0000-000000000001": {
+                                    "type": "security_group",
+                                    "name": "PKG sg-Signode-All-d"
+                                }
                             }
                         },
-                        "user": {
-                            "type": "canvas_auth_policy",
-                            "name": "User Policy",
-                            "attributes": {
-                                "roles": [ "Developer", "SystemManager", "UserManager", "User" ]
+                        "impersonate": {
+                            "type": "role",
+                            "name": "Impersonate",
+                            "tags": {
+                                "description": "Enables an employee administrator to limit their current access so it matches what a specific user would see."
+                            },
+                            "items": {
+                                "00000000-0000-0000-0000-000000000002": {
+                                    "type": "app_role",
+                                    "name": "Impersonate"
+                                },
+                                "00000000-0000-0000-0000-000000000003": {
+                                    "type": "security_group",
+                                    "name": "test-D365CE-PROD (dynamic)"
+                                },
+                                "00000000-0000-0000-0000-000000000004": {
+                                    "type": "security_group",
+                                    "name": "test-D365CE-PROD (manual)"
+                                },
+
+                                "00000000-0000-0000-0000-000000000005": {
+                                    "type": "security_group",
+                                    "name": "test-All-d"
+                                }
                             }
                         }
                     }
                 }
             }
         },
-        "cache": {
-            "key": "cache",
-            "type": "canvas_cache",
-            "name": "Cache",
-
-            "attributes": {
-                "connection_key": "ServiceCache",
-                "default_ttl": "00:03:00"
-            },
-
-            "attachments": {
-                "audit_user": {
-                    "type": "canvas_cache_policy",
-                    "name": "Audit User Polcy",
-
-                    "attributes": {
-                        "ttl": "00:10:00"
+        "notifications": {
+            "type": "notification",
+            "name": "Notifications",
+            "items": {
+                "email": {
+                    "type": "email",
+                    "name": "Email Notifications",
+                    "tags": {
+                        "address_from": "DoNotReply@00000000-0000-0000-0000-000000000000.azurecomm.net",
+                        "connection_string_variable": "Notifications"
                     }
                 },
-
-                "library": {
-                    "type": "canvas_cache_policy",
-                    "name": "Library Cache",
-
-                    "attributes": {
-                        "ttl": "00:10:00"
-                    }
-                },
-
-                "oidc_config": {
-                    "type": "canvas_cache_policy",
-                    "name": "OIDC Config Cache",
-
-                    "attributes": {
-                        "ttl": "03:00:00"
+                "sms": {
+                    "type": "sms",
+                    "name": "SMS Notifications",
+                    "tags": {
+                        "address_from": "+18775555555",
+                        "connection_string_variable": "Notifications"
                     }
                 }
             }
         },
-        "contact": {
-            "attributes": {
-                "company": "Starlight Software Co.",
-                "department": "",
-                "email": "mark@lannings.org"
-            },
-            "name": "Mark Lanning",
-            "type": "canvas_contact"
-        },
-        "database": {
-            "type": "canvas_database",
-            "name": "Cache",
-
-            "attributes": {
-                "connection_key": "ServiceDatabase",
-                "connection_type": "Postgres"
+        "databases": {
+            "type": "databases",
+            "name": "Databases",
+            "items": {
+                "cosmos": {
+                    "type": "database_cosmos",
+                    "name": "Azure Cosmos DB",
+                    "tags": {
+                        "database_name": "connected-services",                            
+                        "connection_string_variable": "EntityDatabase"
+                    }
+                },
+                "fabric": {
+                    "type": "database_fabric",
+                    "name": "D365 CE Database",
+                    "tags": {
+                        "database_name": "",                            
+                        "connection_string_variable": "ServiceDatabase"
+                    }
+                }
             }
         },
-
-        "keyvault": {
-            "type": "canvas_keyvault",
-            "name": "Azure Key Vault",
-
-            "attributes": {
-                "base_url": "https://iqt-production.vault.azure.net",
-                "connection": "ServiceDatabase",
-                "connection_type": "AzureKeyVault",
-                "key_prefix": "dev"
+        "caching": {
+            "type": "cache_cosmos",
+            "name": "Azure Cache for REDIS",
+            "tags": {                    
+                "database_name": "connected-services",
+                "container_name": "cache",                    
+                "connection_string_variable": "EntityDatabase"
+            }
+        },
+        "services": {
+            "type": "services",
+            "name": "Services",
+            "items": {
+                
             }
         }
     }
