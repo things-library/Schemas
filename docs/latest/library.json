@@ -71,7 +71,12 @@
           "title": "Name",
           "minLength": 1,
           "maxLength": 50
-        },        
+        },
+
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
 
         "seq": {
           "type": "integer",
@@ -100,6 +105,11 @@
           "title": "Name",
           "minLength": 1,
           "maxLength": 50
+        },
+
+        "description": {
+          "type": "string",
+          "title": "Description"
         },
 
         "tags": {

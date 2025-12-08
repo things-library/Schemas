@@ -50,7 +50,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
 
         public static void Merge(this RootItemDto libraryDto, RootItemDto itemDto)
         {
-            if(itemDto.Type != "library")
+            if(itemDto.Type != Constants.TYPE_LIBRARY_KEY)
             {
                 libraryDto.Items.Add(itemDto.Key, itemDto);
             }

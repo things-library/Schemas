@@ -46,6 +46,18 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Constructor
         /// </summary>
+        public RootItemDto(string key, ItemDto itemDto) : base(itemDto.Type, itemDto.Name, itemDto.Date)
+        {
+            this.Key = key;
+            
+            this.Tags = itemDto.Tags;
+            this.Items = itemDto.Items;
+            this.Meta = itemDto.Meta;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RootItemDto(string type, string name, string key) : base(type, name)
         {
             ArgumentException.ThrowIfNullOrEmpty(key);

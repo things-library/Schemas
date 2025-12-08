@@ -20,6 +20,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         public static void ApplyDefinition(this ItemTypeDto itemType, ItemTypeDto definitionType)
         {
             itemType.Name = definitionType.Name;
+            itemType.Description = definitionType.Description;
             
             // replace the tags with their definitions
             foreach (var tagKey in itemType.Tags.Keys)

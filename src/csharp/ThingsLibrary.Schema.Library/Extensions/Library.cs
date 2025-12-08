@@ -11,15 +11,16 @@ namespace ThingsLibrary.Schema.Library.Extensions
 {
     public static class LibraryExtensions
     {
-        public static string DefaultLanguageCode { get; set; } = "en-US";
+        public static string LANGUAGE_CODE_DEFAULT { get; set; } = "en";
+        
 
         public static RootItemDto ToResultsDto(this List<RootItemDto> list)
         {
             var results = new RootItemDto
             {
-                Type = "library",
+                Type = Constants.TYPE_LIBRARY_KEY,
 
-                Key = "results",
+                Key = "$results",
                 Name = "Results"                
             };
 
@@ -101,7 +102,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
             }
 
             // if existing library, add the items of that library not the library itself
-            if(item.Type == "library")
+            if(item.Type == Constants.TYPE_LIBRARY_KEY)
             {
                 foreach(var childItem in item.Items)
                 {
@@ -137,55 +138,98 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 // does the definitions have the type key?
                 if (definitions.Types.TryGetValue(libraryType.Key, out var definitionType))
                 {
+                    libraryType.Value.SetLanguageName(languageCode, definitionType);
+                    libraryType.Value.SetLanguageDescription(languageCode, definitionType);
+
                     // we only want to add definition to the tags that are in use
-                    foreach(var libraryTypeTag in libraryType.Value.Tags)
+                    foreach (var libraryTypeTagKey in libraryType.Value.Tags.Select(x => x.Key))
                     {
                         // does the definition type have this tag key?
-                        if(definitionType.Tags.TryGetValue(libraryTypeTag.Key, out var definitionTypeTag))
+                        if(definitionType.Tags.TryGetValue(libraryTypeTagKey, out var definitionTypeTag))
                         {
-                            libraryType.Value.Tags[libraryTypeTag.Key] = definitionTypeTag.Clone(languageCode); //replace the existing tag
+                            libraryType.Value.Tags[libraryTypeTagKey] = definitionTypeTag.Clone(languageCode); //replace the existing tag
                         }
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// Sets the name / units fields to the metadata version for the provided language, clearing metadata after
-        /// </summary>
-        /// <param name="itemType">Item Type</param>
-        /// <param name="languageCode">Language Code (ie: en, en-US, en-UK, de, fr, es)</param>
-        private static void SetLanguage(this ItemTypeDto itemType, string languageCode)
+        private static void SetLanguageName(this ItemTypeDto itemType, string languageCode, ItemTypeDto definitionType)
         {
             // nothing to do? 
-            if (languageCode == LibraryExtensions.DefaultLanguageCode) { return; }
+            if (languageCode == LibraryExtensions.LANGUAGE_CODE_DEFAULT) { return; }
 
             // find the translation if exists
-            if (itemType.Meta.ContainsKey($"name_{languageCode}"))
+            if (definitionType.Meta.ContainsKey($"$name_{languageCode}"))
             {
-                itemType.Name = itemType.Meta[$"name_{languageCode}"];
+                itemType.Name = definitionType.Meta[$"$name_{languageCode}"];
             }
-            else if (languageCode.Contains('-')) // see if there is a region code attached and just match on root language
+            else if (languageCode.Contains('-'))    // see if there is a region code attached and just match on root language
             {
                 languageCode = languageCode.Split('-')[0];
-                if (itemType.Meta.ContainsKey($"name_{languageCode}"))
+                if (definitionType.Meta.ContainsKey($"$name_{languageCode}"))
                 {
-                    itemType.Name = itemType.Meta[$"name_{languageCode}"];
+                    itemType.Name = definitionType.Meta[$"$name_{languageCode}"];
                 }
             }
+        }
 
-            // set all the tags to the specified language
-            foreach (var tag in itemType.Tags.Values)
+        private static void SetLanguageDescription(this ItemTypeDto itemType, string languageCode, ItemTypeDto definitionType)
+        {
+            // nothing to do? 
+            if (languageCode == LibraryExtensions.LANGUAGE_CODE_DEFAULT) { return; }
+
+            // find the translation if exists
+            if (definitionType.Meta.ContainsKey($"$description_{languageCode}"))
             {
-                tag.SetLanguage("name", languageCode);
-                tag.SetLanguage("units", languageCode);
+                itemType.Description = definitionType.Meta[$"$description_{languageCode}"];
+            }
+            else if (languageCode.Contains('-'))    // see if there is a region code attached and just match on root language
+            {
+                languageCode = languageCode.Split('-')[0];
+                if (definitionType.Meta.ContainsKey($"$description_{languageCode}"))
+                {
+                    itemType.Description = definitionType.Meta[$"$description_{languageCode}"];
+                }
             }
         }
+
+        ///// <summary>
+        ///// Sets the name / units fields to the metadata version for the provided language, clearing metadata after
+        ///// </summary>
+        ///// <param name="itemType">Item Type</param>
+        ///// <param name="languageCode">Language Code (ie: en, en-US, en-UK, de, fr, es)</param>
+        //private static void SetLanguage(this ItemTypeDto itemType, string languageCode)
+        //{
+        //    // nothing to do? 
+        //    if (languageCode == LibraryExtensions.DefaultLanguageCode) { return; }
+
+        //    // find the translation if exists
+        //    if (itemType.Meta.ContainsKey($"name_{languageCode}"))
+        //    {
+        //        itemType.Name = itemType.Meta[$"name_{languageCode}"];
+        //    }
+        //    else if (languageCode.Contains('-')) // see if there is a region code attached and just match on root language
+        //    {
+        //        languageCode = languageCode.Split('-')[0];
+        //        if (itemType.Meta.ContainsKey($"name_{languageCode}"))
+        //        {
+        //            itemType.Name = itemType.Meta[$"name_{languageCode}"];
+        //        }
+        //    }
+
+        //    // set all the tags to the specified language
+        //    foreach (var tag in itemType.Tags.Values)
+        //    {
+        //        tag.SetLanguage("name", languageCode);
+        //        tag.SetLanguage("units", languageCode);
+        //    }
+        //}
 
         private static void SetLanguage(this ItemTypeTagDto itemTypeTag, string property, string languageCode)
         {
             // nothing to do? 
-            if (languageCode == LibraryExtensions.DefaultLanguageCode) { return; }
+            if (languageCode == LibraryExtensions.LANGUAGE_CODE_DEFAULT) { return; }
 
             // find the translation if exists
             if (itemTypeTag.Meta.ContainsKey($"${property}_{languageCode}"))
@@ -199,7 +243,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 {
                     itemTypeTag.Name = itemTypeTag.Meta[$"{property}_{languageCode}"];
                 }
-            }            
+            }
         }
 
         private static ItemTypeTagDto Clone(this ItemTypeTagDto itemTypeTag, string languageCode)
@@ -223,15 +267,12 @@ namespace ThingsLibrary.Schema.Library.Extensions
         /// <param name="library">Library</param>
         public static void GenerateDefinitions(this RootItemDto library)
         {
-            // nothing to do?
-            if (library.Type == "library" && library.Items.Count == 0) { return; }
-            
             library.GenerateDefinitions(library);  // start at the top node 
         }
-
+        
         private static void GenerateDefinitions(this RootItemDto library, ItemDto currentItem)
         {
-            if (currentItem.Type != "library")
+            if (currentItem.Type != Constants.TYPE_LIBRARY_KEY)
             {
                 // get the matching item type
                 ItemTypeDto itemType;
@@ -243,10 +284,10 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 {
                     itemType = new ItemTypeDto
                     {
-                        Name = currentItem.Type.ToDisplayName()
+                        Name = currentItem.Type.ToDisplayName(),                        
                     };
                     library.Types.Add(currentItem.Type, itemType);
-                }
+                }              
 
                 // figure out the current position / sequence number
                 short seq = 0;
@@ -265,13 +306,47 @@ namespace ThingsLibrary.Schema.Library.Extensions
                     };
 
                     itemType.Tags.Add(tag.Key, itemTypeTag);
+                }            
+            }
+
+            // METADATA TAGS
+            if (currentItem.Meta.Count > 0)
+            {
+                var type = Constants.TYPE_META;
+                short seq = 0;
+
+                ItemTypeDto metaItemType;
+                if (library.Types.ContainsKey(type))
+                {
+                    metaItemType = library.Types[type];
+                }
+                else
+                {
+                    metaItemType = new ItemTypeDto("Metadata");
+                    library.Types.Add(type, metaItemType);
+                }
+                
+
+                foreach (var tag in currentItem.Meta)
+                {
+                    // we already have something?  NEXT!
+                    if (metaItemType.Tags.ContainsKey(tag.Key)) { continue; }
+
+                    var itemTypeTag = new ItemTypeTagDto
+                    {
+                        Name = tag.Key.ToDisplayName(),
+                        Type = SchemaBase.DetectDataType(tag.Key, tag.Value), //TODO: try to determine type based on pattern matching
+                        Sequence = ++seq
+                    };
+
+                    metaItemType.Tags.Add(tag.Key, itemTypeTag);
                 }
             }
 
             // Recurse the child items
-            foreach (var childItem in currentItem.Items.Values)
+            foreach (var childItem in currentItem.Items)
             {
-                GenerateDefinitions(library, childItem);
+                GenerateDefinitions(library, childItem.Value);
             }
         }
 
@@ -304,7 +379,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         private static void PopulateDefinitionUsage(RootItemDto library, Dictionary<string, ItemTypeDto> usedTypes, ItemDto currentItem)
         {
             // don't include 'library' type as it is just a container
-            if (currentItem.Type != "library")
+            if (currentItem.Type != Constants.TYPE_LIBRARY_KEY)
             {
                 // get the matching item type
                 ItemTypeDto itemType;

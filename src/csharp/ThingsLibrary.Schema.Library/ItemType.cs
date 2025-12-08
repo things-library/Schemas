@@ -13,12 +13,21 @@ namespace ThingsLibrary.Schema.Library
     [DebuggerDisplay("{Name}")]
     public class ItemTypeDto
     {
+        public static ItemTypeDto Empty { get; set; } = new ItemTypeDto();
+
         /// <summary>
         /// Item Type Name
         /// </summary>
         [JsonPropertyName("name")]
         [Display(Name = "Name"), StringLength(50, MinimumLength = 1), Required]
         public string Name { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Description
+        /// </summary>
+        [JsonPropertyName("description")]
+        [Display(Name = "description")]
+        public string? Description { get; set; }
 
         /// <summary>
         /// Tags
@@ -60,26 +69,25 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Easy lookup and empty string lookup
         /// </summary>
-        /// <param name="key">Dictionary Key</param>
-        /// <param name="isMeta">If the value from metadata</param>
+        /// <param name="key">Dictionary Key</param>        
         /// <returns></returns>
-        public string this[string key, bool isMeta = false]
+        public string? this[string key, bool meta = false]
         {
             get
             {
-                if (isMeta)
+                if (meta)
                 {
-                    if (!this.Meta.ContainsKey(key)) { return string.Empty; }
+                    if (!this.Meta.ContainsKey(key)) { return null; }
 
                     return this.Meta[key];
                 }
                 else
                 {
-                    if (!this.Tags.ContainsKey(key)) { return string.Empty; }
+                    if (!this.Tags.ContainsKey(key)) { return null; }
 
                     return this.Tags[key].Name;
                 }
-            }            
+            }
         }
     }
 }

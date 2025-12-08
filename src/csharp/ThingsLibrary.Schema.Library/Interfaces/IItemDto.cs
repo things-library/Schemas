@@ -9,14 +9,16 @@ namespace ThingsLibrary.Schema.Library.Interfaces
 {
     public interface IItemDto
     {
-        public string Type { get; set; }
+        public string Type { get; }
 
-        public string Name { get; set; }
+        public DateTimeOffset? Date { get; }
+
+        public string Name { get; }
 
         public IDictionary<string, string> Meta { get; set; }
 
         public IDictionary<string, string> Tags { get; set; }
 
-        public string? this[string key, bool isMeta = false] { get; }
+        public string? this[string key, bool meta] { get; }
     }
 }

@@ -43,7 +43,7 @@ namespace ThingsLibrary.Schema.Library.Base
         /// <summary>
         /// Pattern to use for all non-root library keys
         /// </summary>
-        public const string KeyPattern = "^[a-z0-9_.-]{1,50}$";
+        public const string KeyPattern = "^[a-z0-9_.$-]{1,50}$";
 
         /// <summary>
         /// Key pattern description
@@ -242,6 +242,12 @@ namespace ThingsLibrary.Schema.Library.Base
             // Unknown, assume string
             if (string.IsNullOrEmpty(value)) { return ItemTagDataTypesDto.String; }
 
+            // ENUM.. values look like:  '|owner|manager|'
+            if (value.StartsWith('|') && value.EndsWith('|'))
+            {
+                return ItemTagDataTypesDto.Enum;
+            }
+
             // HTML
             if (Regex.IsMatch(value, @"<[^>]+>"))
             {
@@ -322,6 +328,9 @@ namespace ThingsLibrary.Schema.Library.Base
         public static string ToDisplayName(this string key)
         {
             // replace the _ with space so that title case finds all the words
+
+            // strip off the metadata system character
+            if(key.StartsWith('$')) { key = key[1..]; }
 
             return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(key.ToLower().Replace('_', ' ').Replace('-', ' '));
         }

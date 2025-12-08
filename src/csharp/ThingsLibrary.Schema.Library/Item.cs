@@ -17,6 +17,15 @@ namespace ThingsLibrary.Schema.Library
     [DebuggerDisplay("Name: {Name}, Type: {Type})")]
     public class ItemDto : IItemDto
     {
+        #region --- Static --- 
+
+        /// <summary>
+        /// Empty Root Item
+        /// </summary>
+        public static ItemDto Empty => new ItemDto(string.Empty, string.Empty);
+
+        #endregion
+
         /// <summary>
         /// Name
         /// </summary>
@@ -36,7 +45,7 @@ namespace ThingsLibrary.Schema.Library
         /// </summary>
         [JsonPropertyName("type")]
         [Display(Name = "Item Type"), StringLength(50, MinimumLength = 1), Required]
-        [RegularExpression(Base.SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
+        [RegularExpression(SchemaBase.KeyPattern, ErrorMessage = Base.SchemaBase.KeyPatternErrorMessage)]
         public string Type { get; set; } = string.Empty;
 
         /// <summary>
@@ -73,7 +82,7 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Constructor
         /// </summary>
-        public ItemDto(string type, string name)
+        public ItemDto(string type, string name, DateTimeOffset? date = null)
         {
             ArgumentException.ThrowIfNullOrEmpty(type);
             ArgumentException.ThrowIfNullOrEmpty(name);
@@ -81,6 +90,7 @@ namespace ThingsLibrary.Schema.Library
 
             this.Type = type;
             this.Name = name;
+            this.Date = date;
         }
 
 
@@ -90,11 +100,11 @@ namespace ThingsLibrary.Schema.Library
         /// <param name="key">Dictionary Key</param>
         /// <param name="isMeta">If the value from metadata</param>
         /// <returns></returns>
-        public string? this[string key, bool isMeta = false]
+        public string? this[string key, bool meta = false]
         {
             get
             {
-                if (isMeta)
+                if (meta)
                 {
                     if (!this.Meta.ContainsKey(key)) { return null; }
 
@@ -109,7 +119,7 @@ namespace ThingsLibrary.Schema.Library
             }
         }
 
-        public bool TryGetItem(string key, [MaybeNullWhen(false)] out ItemDto item)
+        public bool TryGetItem(string key, [MaybeNullWhen(false)] out ItemDto item, bool required = false)
         {
             var keyPath = key.Split('/');
 
@@ -129,6 +139,10 @@ namespace ThingsLibrary.Schema.Library
                     // recurse to find the item
                     return currentItem.TryGetItem(remainingKey, out item);
                 }
+            }
+            else if (required)
+            {
+                throw new ArgumentException($"Unable to find required item with key: {key}");
             }
             else
             {

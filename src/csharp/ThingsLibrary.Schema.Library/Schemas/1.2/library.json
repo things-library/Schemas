@@ -73,6 +73,11 @@
           "maxLength": 50
         },
 
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+
         "seq": {
           "type": "integer",
           "title": "Sequence Order",
@@ -101,7 +106,12 @@
           "minLength": 1,
           "maxLength": 50
         },
-        
+
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+
         "tags": {
           "type": "object",
           "title": "Attributes",
