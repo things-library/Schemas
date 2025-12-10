@@ -128,7 +128,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
         /// <param name="library"></param>
         /// <param name="definitions"></param>
         /// <param name="languageCode">LanguageCode (ie: en, en-US, de, fr)</param>
-        public static void AttachTypeDefinitions(this RootItemDto library, RootItemDto definitions, string languageCode)
+        public static void AddDefinitions(this RootItemDto library, RootItemDto definitions, string languageCode)
         {
             // make sure every type and tag is generated in the 'types' definitions
             library.GenerateDefinitions();

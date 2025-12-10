@@ -5,10 +5,75 @@
 // </copyright>
 // ================================================================================
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace ThingsLibrary.Schema.Library.Extensions
 {
     public static class ItemExtensions
     {
+        /// <summary>
+        /// Try to get the item at the specified key path
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="item"></param>
+        /// <param name="required"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static bool TryGetItem(this ItemDto rootItem, string key, [MaybeNullWhen(false)] out ItemDto item, bool required = false)
+        {
+            var keyPath = key.Split('/');
+
+            // nested item
+            if (rootItem.Items.TryGetValue(keyPath[0], out var currentItem))
+            {
+                // end of key path
+                if (keyPath.Length == 1)
+                {
+                    item = currentItem;
+                    return true;
+                }
+                else
+                {
+                    var remainingKey = string.Join('/', keyPath.Skip(1));
+
+                    // recurse to find the item
+                    return currentItem.TryGetItem(remainingKey, out item);
+                }
+            }
+            else if (required)
+            {
+                throw new ArgumentException($"Unable to find required item with key: {key}");
+            }
+            else
+            {
+                // unable to find at this branch level
+                item = null;
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// Try to get the tag value from a specified item
+        /// </summary>
+        /// <param name="rootItem">Root Item</param>
+        /// <param name="itemKey">Item Key path</param>
+        /// <param name="tagKey">Tag Key</param>
+        /// <param name="tagValue">Parsed tag value</param>
+        /// <returns></returns>
+        public static bool TryGetItemTag(this ItemDto rootItem, string itemKey, string tagKey, [MaybeNullWhen(false)] out string tagValue)
+        {
+            if (rootItem.TryGetItem(itemKey, out var item) && item.Tags.TryGetValue(tagKey, out tagValue))
+            {
+                return true;
+            }
+            else
+            {
+                tagValue = null;
+                return false;
+            }
+        }
+
         public static bool IsInvalid(this RootItemDto itemDto)
         {
             // quick and dirty check
@@ -298,6 +363,126 @@ namespace ThingsLibrary.Schema.Library.Extensions
             }
 
             item.Meta[tagName] = value;
-        }        
+        }
+               
+        /// <summary>
+        /// Flatten the item hierarchy perserving the full key path (clearing the child items of each)  (AKA: use a clone if you don't want the source to be modified)
+        /// </summary>
+        /// <param name="itemDto">Item</param>
+        /// <param name="itemResourceKey">Item Resource Key (aka: full path)</param>
+        /// <returns>Returns a listing of item resource keys and their item</returns>
+        public static ICollection<KeyValuePair<string, ItemDto>> Flatten(this ItemDto itemDto, string itemResourceKey)
+        {
+            if (string.IsNullOrEmpty(itemResourceKey)) { throw new ArgumentException("Resource Key missing."); }
+
+            var items = new List<KeyValuePair<string, ItemDto>>();
+
+            // if we are dealing with a library container.. add the item
+            if (itemResourceKey.Contains('/')) // no paths outside of root?  == library container            
+            { 
+                items.Add(new KeyValuePair<string, ItemDto>(itemResourceKey, itemDto));                
+            }
+
+            foreach (var child in itemDto.Items)
+            {
+                items.AddRange(child.Value.Flatten($"{itemResourceKey}/{child.Key}"));
+            }
+
+            return items;
+        }
+
+        #region --- Data Validation ---
+
+        /// <summary>
+        /// Validate the data that is provided and if it is valid
+        /// </summary>
+        /// <param name="itemTypeTag"></param>
+        /// <param name="tagValue"></param>
+        /// <returns></returns>
+        public static bool IsDataValid(this ItemTypeTagDto itemTypeTag, string tagValue)
+        {
+            return ItemTagDataTypesDto.IsValid(itemTypeTag.Type, tagValue);
+        }
+
+
+        /// <summary>
+        /// Validate all the items against the library definitions
+        /// </summary>
+        /// <param name="libraryDto">Library Definitions</param>
+        /// <param name="items">Items to validate</param>
+        /// <returns>Collection of validation results</returns>
+        public static ICollection<ValidationResult> Validate(this RootItemDto libraryDto, ICollection<KeyValuePair<string, ItemDto>> items)
+        {
+            var results = new List<ValidationResult>();
+            foreach (var importItem in items)
+            {
+                var validationError = libraryDto.Validate(importItem.Key, importItem.Value);
+                if (validationError != null)
+                {
+                    results.Add(validationError);
+                }
+            }
+            return results;
+        }
+
+        /// <summary>
+        /// Validate all the items against the library definitions
+        /// </summary>
+        /// <param name="libraryDto">Library Definitions</param>
+        /// <param name="items">Items to validate</param>
+        /// <returns>Collection of validation results</returns>
+        public static ICollection<ValidationResult> Validate(this RootItemDto libraryDto, IDictionary<string, ItemDto> items)
+        {
+            var results = new List<ValidationResult>();
+            foreach (var importItem in items)
+            {
+                var validationError = libraryDto.Validate(importItem.Key, importItem.Value);
+                if (validationError != null)
+                {
+                    results.Add(validationError);
+                }
+            }
+            return results;
+        }
+
+        /// <summary>
+        /// Validate the item against the library definitions
+        /// </summary>
+        /// <param name="libraryDto">Library Definitions</param>
+        /// <param name="itemKey">Item Key</param>
+        /// <param name="itemDto">Item to evaluate</param>
+        /// <returns>Validation result if there is a validation issue, otherwise null</returns>
+        public static ValidationResult? Validate(this RootItemDto libraryDto, string itemKey, ItemDto itemDto)
+        {
+            // is this type in the library?
+            if (libraryDto.Types.TryGetValue(itemDto.Type, out var itemType))
+            {
+                foreach (var itemTag in itemDto.Tags)
+                {
+                    // is this type tag in the library?
+                    if (itemType.Tags.TryGetValue(itemTag.Key, out var itemTypeTag))
+                    {
+                        // is the data valid for this tag?
+                        if (!itemTypeTag.IsDataValid(itemTag.Value))
+                        {
+                            return new ValidationResult($"Invalid data type '{itemTypeTag.Type}'", new List<string> { $"{itemKey}.tags['{itemTag.Key}']" });
+                        }
+                    }
+                    else
+                    {
+                        return new ValidationResult($"Missing tag definition", new List<string> { $"{itemKey}.tags['{itemTag.Key}']" });
+                    }
+                }
+            }
+            else
+            {
+                return new ValidationResult($"Missing definition for type '{itemDto.Type}'.", new List<string> { $"{itemKey}.type" });
+            }
+
+            // no validation errors
+            return null;
+        }
+
+        #endregion
     }
 }
