@@ -284,7 +284,7 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 {
                     itemType = new ItemTypeDto
                     {
-                        Name = currentItem.Type.ToDisplayName(),                        
+                        Name = currentItem.Type.ToDisplayName(),
                     };
                     library.Types.Add(currentItem.Type, itemType);
                 }              
@@ -293,19 +293,32 @@ namespace ThingsLibrary.Schema.Library.Extensions
                 short seq = 0;
                 if (itemType.Tags.Count > 0) { seq = itemType.Tags.Select(x => x.Value.Sequence ?? 0).Max(); }
 
-                foreach (var tag in currentItem.Tags)
+                foreach (var tagKey in currentItem.Tags.Keys.ToList())
                 {
-                    // we already have something?  NEXT!
-                    if (itemType.Tags.ContainsKey(tag.Key)) { continue; }
+                    var tagValue = currentItem.Tags[tagKey];
 
                     var itemTypeTag = new ItemTypeTagDto
                     {
-                        Name = tag.Key.ToDisplayName(),
-                        Type = SchemaBase.DetectDataType(tag.Key, tag.Value), //TODO: try to determine type based on pattern matching
+                        Name = tagKey,
+                        Type = SchemaBase.DetectDataType(tagKey, tagValue), //TODO: try to determine type based on pattern matching
                         Sequence = ++seq
                     };
 
-                    itemType.Tags.Add(tag.Key, itemTypeTag);
+                    var key = tagKey;
+                    if (!SchemaBase.IsKeyValid(key)) { key = SchemaBase.GenerateKey(key); }
+
+                    // we already have something?  NEXT!
+                    if (!itemType.Tags.ContainsKey(key)) 
+                    {
+                        itemType.Tags.Add(key, itemTypeTag);                        
+                    }
+
+                    // if we renamed then fix the key array
+                    if(string.Compare(key, tagKey) != 0)
+                    {
+                        currentItem.Tags[key] = currentItem.Tags[tagKey];
+                        currentItem.Tags.Remove(tagKey);
+                    }                    
                 }            
             }
 
