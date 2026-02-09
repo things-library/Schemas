@@ -301,9 +301,16 @@ namespace ThingsLibrary.Schema.Library.Extensions
         /// <param name="item">Item</param>
         /// <param name="tagName">Tag Name</param>
         /// <param name="value">Value</param>
-        public static void SetTag(this ItemDto item, string tagName, DateTime? value)
+        /// <param name="minValidValue">If left null, mindate will be 1/1/2000</param>
+        public static void SetTag(this ItemDto item, string tagName, DateTime? value, DateTime? minValidValue = null)
         {
-            if (value == null) 
+            // set to some reasonable min date if not provided
+            if(minValidValue == null) 
+            {
+                minValidValue = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            }
+
+            if (value == null || value < minValidValue) 
             {
                 item.Tags[tagName] = string.Empty;
                 return;
