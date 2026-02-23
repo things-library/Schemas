@@ -15,6 +15,8 @@ namespace ThingsLibrary.Schema.Library
     [DebuggerDisplay("Name: {Name}, Type: {Type})")]
     public class RootItemDto : ItemDto, IRootItemDto
     {
+        public static new RootItemDto Empty => new RootItemDto { Key = string.Empty, Type = string.Empty, Name = string.Empty };
+
         /// <summary>
         /// Json Schema Definition
         /// </summary>

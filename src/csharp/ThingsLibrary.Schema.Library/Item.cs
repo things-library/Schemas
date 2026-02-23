@@ -22,7 +22,7 @@ namespace ThingsLibrary.Schema.Library
         /// <summary>
         /// Empty Root Item
         /// </summary>
-        public static ItemDto Empty => new ItemDto(string.Empty, string.Empty);
+        public static ItemDto Empty => new ItemDto { Type = string.Empty, Name = string.Empty };
 
         #endregion
 
