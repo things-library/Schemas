@@ -35,6 +35,7 @@ namespace ThingsLibrary.Schema.Library
         /// Item Types consumed by this library / branch
         /// </summary>
         [JsonPropertyName("types")]
+        [JsonPropertyOrder(int.MaxValue)]   //always serialize this last, so it is easier to read the item data first
         public IDictionary<string, ItemTypeDto> Types { get; set; } = new Dictionary<string, ItemTypeDto>();
 
         /// <summary>
